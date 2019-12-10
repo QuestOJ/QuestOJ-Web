@@ -8,7 +8,7 @@
 			
 			$visible = isProblemVisibleToUser($problem, $myUser);
 			if (!$visible && $myUser != null) {
-				$result = DB::query(("select contest_id from contests_problems where problem_id = {$_GET['id']}");
+				$result = DB::query("select contest_id from contests_problems where problem_id = {$_GET['id']}");
 				while (list($contest_id) = DB::fetch($result, MYSQL_NUM)) {
 					$contest = queryContest($contest_id);
 					genMoreContestInfo($contest);

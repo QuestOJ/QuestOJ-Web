@@ -60,9 +60,9 @@
 		function($type, $username) {
 			global $contest;
 			if ($type == '+') {
-				DB::query(("insert into contests_permissions (contest_id, username) values (${contest['id']}, '$username')");
+				DB::query("insert into contests_permissions (contest_id, username) values (${contest['id']}, '$username')");
 			} else if ($type == '-') {
-				DB::query(("delete from contests_permissions where contest_id = ${contest['id']} and username = '$username'");
+				DB::query("delete from contests_permissions where contest_id = ${contest['id']} and username = '$username'");
 			}
 		}
 	);

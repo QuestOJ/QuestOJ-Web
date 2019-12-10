@@ -166,7 +166,7 @@ EOD;
 	$blog_link_contests->handle = function() {
 		$blog_id = $_POST['blog_id'];
 		$contest_id = $_POST['contest_id'];
-		$str = DB::fetch(DB::query(("select * from contests where id='${contest_id}'"));
+		$str = DB::fetch(DB::query("select * from contests where id='${contest_id}'"));
 		$all_config = json_decode($str['extra_config'], true);
 		$config = $all_config['links'];
 
@@ -190,7 +190,7 @@ EOD;
 		$all_config['links'] = $config;
 		$str = json_encode($all_config);
 		$str = DB::escape($str);
-		DB::query(("update contests set extra_config='${str}' where id='${contest_id}'");
+		DB::query("update contests set extra_config='${str}' where id='${contest_id}'");
 	};
 	$blog_link_contests->runAtServer();
 	

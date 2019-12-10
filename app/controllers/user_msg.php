@@ -22,14 +22,14 @@
 				return 'fail';
 			}
 
-			DB::query(("insert into user_msg (sender, receiver, message, send_time) values ('$sender', '$receiver', '$esc_message', now())");
+			DB::query("insert into user_msg (sender, receiver, message, send_time) values ('$sender', '$receiver', '$esc_message', now())");
 			return "ok";
 	}
 
 	function getConversations() {
 			global $myUser;
 			$username = $myUser['username'];
-			$result = DB::query(( "select * from user_msg where sender = '$username' or receiver = '$username' order by send_time DESC" );
+			$result = DB::query( "select * from user_msg where sender = '$username' or receiver = '$username' order by send_time DESC" );
 			$ret = array();
 			while ($msg = DB::fetch($result)) {
 					if ($msg['sender'] !== $username) {
@@ -63,9 +63,9 @@
 
 		$conversationName = $_GET['conversationName'];
 		$pageNumber = ($_GET['pageNumber'] - 1) * 10;
-		DB::query(("update user_msg set read_time = now() where sender = '$conversationName'  and  receiver = '$username' and read_time is null");
+		DB::query("update user_msg set read_time = now() where sender = '$conversationName'  and  receiver = '$username' and read_time is null");
 
-		$result = DB::query(("select * from user_msg where (sender = '$username' and receiver = '$conversationName') or (sender = '$conversationName' and receiver = '$username')	order by send_time DESC limit $pageNumber, 11");
+		$result = DB::query("select * from user_msg where (sender = '$username' and receiver = '$conversationName') or (sender = '$conversationName' and receiver = '$username')	order by send_time DESC limit $pageNumber, 11");
 		$ret = array();
 		while ($msg = DB::fetch($result)) {
 			$ret[] = array($msg['message'], $msg['send_time'], $msg['read_time'], $msg['id'], ($msg['sender'] == $username));
@@ -81,13 +81,13 @@ select * from user_msg
 where id = $msgId
 and read_time is null
 EOD;
-    $result = DB::query(($str);
+    $result = DB::query($str);
     if (DB::fetch($result)) {
         $str = <<<EOD
 delete from user_msg
 where id = $msgId
 EOD;
-        DB::query(($str);
+        DB::query($str);
         return 1;
     }
     return 0;
