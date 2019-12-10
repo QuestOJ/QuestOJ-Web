@@ -123,7 +123,7 @@
 		$submission = DB::selectFirst("select id, problem_id, content from submissions where status = '$status' order by id limit 1");
 		if ($submission) {
 			DB::update("update submissions set $set_q where id = {$submission['id']} and status = '$status'");
-			if (DB::DB::affected_rows() != 1) {
+			if (DB::affected_rows() != 1) {
 				$submission = null;
 			}
 		}
@@ -133,7 +133,7 @@
 		$submission = DB::selectFirst("select id, problem_id, content from custom_test_submissions where judge_time is null order by id limit 1");
 		if ($submission) {
 			DB::update("update custom_test_submissions set judge_time = now(), status = 'Judging' where id = {$submission['id']} and judge_time is null");
-			if (DB::DB::affected_rows() != 1) {
+			if (DB::affected_rows() != 1) {
 				$submission = null;
 			}
 		}
@@ -146,7 +146,7 @@
 		$hack = DB::selectFirst("select id, submission_id, input, input_type from hacks where judge_time is null order by id limit 1");
 		if ($hack) {
 			DB::update("update hacks set judge_time = now() where id = {$hack['id']} and judge_time is null");
-			if (DB::DB::affected_rows() != 1) {
+			if (DB::affected_rows() != 1) {
 				$hack = null;
 			}
 		}
