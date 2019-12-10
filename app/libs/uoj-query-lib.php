@@ -42,10 +42,10 @@ function hasContestPermission($user, $contest) {
 }
 
 function hasRegistered($user, $contest) {
-	return mysql_fetch_array(mysql_query("select * from contests_registrants where username = '${user['username']}' and contest_id = ${contest['id']}")) != null;
+	return DB::fetch(DB::query(("select * from contests_registrants where username = '${user['username']}' and contest_id = ${contest['id']}")) != null;
 	}
 function hasAC($user, $problem) {
-	return mysql_fetch_array(mysql_query("select * from best_ac_submissions where submitter = '${user['username']}' and problem_id = ${problem['id']}")) != null;
+	return DB::fetch(DB::query(("select * from best_ac_submissions where submitter = '${user['username']}' and problem_id = ${problem['id']}")) != null;
 }
 
 function queryGroup($groupname){
@@ -63,16 +63,16 @@ function queryUser($username) {
 }
 
 function queryProblemContent($id) {
-	return mysql_fetch_array(mysql_query("select * from problems_contents where id = $id"), MYSQL_ASSOC);
+	return DB::fetch(DB::query(("select * from problems_contents where id = $id"), MYSQL_ASSOC);
 }
 function queryProblemBrief($id) {
-	return mysql_fetch_array(mysql_query("select * from problems where id = $id"), MYSQL_ASSOC);
+	return DB::fetch(DB::query(("select * from problems where id = $id"), MYSQL_ASSOC);
 }
 
 function queryProblemTags($id) {
 	$tags = array();
-	$result = mysql_query("select tag from problems_tags where problem_id = $id order by id");
-	while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
+	$result = DB::query(("select tag from problems_tags where problem_id = $id order by id");
+	while ($row = DB::fetch($result, MYSQL_NUM)) {
 		$tags[] = $row[0];
 	}
 	return $tags;
@@ -84,24 +84,24 @@ function queryContestProblemRank($contest, $problem) {
 	return DB::selectCount("select count(*) from contests_problems where contest_id = {$contest['id']} and problem_id <= {$problem['id']}");
 }
 function querySubmission($id) {
-	return mysql_fetch_array(mysql_query("select * from submissions where id = $id"), MYSQL_ASSOC);
+	return DB::fetch(DB::query(("select * from submissions where id = $id"), MYSQL_ASSOC);
 }
 function queryHack($id) {
-	return mysql_fetch_array(mysql_query("select * from hacks where id = $id"), MYSQL_ASSOC);
+	return DB::fetch(DB::query(("select * from hacks where id = $id"), MYSQL_ASSOC);
 }
 function queryContest($id) {
-	return mysql_fetch_array(mysql_query("select * from contests where id = $id"), MYSQL_ASSOC);
+	return DB::fetch(DB::query(("select * from contests where id = $id"), MYSQL_ASSOC);
 }
 function queryContestProblem($id) {
-	return mysql_fetch_array(mysql_query("select * from contest_problems where contest_id = $id"), MYSQL_ASSOC);
+	return DB::fetch(DB::query(("select * from contest_problems where contest_id = $id"), MYSQL_ASSOC);
 }
 
 function queryZanVal($id, $type, $user) {
 	if ($user == null) {
 		return 0;
 	}
-	$esc_type = mysql_real_escape_string($type);
-	$row = mysql_fetch_array(mysql_query("select val from click_zans where username='{$user['username']}' and type='$esc_type' and target_id='$id'"));
+	$esc_type = DB::escape($type);
+	$row = DB::fetch(DB::query(("select val from click_zans where username='{$user['username']}' and type='$esc_type' and target_id='$id'"));
 	if ($row == null) {
 		return 0;
 	}
@@ -109,7 +109,7 @@ function queryZanVal($id, $type, $user) {
 }
 
 function queryBlog($id) {
-	return mysql_fetch_array(mysql_query("select * from blogs where id='$id'"), MYSQL_ASSOC);
+	return DB::fetch(DB::query(("select * from blogs where id='$id'"), MYSQL_ASSOC);
 }
 function queryBlogTags($id) {
 	$tags = array();
@@ -120,7 +120,7 @@ function queryBlogTags($id) {
 	return $tags;
 }
 function queryBlogComment($id) {
-	return mysql_fetch_array(mysql_query("select * from blogs_comments where id='$id'"), MYSQL_ASSOC);
+	return DB::fetch(DB::query(("select * from blogs_comments where id='$id'"), MYSQL_ASSOC);
 }
 
 function isProblemVisibleToUser($problem, $user) {

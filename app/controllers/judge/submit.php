@@ -42,7 +42,7 @@
 				$content['first_test_config'] = $content['config'];
 				$content['config'] = $content['final_test_config'];
 				unset($content['final_test_config']);
-				$esc_content = mysql_real_escape_string(json_encode($content));
+				$esc_content = DB::escape(json_encode($content));
 			
 				DB::update("update submissions set status = 'Judged, Waiting', content = '$esc_content' where id = ${_POST['id']}");
 			}
@@ -77,11 +77,11 @@
 		$ok = DB::update("update hacks set success = {$result['score']}, details = '$esc_details' where id = {$_POST['id']}");
 		
 		if ($ok) {
-			list($hack_input) = mysql_fetch_array(mysql_query("select input from hacks where id = {$_POST['id']}"), MYSQL_NUM);
+			list($hack_input) = DB::fetch(DB::query(("select input from hacks where id = {$_POST['id']}"), MYSQL_NUM);
 			unlink(UOJContext::storagePath().$hack_input);
 
 			if ($result['score']) {
-				list($problem_id) = mysql_fetch_array(mysql_query("select problem_id from hacks where id = ${_POST['id']}"), MYSQL_NUM);
+				list($problem_id) = DB::fetch(DB::query(("select problem_id from hacks where id = ${_POST['id']}"), MYSQL_NUM);
 				if (validateUploadedFile('hack_input') && validateUploadedFile('std_output')) {
 					svnAddExtraTest(queryProblemBrief($problem_id), $_FILES["hack_input"]["tmp_name"], $_FILES["std_output"]["tmp_name"]);
 				} else {
@@ -123,7 +123,7 @@
 		$submission = DB::selectFirst("select id, problem_id, content from submissions where status = '$status' order by id limit 1");
 		if ($submission) {
 			DB::update("update submissions set $set_q where id = {$submission['id']} and status = '$status'");
-			if (DB::affected_rows() != 1) {
+			if (DB::DB::affected_rows() != 1) {
 				$submission = null;
 			}
 		}
@@ -133,7 +133,7 @@
 		$submission = DB::selectFirst("select id, problem_id, content from custom_test_submissions where judge_time is null order by id limit 1");
 		if ($submission) {
 			DB::update("update custom_test_submissions set judge_time = now(), status = 'Judging' where id = {$submission['id']} and judge_time is null");
-			if (DB::affected_rows() != 1) {
+			if (DB::DB::affected_rows() != 1) {
 				$submission = null;
 			}
 		}
@@ -146,7 +146,7 @@
 		$hack = DB::selectFirst("select id, submission_id, input, input_type from hacks where judge_time is null order by id limit 1");
 		if ($hack) {
 			DB::update("update hacks set judge_time = now() where id = {$hack['id']} and judge_time is null");
-			if (DB::affected_rows() != 1) {
+			if (DB::DB::affected_rows() != 1) {
 				$hack = null;
 			}
 		}
