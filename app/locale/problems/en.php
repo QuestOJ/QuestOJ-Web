@@ -2,7 +2,7 @@
 return [
 	'problem' => 'Problem',
 	'all problems' => 'All Problems',
-	'template problems' => 'Template Problems',
+	'star problems' => 'Star Problems',
 	'add new' => 'Add new problem',
 	'title' => 'Title',
 	'ac' => 'AC',

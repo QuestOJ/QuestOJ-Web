@@ -62,8 +62,8 @@ EOD;
 	$search_tag = null;
 	
 	$cur_tab = isset($_GET['tab']) ? $_GET['tab'] : 'all';
-	if ($cur_tab == 'template') {
-		$search_tag = "模板题";
+	if ($cur_tab == 'star') {
+		$cond[] = "is_top = 1";
 	}
 	if (isset($_GET['tag'])) {
 		$search_tag = $_GET['tag'];
@@ -93,13 +93,13 @@ EOD;
 	$header .= '</tr>';
 	
 	$tabs_info = array(
+		'star' => array(
+			'name' => UOJLocale::get('problems::star problems'),
+			'url' => "/problems/star"
+		)
 		'all' => array(
 			'name' => UOJLocale::get('problems::all problems'),
 			'url' => "/problems"
-		),
-		'template' => array(
-			'name' => UOJLocale::get('problems::template problems'),
-			'url' => "/problems/template"
 		)
 	);
 	

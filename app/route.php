@@ -12,7 +12,7 @@ Route::group([
 	], function() {
 		Route::any('/', '/index.php');
 		Route::any('/problems', '/problem_set.php');
-		Route::any('/problems/template', '/problem_set.php?tab=template');
+		Route::any('/problems/star', '/problem_set.php?tab=star');
 
 		Route::any('/problem/{id}/manage/auth', '/problem_auth_manage.php');
 		Route::any('/problem/{id}', '/problem.php');
