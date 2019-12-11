@@ -16,7 +16,7 @@
 
 	$problem_content = queryProblemContent($problem['id']);
 	$problem_tags = queryProblemTags($problem['id']);
-	$problem_top_text = $problem['is_top'] == 0 ? '置顶本题' : '取消置顶';
+	$problem_top_text = $problem['is_top'] == 0 ? '精选本题' : '取消精选';
 
 	$problem_editor = new UOJBlogEditor();
 	$problem_editor->name = 'problem';
