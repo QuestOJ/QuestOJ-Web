@@ -12,7 +12,7 @@ class UOJMail {
 		$mailer->SMTPSecure = UOJConfig::$data['mail']['noreply']['secure'];
 		$mailer->Username = UOJConfig::$data['mail']['noreply']['username'];
 		$mailer->Password = UOJConfig::$data['mail']['noreply']['password'];
-		$mailer->setFrom(UOJConfig::$data['mail']['noreply']['username'], "UOJ noreply");
+		$mailer->setFrom(UOJConfig::$data['mail']['noreply']['username'], "Quest OJ");
 		$mailer->CharSet = "utf-8";
 		$mailer->Encoding = "base64";
 		return $mailer;
