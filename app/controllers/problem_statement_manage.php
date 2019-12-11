@@ -8,12 +8,19 @@
 		become403Page();
 	}
 	
+	if ($_GET["top"] == true) {
+		$problem_new_top_status = $problem['is_top'] == 0 ? 1 : 0;
+		DB::update("update problems set is_top = '{$problem_new_top_status}' where id = {$problem['id']}");
+		$problem['is_top'] = $problem_new_top_status;
+	}
+
 	$problem_content = queryProblemContent($problem['id']);
 	$problem_tags = queryProblemTags($problem['id']);
-	
+	$problem_top_text = $problem['is_top'] == 0 ? '置顶本题' : '取消置顶';
+
 	$problem_editor = new UOJBlogEditor();
 	$problem_editor->name = 'problem';
-	$problem_editor->blog_url = "/problem/{$problem['id']}";
+	$problem_editor->blog_url = "/problem/{$problem['id']}/manage/statement?top=true";
 	$problem_editor->cur_data = array(
 		'title' => $problem['title'],
 		'content_md' => $problem_content['statement_md'],
@@ -22,7 +29,7 @@
 		'is_hidden' => $problem['is_hidden']
 	);
 	$problem_editor->label_text = array_merge($problem_editor->label_text, array(
-		'view blog' => '查看题目',
+		'view blog' => $problem_top_text,
 		'blog visibility' => '题目可见性'
 	));
 	
