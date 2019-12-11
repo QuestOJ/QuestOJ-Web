@@ -301,14 +301,14 @@ EOD;
 	};
 	$custom_test_deleter->runAtServer();
 	
-	$banlist_cols = array('username', 'usergroup');
-	$banlist_config = array();
-	$banlist_header_row = <<<EOD
+	$list_cols = array('username', 'usergroup');
+	$list_config = array();
+	$list_header_row = <<<EOD
 	<tr>
 		<th>用户名</th>
 	</tr>
 EOD;
-	$banlist_print_row = function($row) {
+	$list_print_row = function($row) {
 		$hislink = getUserLink($row['username']);
 		echo <<<EOD
 			<tr>
@@ -372,7 +372,9 @@ EOD;
 		<?php if ($cur_tab === 'users'): ?>
 			<?php $user_form->printHTML(); ?>
 			<h3>封禁名单</h3>
-			<?php echoLongTable($banlist_cols, 'user_info', "usergroup='B'", '', $banlist_header_row, $banlist_print_row, $banlist_config) ?>
+			<?php echoLongTable($list_cols, 'user_info', "usergroup='B'", '', $list_header_row, $list_print_row, $list_config) ?>
+			<h3>管理员名单</h3>
+			<?php echoLongTable($list_cols, 'user_info', "usergroup='S'", '', $list_header_row, $list_print_row, $list_config) ?>
 		<?php elseif ($cur_tab === 'blogs'): ?>
 			<div>
 				<h4>添加到比赛链接</h4>
