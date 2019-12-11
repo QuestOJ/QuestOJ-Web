@@ -96,7 +96,7 @@ EOD;
 		'star' => array(
 			'name' => UOJLocale::get('problems::star problems'),
 			'url' => "/problems/star"
-		)
+		),
 		'all' => array(
 			'name' => UOJLocale::get('problems::all problems'),
 			'url' => "/problems"
