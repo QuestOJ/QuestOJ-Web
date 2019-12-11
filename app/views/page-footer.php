@@ -15,10 +15,9 @@
 					<?php if (UOJConfig::$data['profile']['ICP-license'] != ''): ?> | 
 					<li><a href="http://www.miitbeian.gov.cn"><?= UOJConfig::$data['profile']['ICP-license'] ?></a></li>
 					<?php endif ?>
-					<li><script src="https://s19.cnzz.com/z_stat.php?id=1273388946&web_id=1273388946" language="JavaScript"></script></li>
 				</ul>
 				
-				<p>Server time: <?= UOJTime::$time_now_str ?> | <a href="http://github.com/UniversalOJ/UOJ-System">开源项目</a></p>
+				<p>Server time: <?= UOJTime::$time_now_str ?> | <a href="https://gitee.com/limstash/QuestOJ">开源项目</a></p>
 			</div>
 			<?php endif ?>
 		</div>
