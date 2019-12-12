@@ -162,7 +162,7 @@
 				return "invalid problem id";
 			}
 
-			$this->svn_data_dir = "/var/svn/problem/$id/cur/$id/1/$id";
+			$this->svn_data_dir = "/var/svn/problem/$id/cur/$id/1";
 			$this->data_dir = "/var/uoj_data/$id";
 			$this->prepare_dir = "/var/uoj_data/prepare_$id";
 
