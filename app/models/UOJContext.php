@@ -68,7 +68,7 @@ class UOJContext {
 		}
 		$domainArr = explode(':', $domain);
 		$domain = array_shift($domainArr);
-		if (validateIP($domain)) {
+		if (validateIP($domain) || $domain === 'localhost') {
 			$domain = '';
 		} else {
 			$domain = '.'.$domain;
