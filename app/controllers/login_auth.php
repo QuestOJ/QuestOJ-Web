@@ -174,7 +174,7 @@ function submitLoginPost() {
 			$('#help-code').html('页面会话已过期。');
 		} else {
 			$('#div-code').addClass('has-error');
-			$('#help-codee').html('验证码错误。');
+			$('#help-code').html('验证码错误。');
 		}
 	});
 	return true;
