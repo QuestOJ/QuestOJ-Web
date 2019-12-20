@@ -23,6 +23,14 @@ function validatePassword($password) {
 	return is_string($password) && preg_match('/^[a-z0-9]{32}$/', $password);
 }
 
+function validateRealname($realname) {
+	return is_string($realname) && (preg_match('/^[\x7f-\xff]+$/', $realname) || preg_match('/^[a-zA-Z0-9_]{1,20}$/', $realname));
+}
+
+function validateCode($code) {
+	return is_string($code) && preg_match('/^[0-9]{8}$/', $code);
+}
+
 function validateEmail($email) {
 	return is_string($email) && strlen($email) <= 50 && preg_match('/^(.+)@(.+)$/', $email);
 }
@@ -62,4 +70,5 @@ function validateUploadedFile($name) {
 function validateIP($ip) {
 	return filter_var($ip, FILTER_VALIDATE_IP) !== false;
 }
+
 

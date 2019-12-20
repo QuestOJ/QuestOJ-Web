@@ -278,7 +278,26 @@ function validateMotto(str) {
 		return '';
 	}
 }
-
+function validateRealname(str) {
+	if (str.length == 0) {
+		return '姓名不能为空。';
+	} else if ((! /^[\u4e00-\u9fa5]{1,6}(·[\u4e00-\u9fa5]{1,6}){0,2}([,，][\u4e00-\u9fa5]{1,6}(·[\u4e00-\u9fa5]{1,6}){0,2})*$/.test(str)) && (! /^[a-zA-Z0-9_]+$/.test(str))) {
+		return '姓名应只包含中英文和空格和间隔号。';
+	} else {
+		return '';
+	}
+}
+function validateCode(str) {
+	if (str.length == 0) {
+		return '验证码不能为空。';
+	} else if (str.length != 8) {
+		return '验证码的长度应8。';
+	} else if (/\D/.test(str)) {
+		return '验证码应只包含0~9的数字。';
+	} else {
+		return '';
+	}
+}
 // tags
 $.fn.uoj_problem_tag = function() {
 	return this.each(function() {
@@ -1147,3 +1166,4 @@ function showStandings() {
 		}
 	);
 }
+

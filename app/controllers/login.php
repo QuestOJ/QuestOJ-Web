@@ -32,7 +32,12 @@
 			return "banned";
 		}
 		
-		Auth::login($user['username']);
+		$verify = Auth::login($user['username']);
+		
+		if ($verify == 0) {
+			return "verify";
+		}
+
 		return "ok";
 	}
 	
@@ -93,6 +98,8 @@ function submitLoginPost() {
 				prevUrl = '/';
 			};
 			window.location.href = prevUrl;
+		} else if (msg == 'verify') {
+			window.location.href = '/login/auth';
 		} else if (msg == 'banned') {
 			$('#div-username').addClass('has-error');
 			$('#help-username').html('该用户已被封停，请联系管理员。');

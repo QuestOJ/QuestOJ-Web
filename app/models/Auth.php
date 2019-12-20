@@ -1,9 +1,15 @@
 <?php
 
 class Auth {
-	public static function check() {
+	public static function checkVerify() {
+		return $_SESSION['verify'];
+	}
+	public static function checkLogin() {
 		global $myUser;
 		return $myUser != null;
+	}
+	public static function check() {
+		return Auth::checkLogin() && Auth::checkVerify();
 	}
 	public static function id() {
 		global $myUser;
@@ -15,7 +21,7 @@ class Auth {
 	}
 	public static function login($username, $remember = true) {
 		if (!validateUsername($username)) {
-			return;
+			return 0;
 		}
 		$_SESSION['username'] = $username;
 		if ($remember) {
@@ -29,9 +35,15 @@ class Auth {
 			Cookie::safeSet('uoj_username', $username, $expire, '/', array('httponly' => true));
 			Cookie::safeSet('uoj_remember_token', $remember_token, $expire, '/', array('httponly' => true));
 		}
+
+		$verify = DB::selectFirst("select verify from user_info where username = '$username'")['verify'];
+		$_SESSION['verify'] = $verify;
+
+		return $verify;
 	}
 	public static function logout() {
 		unset($_SESSION['username']);
+		unset($_SESSION['verify']);
 		unset($_SESSION['last_visited']);
 		Cookie::safeUnset('uoj_username', '/');
 		Cookie::safeUnset('uoj_remember_token', '/');
@@ -81,3 +93,4 @@ class Auth {
 		}
 	}
 }
+

@@ -1,6 +1,7 @@
 <?php
 return [
 	'login' => 'Login',
+	'email auth' => 'Email Authentication',
 	'register' => 'Register',
 	'logout' => 'Logout',
 	'my profile' => 'My Profile',
@@ -23,6 +24,8 @@ return [
 	'email' => 'Email',
 	'QQ' => 'QQ',
 	'sex' => 'Sex',
+	'realname' => 'Realname',
+	'verification code' => 'Code',
 	'motto' => 'Motto',
 	'rating' => 'Rating',
 	'view all' => 'View all',
@@ -59,6 +62,8 @@ return [
 	're-enter your password' => 'Re-enter your password',
 	'enter your new password' => 'Enter your new password',
 	're-enter your new password' => 'Re-enter your new password',
+	'enter your realname' => 'Enter your realname',
+	'enter your verification code' => 'Enter your verification code',
 	'enter your QQ' => 'Enter your QQ',
 	'refuse to answer' => 'Refuse to answer',
 	'male' => 'Male',
