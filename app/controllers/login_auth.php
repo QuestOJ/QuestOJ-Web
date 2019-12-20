@@ -170,11 +170,11 @@ function submitLoginPost() {
 			};
 			window.location.href = prevUrl;
 		} else if (msg == 'expired') {
-			$('#div-username').addClass('has-error');
-			$('#help-username').html('页面会话已过期。');
+			$('#div-code').addClass('has-error');
+			$('#help-code').html('页面会话已过期。');
 		} else {
-			$('#div-username').addClass('has-error');
-			$('#help-username').html('验证码错误。');
+			$('#div-code').addClass('has-error');
+			$('#help-codee').html('验证码错误。');
 		}
 	});
 	return true;
