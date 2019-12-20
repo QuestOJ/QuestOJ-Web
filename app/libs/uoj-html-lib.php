@@ -937,7 +937,7 @@ function echoRanklist($config = array()) {
 	$users = array();
 	$print_row = function($user, $now_cnt) use(&$users) {
 		if (!$users) {
-			$rank = DB::selectCount("select count(*) from user_info where rating > {$user['rating']}") + 1;
+			$rank = DB::selectCount("select count(*) from user_info where rating > {$user['rating']} and verify = 1") + 1;
 		} else if ($user['rating'] == $users[count($users) - 1]['rating']) {
 			$rank = $users[count($users) - 1]['rank'];
 		} else {
