@@ -9,7 +9,7 @@ class DB {
 			die();
 		}
 		mysql_select_db(UOJConfig::$data['database']['database']);
-		mysql_query("set names 'utf8'");
+		mysql_query("set names 'utf8mb4'");
 	}
 	public static function escape($str) {
 		return mysql_real_escape_string($str);
