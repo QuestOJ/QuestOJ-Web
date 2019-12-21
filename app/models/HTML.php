@@ -137,6 +137,8 @@ class HTML {
 		$def->addElement('aside',   'Block', 'Flow', 'Common');
 		$def->addElement('header',  'Block', 'Flow', 'Common');
 		$def->addElement('footer',  'Block', 'Flow', 'Common');
+		$def->addElement('details', 'Block', 'Flow', 'Common');
+		$def->addElement('summary', 'Block', 'Flow', 'Common');
 		
 		return new HTMLPurifier($config);
 	}
