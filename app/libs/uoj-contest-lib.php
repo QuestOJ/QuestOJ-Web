@@ -171,7 +171,7 @@ function queryContestData($contest, $config = array()) {
 		}
 	}
 	$people = [];
-	$result = DB::query("select username, user_rating from contests_registrants where contest_id = {$contest['id']} and has_participated = 1");
+	$result = DB::query("select username, user_rating, realname from contests_registrants where contest_id = {$contest['id']} and has_participated = 1");
 	while ($row = DB::fetch($result, MYSQL_NUM)) {
 		$row[1] = (int)$row[1];
 		$people[] = $row;
