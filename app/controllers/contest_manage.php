@@ -226,9 +226,9 @@
 			</thead>
 			<tbody>
 <?php
-	$row_id = 1;
+	$row_id = 0;
 	$result = DB::query("select username from contests_permissions where contest_id = {$contest['id']}");
-	echo '<tr>', '<td>',1 , '</td>', '<td>', getUserLink($contest['creator']), '</td>', '</tr>';
+	echo '<tr>', '<td>',Owner , '</td>', '<td>', getUserLink($contest['creator']), '</td>', '</tr>';
 	while ($row = DB::fetch($result, MYSQL_ASSOC)) {
 		$row_id++;
 		echo '<tr>', '<td>', $row_id, '</td>', '<td>', getUserLink($row['username']), '</td>', '</tr>';
