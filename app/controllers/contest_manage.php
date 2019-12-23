@@ -59,6 +59,10 @@
 		},
 		function($type, $username) {
 			global $contest;
+			if ($username == $contest["creator"]) {
+				return '';
+			}
+
 			if ($type == '+') {
 				DB::query("insert into contests_permissions (contest_id, username) values (${contest['id']}, '$username')");
 			} else if ($type == '-') {
@@ -222,8 +226,9 @@
 			</thead>
 			<tbody>
 <?php
-	$row_id = 0;
+	$row_id = 1;
 	$result = DB::query("select username from contests_permissions where contest_id = {$contest['id']}");
+	echo '<tr>', '<td>',1 , '</td>', '<td>', getUserLink($contest['creator']), '</td>', '</tr>';
 	while ($row = DB::fetch($result, MYSQL_ASSOC)) {
 		$row_id++;
 		echo '<tr>', '<td>', $row_id, '</td>', '<td>', getUserLink($row['username']), '</td>', '</tr>';
