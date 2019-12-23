@@ -96,8 +96,10 @@
 			
 			if ($type == '+') {
 				DB::insert("insert into contests_problems (contest_id, problem_id) values ({$contest['id']}, '$problem_id')");
+				DB::update("update problems set is_contest = 1 where problem_id='$problem_id'");
 			} else if ($type == '-') {
 				DB::delete("delete from contests_problems where contest_id = {$contest['id']} and problem_id = '$problem_id'");
+				contestMoveOutProblem($problem_id);
 			}
 			
 			if (isset($matches[2])) {

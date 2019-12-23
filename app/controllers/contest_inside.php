@@ -151,6 +151,12 @@ EOD;
 					DB::query("update user_info set rating = {$ratings[$i]} where username = '{$standings[$i][2][0]}'");
 					DB::query("update contests_registrants set rank = {$standings[$i][3]} where contest_id = {$contest['id']} and username = '{$standings[$i][2][0]}'");
 				}
+
+				$result = DB::query("select problem_id from contests_problems where contest_id = ${contest['id']} order by problem_id asc");
+				while ($row = DB::fetch($result, MYSQL_ASSOC)) {
+					contestMoveOutProblem($row['problem_id']);
+				}
+
 				DB::query("update contests set status = 'finished' where id = {$contest['id']}");
 			};
 			$publish_result_form->submit_button_config['class_str'] = 'btn btn-danger btn-block';
