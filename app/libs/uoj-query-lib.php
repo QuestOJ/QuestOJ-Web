@@ -35,7 +35,7 @@ function hasContestPermission($user, $contest) {
 	if ($user == null) {
 		return false;
 	}
-	if (isSuperUser($user)) {
+	if ($contest['creator'] == $user['username']) {
 		return true;
 	}
 	return DB::selectFirst("select * from contests_permissions where username = '{$user['username']}' and contest_id = {$contest['id']}") != null;
