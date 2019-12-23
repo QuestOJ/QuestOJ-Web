@@ -239,5 +239,5 @@ function contestMoveOutProblem($problem_id) {
 			return;
 		}
 	}
-	DB::update("update problems set is_contest = 0 where problem_id='$problem_id'");
+	DB::update("update problems set is_contest = 0 where id='$problem_id'");
 }
