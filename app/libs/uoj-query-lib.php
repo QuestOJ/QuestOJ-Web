@@ -4,7 +4,7 @@ function hasProblemPermission($user, $problem) {
 	if ($user == null) {
 		return false;
 	}
-	if (isSuperUser($user)) {
+	if ($problem['is_contest'] == false && isSuperUser($user)) {
 		return true;
 	}
 	
