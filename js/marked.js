@@ -895,7 +895,7 @@ Parser.prototype.tok = function() {
       }
       body += '</tbody>\n';
 
-      return '<table' + tok_class + '>\n'
+      return '<table class="table table-bordered table-hover table-striped table-text-center"' + tok_class + '>\n'
         + body
         + '</table>\n';
     }
