@@ -11,7 +11,7 @@
 	if ($_GET["top"] == true) {
 		$problem_new_top_status = $problem['is_top'] == 0 ? 1 : 0;
 		DB::update("update problems set is_top = '{$problem_new_top_status}' where id = {$problem['id']}");
-		$problem['is_top'] = $problem_new_top_status;
+		header("/problem/".$_GET['id']."/manage/statement");
 	}
 
 	$problem_content = queryProblemContent($problem['id']);
