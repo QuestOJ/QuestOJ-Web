@@ -1,5 +1,6 @@
 <?php
 return [
+	'_common_name' => 'English',
 	'login' => 'Login',
 	'email auth' => 'Email Authentication',
 	'register' => 'Register',

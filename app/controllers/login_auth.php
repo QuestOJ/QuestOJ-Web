@@ -106,8 +106,8 @@ EOD;
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-3">
-      <button type="button" id="button-sendmail" class="btn btn-default">获取验证码</button>&nbsp;&nbsp;
-      <button type="submit" id="button-submit" class="btn btn-default"><?= UOJLocale::get('submit') ?></button>
+      <button type="button" id="button-sendmail" class="btn btn-secondary">获取验证码</button>&nbsp;&nbsp;
+      <button type="submit" id="button-submit" class="btn btn-secondary"><?= UOJLocale::get('submit') ?></button>
     </div>
   </div>
 </form>
