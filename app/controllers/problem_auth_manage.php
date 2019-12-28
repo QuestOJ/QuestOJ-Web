@@ -1,6 +1,5 @@
 <?php
 	requirePHPLib('form');
-	requirePHPLib('svn');
 	
 	if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
 		become404Page();
@@ -41,10 +40,6 @@
 					DB::delete("delete from problems_auth where pid = ${problem['id']} and gid = '$id'");
 				}
 			}
-		},
-		function() {
-			global $problem;
-			svnRefreshPasswordOfProblem($problem['id']);
 		}
 	);
 	
