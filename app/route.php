@@ -45,7 +45,8 @@ Route::group([
 			Route::any('/blog/{id}', '/blog_show.php');
 		}
 		Route::any('/blogs/{id}', '/blog_show.php');
-		
+		Route::any('/post/{id}', '/blog_show.php');
+			
 		Route::any('/announcements', '/announcements.php');
 		
 		Route::any('/faq', '/faq.php');
