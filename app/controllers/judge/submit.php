@@ -1,6 +1,6 @@
 <?php
 	requirePHPLib('judger');
-	requirePHPLib('svn');
+	requirePHPLib('data');
 	
 	if (!authenticateJudger()) {
 		become404Page();
@@ -83,7 +83,7 @@
 			if ($result['score']) {
 				list($problem_id) = DB::fetch(DB::query("select problem_id from hacks where id = ${_POST['id']}"), MYSQL_NUM);
 				if (validateUploadedFile('hack_input') && validateUploadedFile('std_output')) {
-					svnAddExtraTest(queryProblemBrief($problem_id), $_FILES["hack_input"]["tmp_name"], $_FILES["std_output"]["tmp_name"]);
+					dataAddExtraTest(queryProblemBrief($problem_id), $_FILES["hack_input"]["tmp_name"], $_FILES["std_output"]["tmp_name"]);
 				} else {
 					error_log("hack successfully but received no data. id: ${_POST['id']}");
 				}
