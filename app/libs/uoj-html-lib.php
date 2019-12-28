@@ -496,7 +496,7 @@ class JudgementDetailsPrinter {
 			
 			echo 		'<div class="row">';
 			echo 			'<div class="col-sm-2">';
-			echo 				'<h3 class="card-title">', 'Subtask #', $subtask_num, ': ', '</h3>';
+			echo 				'<h4 class="card-title">', 'Subtask #', $subtask_num, ': ', '</h3>';
 			echo 			'</div>';
 			
 			if ($this->styler->show_score) {
