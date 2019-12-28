@@ -88,7 +88,7 @@
 		<?= HTML::js_src('/js/LAB.min.js') ?>
 
 		<!-- favicon -->
-		<link rel="shortcut icon" href="<?= HTML::url('/images/favicon.ico') ?>" />
+		<link rel="shortcut icon" href="<?= HTML::url('/pictures/favicon.ico') ?>" />
 		
 		<?php if (isset($REQUIRE_LIB['blog-editor'])): ?>
 		<!-- UOJ blog editor -->
@@ -248,7 +248,7 @@
 					<li class="nav-item" role="presentation"><a class="nav-link" href="<?= HTML::url('/register') ?>"><?= UOJLocale::get('register') ?></a></li>
 				<?php endif ?>
 				</ul>
-				<h1 class="d-none d-sm-block"><a href="<?= HTML::url('/') ?>"><img src="<?= HTML::url('/images/logo_small.png') ?>" alt="Logo" class="img-rounded" style="width:39px; height:39px;" /></a> <?= $PageMainTitle ?></h1>
+				<h1 class="d-none d-sm-block"><a href="<?= HTML::url('/') ?>"><img src="<?= HTML::url('/pictures/logo_small.png') ?>" alt="Logo" class="img-rounded" style="width:39px; height:39px;" /></a> <?= $PageMainTitle ?></h1>
 				<h1 class="d-block d-sm-none"><?= $PageMainTitleOnSmall ?></h1>
 			</div>
 			

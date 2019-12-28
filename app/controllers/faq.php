@@ -106,8 +106,8 @@
 			<hr /><p><code>*强调*</code> = <em>强调</em></p>
 			<hr /><p><code>[<?= UOJConfig::$data['profile']['oj-name-short'] ?>](<?= HTML::url('/') ?>)</code> = <a href="<?= HTML::url('/') ?>"><?= UOJConfig::$data['profile']['oj-name-short'] ?></a></p>
 			<hr /><p><code><?= HTML::url('/') ?></code> = <a href="http://<?= UOJConfig::$data['web']['main']['host'] ?>"><?= HTML::url('/') ?></a></p>
-			<hr /><p><code>![这个文字在图挂了的时候会显示](<?= HTML::url('/pictures/UOJ.ico') ?>)</code> =
-			<img src="<?= HTML::url('/pictures/UOJ.ico') ?>" alt="这个文字在图挂了的时候会显示" /></p>
+			<hr /><p><code>![这个文字在图挂了的时候会显示](<?= HTML::url('/pictures/favicon.ico') ?>)</code> =
+			<img src="<?= HTML::url('/pictures/favicon.ico') ?>" alt="这个文字在图挂了的时候会显示" /></p>
 			<hr /><p><code>`rm orz`</code> = <code>rm orz</code></p>
 			<hr /><p><code>数学公式萌萌哒$(a + b)^2$萌萌哒</code> = 数学公式萌萌哒$(a + b)^2$萌萌哒</p>
 			<hr /><p><code>&lt;!-- readmore --&gt;</code> = 在外面看这篇博客时会到此为止然后显示一个“阅读更多”字样</p>

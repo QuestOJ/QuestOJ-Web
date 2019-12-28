@@ -38,7 +38,7 @@
 				</table>
 			</div>
 			<div class="col-xs-6 col-sm-4 col-md-3">
-				<img class="media-object img-thumbnail" src="/pictures/UOJ.png" alt="Logo" />
+				<img class="media-object img-thumbnail" src="/pictures/logo.png" alt="Logo" />
 			</div>
 		</div>
 	</div>
