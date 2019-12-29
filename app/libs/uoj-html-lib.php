@@ -73,7 +73,10 @@ function become403Page() {
 	header($_SERVER['SERVER_PROTOCOL'] . " 403 Forbidden", true, 403); 
 	becomeMsgPage('<div class="text-center"><div style="font-size:233px">403</div><p>禁止入内！ T_T</p></div>', '403');
 }
-
+function become503Page() {
+	header($_SERVER['SERVER_PROTOCOL'] . " 503 Service Unavailable", true, 503); 
+	becomeMsgPage('<div class="text-center"><div style="font-size:233px">503</div><p>服务器正在维护......</p></div>', '503');
+}
 function getUserLink($username, $rating = null) {
 	if (validateUsername($username) && ($user = queryUser($username))) {
 		if ($rating == null) {

@@ -57,8 +57,8 @@ class DB {
 		return DB::query("select 1 from $name") !== false;
 	}
 	
-	public static function num_rows() {
-		return mysql_num_rows();
+	public static function num_rows($q) {
+		return mysql_num_rows(mysql_query($q));
 	}
 	public static function affected_rows() {
 		return mysql_affected_rows();

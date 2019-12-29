@@ -2,6 +2,10 @@
 
 require $_SERVER['DOCUMENT_ROOT'] . '/app/libs/uoj-lib.php';
 
+if (file_exists(UOJContext::documentRoot()."/app/.lock")) {
+	become503Page();
+}
+
 require UOJContext::documentRoot().'/app/route.php';
 require UOJContext::documentRoot().'/app/controllers/subdomain/blog/route.php';
 

@@ -61,12 +61,20 @@ $handlers = [
 		});
 		die("finished!\n");
 	},
+	'tools:insert' => function ($id) {
+		if (func_num_args() != 1) {
+			die("php cli.php tools:insert <id>\n");
+		}
+		
+		Tools::insert($id, $number);
+		die("finished!\n");
+	},
 	'help' => 'showHelp'
 ];
 
 function showHelp() {
 	global $handlers;
-	echo "UOJ Command-Line Interface\n";
+	echo "QuestOJ Command-Line Interface\n";
 	echo "php cli.php <task-name> params1 params2 ...\n";
 	echo "\n";
 	echo "The following tasks are available:\n";
