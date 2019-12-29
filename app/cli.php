@@ -69,6 +69,14 @@ $handlers = [
 		Tools::insert($id, $number);
 		die("finished!\n");
 	},
+	'tools:delete' => function ($id) {
+		if (func_num_args() != 1) {
+			die("php cli.php tools:delete <id>\n");
+		}
+		
+		Tools::delete($id, $number);
+		die("finished!\n");
+	},
 	'help' => 'showHelp'
 ];
 
