@@ -16,12 +16,19 @@
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 		$email = $_POST['email'];
+		$esc_email = DB::escape($email);
+
 		if (!validateUsername($username)) {
 			return "失败：无效用户名。";
 		}
 		if (queryUser($username)) {
 			return "失败：用户名已存在。";
 		}
+
+		if (DB::num_rows("select username from user_info where email = '{$esc_email}'")) {
+			return "失败：电子邮箱已存在。";
+		}
+
 		if (!validatePassword($password)) {
 			return "失败：无效密码。";
 		}
@@ -30,8 +37,6 @@
 		}
 		
 		$password = getPasswordToStore($password, $username);
-		
-		$esc_email = DB::escape($email);
 		
 		$svn_pw = uojRandString(10);
 		if (!DB::selectCount("SELECT COUNT(*) FROM user_info"))
