@@ -231,7 +231,7 @@
 	$row_id = 0;
 	$result = DB::query("select username from contests_permissions where contest_id = {$contest['id']}");
 	echo '<tr>', '<td>',Owner , '</td>', '<td>', getUserLink($contest['creator']), '</td>', '</tr>';
-	while ($row = DB::fetch($result, MYSQL_ASSOC)) {
+	while ($row = DB::fetch($result, MYSQLI_ASSOC)) {
 		$row_id++;
 		echo '<tr>', '<td>', $row_id, '</td>', '<td>', getUserLink($row['username']), '</td>', '</tr>';
 	}
@@ -253,7 +253,7 @@
 			<tbody>
 <?php
 	$result = DB::query("select problem_id from contests_problems where contest_id = ${contest['id']} order by problem_id asc");
-	while ($row = DB::fetch($result, MYSQL_ASSOC)) {
+	while ($row = DB::fetch($result, MYSQLI_ASSOC)) {
 		$problem = queryProblemBrief($row['problem_id']);
 		$problem_config_str = isset($contest['extra_config']["problem_{$problem['id']}"]) ? $contest['extra_config']["problem_{$problem['id']}"] : 'sample';
 		echo '<tr>', '<td>', $problem['id'], '</td>', '<td>', getProblemLink($problem), ' ', "[$problem_config_str]", '</td>', '</tr>';

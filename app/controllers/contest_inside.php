@@ -84,7 +84,7 @@
 			$start_test_form->handle = function() {
 				global $contest;
 				$result = DB::query("select id, problem_id, content from submissions where contest_id = {$contest['id']}");
-				while ($submission = DB::fetch($result, MYSQL_ASSOC)) {
+				while ($submission = DB::fetch($result, MYSQLI_ASSOC)) {
 					if (!isset($contest['extra_config']["problem_{$submission['problem_id']}"])) {
 	 					$content = json_decode($submission['content'], true);
 						if (isset($content['final_test_config'])) {
@@ -153,7 +153,7 @@ EOD;
 				}
 
 				$result = DB::query("select problem_id from contests_problems where contest_id = ${contest['id']} order by problem_id asc");
-				while ($row = DB::fetch($result, MYSQL_ASSOC)) {
+				while ($row = DB::fetch($result, MYSQLI_ASSOC)) {
 					contestMoveOutProblem($row['problem_id']);
 				}
 

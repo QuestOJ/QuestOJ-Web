@@ -138,14 +138,14 @@ function queryContestData($contest, $config = array()) {
 	$prob_pos = [];
 	$n_problems = 0;
 	$result = DB::query("select problem_id from contests_problems where contest_id = {$contest['id']} order by problem_id");
-	while ($row = DB::fetch($result, MYSQL_NUM)) {
+	while ($row = DB::fetch($result, MYSQLI_NUM)) {
 		$prob_pos[$problems[] = (int)$row[0]] = $n_problems++;
 	}
 	$data = [];
 	if ($config['pre_final']) {
 		$result = DB::query("select id, submit_time, submitter, problem_id, result from submissions"
 				." where contest_id = {$contest['id']} and score is not null order by id");
-		while ($row = DB::fetch($result, MYSQL_NUM)) {
+		while ($row = DB::fetch($result, MYSQLI_NUM)) {
 			$r = json_decode($row[4], true);
 			if (!isset($r['final_result'])) {
 				continue;
@@ -163,7 +163,7 @@ function queryContestData($contest, $config = array()) {
 			$result = DB::query("select submission_id, date_add('{$contest['start_time_str']}', interval penalty second),"
 				." submitter, problem_id, score from contests_submissions where contest_id = {$contest['id']}");
 		}
-		while ($row = DB::fetch($result, MYSQL_NUM)) {
+		while ($row = DB::fetch($result, MYSQLI_NUM)) {
 			$row[0] = (int)$row[0];
 			$row[3] = $prob_pos[$row[3]];
 			$row[4] = (int)$row[4];
@@ -172,7 +172,7 @@ function queryContestData($contest, $config = array()) {
 	}
 	$people = [];
 	$result = DB::query("select username, user_rating, realname from contests_registrants where contest_id = {$contest['id']} and has_participated = 1");
-	while ($row = DB::fetch($result, MYSQL_NUM)) {
+	while ($row = DB::fetch($result, MYSQLI_NUM)) {
 		$row[1] = (int)$row[1];
 		$people[] = $row;
 	}
@@ -234,7 +234,7 @@ function calcStandings($contest, $contest_data, &$score, &$standings, $update_co
 
 function contestMoveOutProblem($problem_id) {
 	$contest = DB::query("select contest_id from contests_problems where problem_id = '$problem_id'");
-	while ($row = DB::fetch($contest, MYSQL_ASSOC)) {
+	while ($row = DB::fetch($contest, MYSQLI_ASSOC)) {
 		if (queryContest($row["contest_id"])["status"] != "finished") {
 			return;
 		}
