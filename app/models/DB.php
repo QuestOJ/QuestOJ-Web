@@ -3,14 +3,10 @@ class DB {
 	public static function init() {
 		global $uojMySQL;
 		$uojMySQL = new mysqli(UOJConfig::$data['database']['host'] . ':3306', UOJConfig::$data['database']['username'], UOJConfig::$data['database']['password'], UOJConfig::$data['database']['database']);
-		if($uojMySQL == null){
-			echo '-----------------------\n';
-			echo $uojMySQL->connect_errno;
-			echo '========================\n';
-		}
-		if (!$uojMySQL) {
-			echo 'There is something wrong with database >_<.... ' . mysqli_error($uojMySQL);
-			die();
+		if ($uojMySQL->client_info == null) {
+				echo 'There is something wrong with database >_<.... ';
+				echo $uojMySQL->connect_error;
+				die();
 		}
 	}
 	public static function escape($str) {

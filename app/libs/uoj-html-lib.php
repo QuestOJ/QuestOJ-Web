@@ -537,7 +537,7 @@ class JudgementDetailsPrinter {
 			$test_time = $node->getAttribute('time');
 			$test_memory = $node->getAttribute('memory');
 
-			echo '<div class="card ', $this->styler->getTestInfoClass($test_info), ' mb-3">';
+			echo '<div class="card ', $this->styler->getTestInfoClass($test_info), '">';
 			
 			$accordion_parent = "{$this->name}_details_accordion";
 			if ($this->subtask_num != null) {
@@ -606,7 +606,7 @@ class JudgementDetailsPrinter {
 			$test_time = $node->getAttribute('time');
 			$test_memory = $node->getAttribute('memory');
 
-			echo '<div class="card ', $this->styler->getTestInfoClass($test_info), ' mb-3">';
+			echo '<div class="card ', $this->styler->getTestInfoClass($test_info), '">';
 			
 			$accordion_parent = "{$this->name}_details_accordion";
 			$accordion_collapse = "{$accordion_parent}_collapse_custom_test";
