@@ -442,6 +442,13 @@ EOD
 			if (isset($problem_conf['interaction_mode'])) {
 				$data_disp->addDisplayer('interactor', $getDisplaySrcFunc('interactor'));
 			}
+
+			if (is_file("/var/uoj_data/{$_GET['id']}/statement.pdf")) {
+				$data_disp->addDisplayer('statement', function($self) {
+					echo "<embed src=\"/download.php?type=statement&id={$_GET['id']}\" width=\"100%\" height=\"700px\">";
+				});
+			}
+
 			return $data_disp;
 		} else {
 			return (new DataDisplayer($problem_conf))->setProblemConfRowStatus('use_builtin_judger', 'danger');
