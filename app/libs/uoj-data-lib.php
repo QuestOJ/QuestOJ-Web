@@ -184,6 +184,10 @@
 				if ($zip_file->open("{$this->prepare_dir}/download.zip", ZipArchive::CREATE) !== true) {
 					throw new Exception("<strong>download.zip</strong> : failed to create the zip file");
 				}
+
+				if (is_file("{$this->upload_dir}/statement.pdf")) {
+					$this->copy_file_to_prepare("statement.pdf");
+				}
 				
 				if (isset($this->allow_files['require']) && is_dir("{$this->upload_dir}/require")) {
 					$this->copy_to_prepare('require');

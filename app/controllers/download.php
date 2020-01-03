@@ -42,7 +42,21 @@
                         $file_name = "/var/uoj_data/$id.zip";
                         $download_name = "testdata_$id.zip";
                         
-                        break;
+						break;
+		case 'statement':
+			if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
+				become404Page();
+			}
+			if (!hasProblemPermission($myUser, $problem)) {
+				become403Page();
+			}
+
+			$id = $_GET['id'];
+
+			$file_name = "/var/uoj_data/$id/statement.pdf";
+			$download_name = "statement_$id.pdf";
+
+			break;					
 		case 'testlib.h':
 			$file_name = "/home/local_main_judger/judge_client/uoj_judger/include/testlib.h";
 			$download_name = "testlib.h";
