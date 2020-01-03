@@ -1,5 +1,7 @@
 <?php
 	requirePHPLib('judger');
+	$disposition = "attachment";
+
 	switch ($_GET['type']) {
 		case 'problem':
 			if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
@@ -55,7 +57,7 @@
 
 			$file_name = "/var/uoj_data/$id/statement.pdf";
 			$download_name = "statement_$id.pdf";
-
+			$disposition = "inline";
 			break;					
 		case 'testlib.h':
 			$file_name = "/home/local_main_judger/judge_client/uoj_judger/include/testlib.h";
@@ -74,5 +76,5 @@
 	
 	header("X-Sendfile: $file_name");
 	header("Content-type: $mimetype");
-	header("Content-Disposition: attachment; filename=$download_name");
+	header("Content-Disposition: $disposition; filename=$download_name");
 ?>
