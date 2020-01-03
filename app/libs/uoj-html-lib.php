@@ -403,15 +403,13 @@ function echoSubmissionContent($submission, $requirement) {
 			switch ($file_language) {
 				case 'C++':
 				case 'C++11':
+				case 'C++14':
+				case 'C++17':
 					$sh_class = 'sh_cpp';
 					break;
-				case 'Python2.7':
+				case 'Python2':
 				case 'Python3':
 					$sh_class = 'sh_python';
-					break;
-				case 'Java7':
-				case 'Java8':
-					$sh_class = 'sh_java';
 					break;
 				case 'C':
 					$sh_class = 'sh_c';
