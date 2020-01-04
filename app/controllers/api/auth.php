@@ -8,8 +8,8 @@
         die("Please provide request id");
     }
 
-    $token == DB::escape($_GET["token"]);
-    $RequestID == DB::escape($_GET["RequestID"]);
+    $token = DB::escape($_GET["token"]);
+    $RequestID = DB::escape($_GET["RequestID"]);
 
     if (!API::checkClient($token)) {
         die("No such server");

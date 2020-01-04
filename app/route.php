@@ -68,9 +68,9 @@ Route::group([
 		
 		Route::any('/click-zan', '/click_zan.php');
 
-		Route::any('/api/login', '/api/login.php');
+		Route::any('/api/auth', '/api/auth.php');
 		Route::any('/api/register', '/api/register.php');
-		Route::any('/api/callback', '/api/callback.php');
+		Route::any('/api/verify', '/api/verify.php');
 	}
 );
 

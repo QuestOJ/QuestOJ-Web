@@ -3,7 +3,7 @@
 class API{
     public static function checkClient($token, $secret = NULL) {
         if ($secret != NULL) {
-            if (DB::num_rows("select id from api where token = {$token} and secret = {$secret}") != 0) {
+            if (DB::num_rows("select id from api where token = '{$token}' and secret = '{$secret}'") != 0) {
                 return true;
             }
             return false;
