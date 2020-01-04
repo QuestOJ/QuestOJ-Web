@@ -67,7 +67,7 @@ class DB {
 		return DB::query("select 1 from $name") !== false;
 	}
 	
-	public static function num_rows() {
+	public static function num_rows($q) {
 		global $uojMySQL;
 		return mysqli_num_rows(mysqli_query($uojMySQL, $q));
 	}

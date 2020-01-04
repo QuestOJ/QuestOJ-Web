@@ -21,7 +21,10 @@
 
     if (Auth::check()) {
         API::finishRequest($token, $RequestID, "success");
+        API::callback($token, $RequestID);
+        die();
     }
 
+    $_SESSION["callback"] = "/api/auth?token=$token&RequestID=$RequestID";
     header("Location:/login");
 ?>

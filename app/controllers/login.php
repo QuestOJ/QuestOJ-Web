@@ -38,6 +38,11 @@
 			return "verify";
 		}
 
+		if (!empty($_SESSION["callback"])) {
+			header("Location:".$_SESSION["callback"]);
+			unset($_SESSION["callback"]);
+		}
+		
 		return "ok";
 	}
 	
