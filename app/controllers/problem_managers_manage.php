@@ -48,7 +48,7 @@
 <?php
 	$row_id = 0;
 	$result = DB::query("select username from problems_permissions where problem_id = ${problem['id']}");
-	while ($row = DB::fetch($result, MYSQL_ASSOC)) {
+	while ($row = DB::fetch($result, MYSQLI_ASSOC)) {
 		$row_id++;
 		echo '<tr>', '<td>', $row_id, '</td>', '<td>', getUserLink($row['username']), '</td>', '</tr>';
 	}

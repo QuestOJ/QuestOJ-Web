@@ -71,6 +71,16 @@
 			}
 			$this->copy_to_prepare($file_name);
 		}
+		private function copy_statement($file_name){
+			$src = escapeshellarg("{$this->upload_dir}/$file_name");
+			$dest = escapeshellarg("{$this->prepare_dir}/$file_name");
+
+			exec("cp $src $dest -r", $output, $ret);
+
+			if ($ret) {
+					throw new UOJFileNotFoundException($file_name);
+			}
+		}
 		private function compile_at_prepare($name, $config = array()) {
 			global $uojMainJudgerWorkPath;
 			$include_path = "$uojMainJudgerWorkPath/include";
@@ -183,6 +193,10 @@
 				$zip_file = new ZipArchive();
 				if ($zip_file->open("{$this->prepare_dir}/download.zip", ZipArchive::CREATE) !== true) {
 					throw new Exception("<strong>download.zip</strong> : failed to create the zip file");
+				}
+
+				if (is_file("{$this->upload_dir}/statement.pdf")) {
+					$this->copy_statement("statement.pdf");
 				}
 				
 				if (isset($this->allow_files['require']) && is_dir("{$this->upload_dir}/require")) {

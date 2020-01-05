@@ -403,15 +403,13 @@ function echoSubmissionContent($submission, $requirement) {
 			switch ($file_language) {
 				case 'C++':
 				case 'C++11':
+				case 'C++14':
+				case 'C++17':
 					$sh_class = 'sh_cpp';
 					break;
-				case 'Python2.7':
+				case 'Python2':
 				case 'Python3':
 					$sh_class = 'sh_python';
-					break;
-				case 'Java7':
-				case 'Java8':
-					$sh_class = 'sh_java';
 					break;
 				case 'C':
 					$sh_class = 'sh_c';
@@ -537,7 +535,7 @@ class JudgementDetailsPrinter {
 			$test_time = $node->getAttribute('time');
 			$test_memory = $node->getAttribute('memory');
 
-			echo '<div class="card ', $this->styler->getTestInfoClass($test_info), ' mb-3">';
+			echo '<div class="card ', $this->styler->getTestInfoClass($test_info), '">';
 			
 			$accordion_parent = "{$this->name}_details_accordion";
 			if ($this->subtask_num != null) {
@@ -606,7 +604,7 @@ class JudgementDetailsPrinter {
 			$test_time = $node->getAttribute('time');
 			$test_memory = $node->getAttribute('memory');
 
-			echo '<div class="card ', $this->styler->getTestInfoClass($test_info), ' mb-3">';
+			echo '<div class="card ', $this->styler->getTestInfoClass($test_info), '">';
 			
 			$accordion_parent = "{$this->name}_details_accordion";
 			$accordion_collapse = "{$accordion_parent}_collapse_custom_test";

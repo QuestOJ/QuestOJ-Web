@@ -67,6 +67,10 @@ Route::group([
 		Route::any('/download.php', '/download.php');
 		
 		Route::any('/click-zan', '/click_zan.php');
+
+		Route::any('/api/auth', '/api/auth.php');
+		Route::any('/api/register', '/api/register.php');
+		Route::any('/api/verify', '/api/verify.php');
 	}
 );
 

@@ -4,7 +4,7 @@ function hasProblemPermission($user, $problem) {
 	if ($user == null) {
 		return false;
 	}
-	if ($problem['is_contest'] == false && isSuperUser($user)) {
+	if (isSuperUser($user)) {
 		return true;
 	}
 	
@@ -35,7 +35,7 @@ function hasContestPermission($user, $contest) {
 	if ($user == null) {
 		return false;
 	}
-	if ($contest['creator'] == $user['username']) {
+	if (isSuperUser($user)) {
 		return true;
 	}
 	return DB::selectFirst("select * from contests_permissions where username = '{$user['username']}' and contest_id = {$contest['id']}") != null;
@@ -52,27 +52,27 @@ function queryGroup($groupname){
 	if(!validateString($groupname)){
 		return null;
 	}
-	return DB::selectAll("select * from usergroup where name = '$groupname'", MYSQL_ASSOC);
+	return DB::selectAll("select * from usergroup where name = '$groupname'", MYSQLI_ASSOC);
 }
 
 function queryUser($username) {
 	if (!validateUsername($username)) {
 		return null;
 	}
-	return DB::selectFirst("select * from user_info where username='$username'", MYSQL_ASSOC);
+	return DB::selectFirst("select * from user_info where username='$username'", MYSQLI_ASSOC);
 }
 
 function queryProblemContent($id) {
-	return DB::fetch(DB::query("select * from problems_contents where id = $id"), MYSQL_ASSOC);
+	return DB::fetch(DB::query("select * from problems_contents where id = $id"), MYSQLI_ASSOC);
 }
 function queryProblemBrief($id) {
-	return DB::fetch(DB::query("select * from problems where id = $id"), MYSQL_ASSOC);
+	return DB::fetch(DB::query("select * from problems where id = $id"), MYSQLI_ASSOC);
 }
 
 function queryProblemTags($id) {
 	$tags = array();
 	$result = DB::query("select tag from problems_tags where problem_id = $id order by id");
-	while ($row = DB::fetch($result, MYSQL_NUM)) {
+	while ($row = DB::fetch($result, MYSQLI_NUM)) {
 		$tags[] = $row[0];
 	}
 	return $tags;
@@ -84,16 +84,16 @@ function queryContestProblemRank($contest, $problem) {
 	return DB::selectCount("select count(*) from contests_problems where contest_id = {$contest['id']} and problem_id <= {$problem['id']}");
 }
 function querySubmission($id) {
-	return DB::fetch(DB::query("select * from submissions where id = $id"), MYSQL_ASSOC);
+	return DB::fetch(DB::query("select * from submissions where id = $id"), MYSQLI_ASSOC);
 }
 function queryHack($id) {
-	return DB::fetch(DB::query("select * from hacks where id = $id"), MYSQL_ASSOC);
+	return DB::fetch(DB::query("select * from hacks where id = $id"), MYSQLI_ASSOC);
 }
 function queryContest($id) {
-	return DB::fetch(DB::query("select * from contests where id = $id"), MYSQL_ASSOC);
+	return DB::fetch(DB::query("select * from contests where id = $id"), MYSQLI_ASSOC);
 }
 function queryContestProblem($id) {
-	return DB::fetch(DB::query("select * from contest_problems where contest_id = $id"), MYSQL_ASSOC);
+	return DB::fetch(DB::query("select * from contest_problems where contest_id = $id"), MYSQLI_ASSOC);
 }
 
 function queryZanVal($id, $type, $user) {
@@ -109,18 +109,18 @@ function queryZanVal($id, $type, $user) {
 }
 
 function queryBlog($id) {
-	return DB::fetch(DB::query("select * from blogs where id='$id'"), MYSQL_ASSOC);
+	return DB::fetch(DB::query("select * from blogs where id='$id'"), MYSQLI_ASSOC);
 }
 function queryBlogTags($id) {
 	$tags = array();
 	$result = DB::select("select tag from blogs_tags where blog_id = $id order by id");
-	while ($row = DB::fetch($result, MYSQL_NUM)) {
+	while ($row = DB::fetch($result, MYSQLI_NUM)) {
 		$tags[] = $row[0];
 	}
 	return $tags;
 }
 function queryBlogComment($id) {
-	return DB::fetch(DB::query("select * from blogs_comments where id='$id'"), MYSQL_ASSOC);
+	return DB::fetch(DB::query("select * from blogs_comments where id='$id'"), MYSQLI_ASSOC);
 }
 
 function isProblemVisibleToUser($problem, $user) {

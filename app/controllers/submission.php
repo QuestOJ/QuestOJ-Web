@@ -151,7 +151,7 @@
 <?php endif ?>
 
 <?php if ($should_show_all_details): ?>
-	<div class="card border-info mb-3">
+	<div class="card border-info">
 		<div class="card-header bg-info">
 			<h4 class="card-title"><?= UOJLocale::get('details') ?></h4>
 		</div>

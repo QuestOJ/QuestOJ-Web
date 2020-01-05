@@ -253,7 +253,7 @@ $('#contest-countdown').countdown(<?= $contest['end_time']->getTimestamp() - UOJ
 </ul>
 <div class="tab-content">
 	<div class="tab-pane active" id="tab-statement">
-		<article class="top-buffer-md"><?= $problem_content['statement'] ?></article>
+		<article class="top-buffer-md"><?php if (!file_exists("/var/uoj_data/{$problem['id']}/statement.pdf")){ echo $problem_content['statement']; } else { echo "<embed src=\"/download.php?type=statement&id={$problem['id']}\" width=\"100%\" height=\"700px\">"; } ?></article>
 	</div>
 	<div class="tab-pane" id="tab-submit-answer">
 		<div class="top-buffer-sm"></div>
