@@ -39,8 +39,9 @@
 		}
 
 		if (!empty($_SESSION["callback"])) {
-			header("Location:".$_SESSION["callback"]);
+			$callback = $_SESSION["callback"];
 			unset($_SESSION["callback"]);
+			return $callback;
 		}
 		
 		return "ok";
@@ -111,6 +112,8 @@ function submitLoginPost() {
 		} else if (msg == 'expired') {
 			$('#div-username').addClass('has-error');
 			$('#help-username').html('页面会话已过期。');
+		} else if (/^\/api\/auth.*/.test(msg)) {
+			window.location.href = msg;
 		} else {
 			$('#div-username').addClass('has-error');
 			$('#help-username').html('用户名或密码错误。');
