@@ -1,19 +1,19 @@
 <?php
 
     if (empty($_POST["token"])) {
-        die("Please provide server token");
+        die("Authentication token required (101)");
     }
 
     if (empty($_POST["secret"])) {
-        die("Please provide server secret");
+        die("Authentication secret required (102)");
     }
 
     if (empty($_POST["action"])) {
-        die("Please provide request action");
+        die("Request action required (202)");
     }
 
     if (empty($_POST["callback"])) {
-        die("Please provide callback url");
+        die("Request callback URL required (203)");
     }
 
     $token = DB::escape($_POST["token"]);
@@ -22,10 +22,10 @@
     $callback = DB::escape($_POST["callback"]);
 
     if (!API::checkClient($token, $secret)) {
-        die("No such server");
+        die("Authentication failed (110)");
     }
 
-    $requestID = API::registerRequest($token, $action, $callback);
-    die($requestID);
+    $request = API::registerRequest($token, $action, $callback);
+    die($request);
 
 ?>

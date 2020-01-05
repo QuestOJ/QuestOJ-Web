@@ -1,19 +1,19 @@
 <?php
 
     if (empty($_POST["token"])) {
-        die("Please provide server token");
+        die("Authentication token required (101)");
     }
 
     if (empty($_POST["secret"])) {
-        die("Please provide server secret");
+        die("Authentication secret required (102)");
     }
 
     if (empty($_POST["request"])) {
-        die("Please provide request id");
+        die("Request ID required (201)");
     }
 
     if (empty($_POST["action"])) {
-        die("Please provide request action");
+        die("Request action required (202)");
     }
 
     $token = DB::escape($_POST["token"]);
@@ -22,7 +22,7 @@
     $action = DB::escape($_POST["action"]);
 
     if (!API::checkClient($token, $secret)) {
-        die("No such server");
+        die("Authentication failed (110)");
     }
 
     $status = API::checkRequest($token, $request, $action, "success");
