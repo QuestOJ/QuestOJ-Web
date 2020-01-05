@@ -59,10 +59,7 @@
 		},
 		function($type, $username) {
 			global $contest;
-			if ($username == $contest["creator"]) {
-				return '';
-			}
-
+			
 			if ($type == '+') {
 				DB::query("insert into contests_permissions (contest_id, username) values (${contest['id']}, '$username')");
 			} else if ($type == '-') {
@@ -96,10 +93,8 @@
 			
 			if ($type == '+') {
 				DB::insert("insert into contests_problems (contest_id, problem_id) values ({$contest['id']}, '$problem_id')");
-				DB::update("update problems set is_contest = 1 where id='$problem_id'");
 			} else if ($type == '-') {
 				DB::delete("delete from contests_problems where contest_id = {$contest['id']} and problem_id = '$problem_id'");
-				contestMoveOutProblem($problem_id);
 			}
 			
 			if (isset($matches[2])) {
@@ -228,9 +223,8 @@
 			</thead>
 			<tbody>
 <?php
-	$row_id = 0;
+	$row_id = 1;
 	$result = DB::query("select username from contests_permissions where contest_id = {$contest['id']}");
-	echo '<tr>', '<td>',Owner , '</td>', '<td>', getUserLink($contest['creator']), '</td>', '</tr>';
 	while ($row = DB::fetch($result, MYSQLI_ASSOC)) {
 		$row_id++;
 		echo '<tr>', '<td>', $row_id, '</td>', '<td>', getUserLink($row['username']), '</td>', '</tr>';

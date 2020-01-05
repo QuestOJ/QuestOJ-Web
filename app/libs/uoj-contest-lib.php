@@ -231,13 +231,3 @@ function calcStandings($contest, $contest_data, &$score, &$standings, $update_co
 		}
 	}
 }
-
-function contestMoveOutProblem($problem_id) {
-	$contest = DB::query("select contest_id from contests_problems where problem_id = '$problem_id'");
-	while ($row = DB::fetch($contest, MYSQLI_ASSOC)) {
-		if (queryContest($row["contest_id"])["status"] != "finished") {
-			return;
-		}
-	}
-	DB::update("update problems set is_contest = 0 where id='$problem_id'");
-}

@@ -4,7 +4,7 @@ function hasProblemPermission($user, $problem) {
 	if ($user == null) {
 		return false;
 	}
-	if ($problem['is_contest'] == false && isSuperUser($user)) {
+	if (isSuperUser($user)) {
 		return true;
 	}
 	
@@ -35,7 +35,7 @@ function hasContestPermission($user, $contest) {
 	if ($user == null) {
 		return false;
 	}
-	if ($contest['creator'] == $user['username']) {
+	if (isSuperUser($user)) {
 		return true;
 	}
 	return DB::selectFirst("select * from contests_permissions where username = '{$user['username']}' and contest_id = {$contest['id']}") != null;
