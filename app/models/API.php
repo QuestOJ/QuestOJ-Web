@@ -35,8 +35,12 @@ class API{
         return false;          
     }
 
-    public static function finishRequest($token, $request, $status) {
-        DB::update("update api_request set status = '$status' where server = '$token' and requestID = '$request'");
+    public static function finishRequest($token, $request, $status, $data = NULL) {
+        DB::update("update api_request set status = '$status', data = '$data' where server = '$token' and requestID = '$request'");
+    }
+
+    public static function getRequestData($token, $request) {
+        return DB::selectFirst("select data from api_request where server = '$token' and requestID = '$request'")["data"];
     }
 
     public static function callback($token, $request) {

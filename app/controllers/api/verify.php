@@ -26,10 +26,16 @@
     }
 
     $status = API::checkRequest($token, $request, $action, "success");
-    
-    if ($status) {
-        die("success");
-    } else {
-        die("fail");
+    $data = API::getRequestData($token, $request);
+
+    $array = array (
+        "status" => true,
+        "data" => $data
+    );
+
+    if (!$status) {
+        $array["status"] = false;
     }
+
+    die(json_encode($array));
 ?>

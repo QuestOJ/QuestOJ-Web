@@ -20,7 +20,7 @@
     }
 
     if (Auth::check()) {
-        API::finishRequest($token, $request, "success");
+        API::finishRequest($token, $request, "success", Auth::id());
         API::callback($token, $request);
         die();
     }
