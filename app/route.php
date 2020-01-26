@@ -71,6 +71,7 @@ Route::group([
 		Route::any('/api/auth', '/api/auth.php');
 		Route::any('/api/register', '/api/register.php');
 		Route::any('/api/verify', '/api/verify.php');
+		Route::any('/api/message', '/api/message.php');
 	}
 );
 
