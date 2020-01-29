@@ -86,6 +86,9 @@ function queryContestProblemRank($contest, $problem) {
 function querySubmission($id) {
 	return DB::fetch(DB::query("select * from submissions where id = $id"), MYSQLI_ASSOC);
 }
+function queryCustomSubmission($id) {
+	return DB::fetch(DB::query("select * from custom_test_submissions where id = $id"), MYSQLI_ASSOC);
+}
 function queryHack($id) {
 	return DB::fetch(DB::query("select * from hacks where id = $id"), MYSQLI_ASSOC);
 }
@@ -138,7 +141,14 @@ function isContestProblemVisibleToUser($problem, $contest, $user) {
 	}
 	return hasRegistered($user, $contest);
 }
-
+function isCustomSubmissionVisibleToUser($submission, $problem, $user) {
+	if (isSuperUser($user)) {
+		return true;
+	} else if($submission["submitter"] == $user["username"]) {
+		return true;	
+	}
+	return false;
+}
 function isSubmissionVisibleToUser($submission, $problem, $user) {
 	if (isSuperUser($user)) {
 		return true;

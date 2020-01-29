@@ -257,14 +257,17 @@ function echoSubmission($submission, $config, $user) {
 	if (!isset($config['used_memory_hidden']))
 		echo '<td>', $used_memory_str, '</td>';
 
-	echo '<td>', '<a href="/submission/', $submission['id'], '">', $submission['language'], '</a>', '</td>';
-
-	if ($submission['tot_size'] < 1024) {
-		$size_str = $submission['tot_size'] . 'b';
-	} else {
-		$size_str = sprintf("%.1f", $submission['tot_size'] / 1024) . 'kb';
+	if (!isset($config['language_hidden']))
+		echo '<td>', '<a href="/submission/', $submission['id'], '">', $submission['language'], '</a>', '</td>';
+	
+	if (!isset($config['file_size_hidden'])){
+		if ($submission['tot_size'] < 1024) {
+			$size_str = $submission['tot_size'] . 'b';
+		} else {
+			$size_str = sprintf("%.1f", $submission['tot_size'] / 1024) . 'kb';
+		}
+		echo '<td>', $size_str, '</td>';
 	}
-	echo '<td>', $size_str, '</td>';
 
 	if (!isset($config['submit_time_hidden']))
 		echo '<td><small>', $submission['submit_time'], '</small></td>';
@@ -297,8 +300,10 @@ function echoSubmissionsListOnlyOne($submission, $config, $user) {
 		echo '<th>'.UOJLocale::get('problems::used time').'</th>';
 	if (!isset($config['used_memory_hidden']))
 		echo '<th>'.UOJLocale::get('problems::used memory').'</th>';
-	echo '<th>'.UOJLocale::get('problems::language').'</th>';
-	echo '<th>'.UOJLocale::get('problems::file size').'</th>';
+	if (!isset($config['language_hidden']))
+		echo '<th>'.UOJLocale::get('problems::language').'</th>';
+	if (!isset($config['file_size_hidden']))
+		echo '<th>'.UOJLocale::get('problems::file size').'</th>';
 	if (!isset($config['submit_time_hidden']))
 		echo '<th>'.UOJLocale::get('problems::submit time').'</th>';
 	if (!isset($config['judge_time_hidden']))
@@ -609,7 +614,7 @@ class JudgementDetailsPrinter {
 			$accordion_parent = "{$this->name}_details_accordion";
 			$accordion_collapse = "{$accordion_parent}_collapse_custom_test";
 			if (!$this->styler->shouldFadeDetails($test_info)) {
-				echo '<div class="card-header data-toggle="collapse" data-parent="#', $accordion_parent, '" data-target="#', $accordion_collapse, '">';
+				echo '<div class="card-header" data-toggle="collapse" data-parent="#', $accordion_parent, '" data-target="#', $accordion_collapse, '">';
 			} else {
 				echo '<div class="card-header">';
 			}

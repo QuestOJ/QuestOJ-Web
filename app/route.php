@@ -35,6 +35,7 @@ Route::group([
 		
 		Route::any('/submissions', '/submissions_list.php');
 		Route::any('/submission/{id}', '/submission.php');
+		Route::any('/submission/custom/{id}', '/submission_custom.php');
 		Route::any('/submission-status-details', '/submission_status_details.php');
 		
 		Route::any('/hacks', '/hack_list.php');
