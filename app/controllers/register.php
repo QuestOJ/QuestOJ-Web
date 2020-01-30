@@ -1,4 +1,5 @@
 <?php
+
 	function handleRegisterPost() {
 		if (!crsf_check()) {
 			return '页面已过期';
@@ -12,7 +13,6 @@
 		if (!isset($_POST['email'])) {
 			return "无效表单";
 		}
-
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 		$email = $_POST['email'];
@@ -35,10 +35,10 @@
 		if (!validateEmail($email)) {
 			return "失败：无效电子邮箱。";
 		}
-		
 		$password = getPasswordToStore($password, $username);
 		
 		$svn_pw = uojRandString(10);
+		
 		if (!DB::selectCount("SELECT COUNT(*) FROM user_info"))
 			DB::query("insert into user_info (username, email, password, svn_password, register_time, usergroup) values ('$username', '$esc_email', '$password', '$svn_pw', now(), 'S')");
 		else
@@ -146,7 +146,7 @@ function submitRegisterPost() {
 		email		: $('#input-email').val(),
 		password : md5($('#input-password').val(), "<?= getPasswordClientSalt() ?>")
 	}, function(msg) {
-		if (/^欢迎你！/.test(msg)) {
+		if (/^欢迎/.test(msg)) {
 			BootstrapDialog.show({
 				title	 : '注册成功',
 				message : msg,

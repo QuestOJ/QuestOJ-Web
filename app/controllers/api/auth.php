@@ -20,6 +20,9 @@
     }
 
     if (Auth::check()) {
+        if (!isSuperUser($myUser)) {
+            become403Page();
+        }
         API::finishRequest($token, $request, "success", Auth::id());
         API::callback($token, $request);
         die();
