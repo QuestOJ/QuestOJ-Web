@@ -12,7 +12,12 @@
 		if ($judger == null) {
 			return false;
 		}
-		return $judger['password'] == $_POST['password'];
+		if ($judger['password'] == $_POST['password']) {
+			$date = date("Y-m-d H:i:s");
+			DB::update("update judger_info set lastTime = '$date' where judger_name = '$esc_judger_name'");
+			return true;
+		}
+		return false;
 	}
 	
 	function judgerCodeStr($code) {
