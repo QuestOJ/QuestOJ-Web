@@ -8,6 +8,9 @@
 	$submission_result = json_decode($submission['result'], true);	
 	$problem = queryProblemBrief($submission['problem_id']);
 
+	$submission["used_time"] = $submission_result["time"];
+	$submission["used_memory"] = $submission_result["memory"];
+
 	if (!isCustomSubmissionVisibleToUser($submission, $problem, $myUser)) {
 		become403Page();
 	}
