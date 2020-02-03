@@ -3,6 +3,6 @@
 		become403Page();
 	}
 	
-	header("Location: ".UOJConfig::$data['manage_platgorm']."/login");
+	header("Location: ".UOJConfig::$data['manage_platform']."/login");
 	exit();
 ?>
