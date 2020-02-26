@@ -90,7 +90,7 @@
 				}
 			}
 			echo '<td>'.$num.'</td>';
-			echo '<td>'.$user_link.'</td>';
+			echo '<td>'.$user_link.'&nbsp;<span style="font-size: 12px; color: grey">'.$user['realname'].'</span></td>';
 			if ($show_ip) {
 				echo '<td>'.$user['remote_addr'].'</td>';
 			}
