@@ -41,37 +41,37 @@
 					<h2><span class="uoj-honor" data-rating="<?= $user['rating'] ?>"><?= $user['username'] ?></span> <span><strong style="<?= $col_sex ?>"><?= $esc_sex ?></strong></span> <small><?= $user['realname'] ?></small></h2>
 					<div class="list-group">
 						<div class="list-group-item qoj-profile-item">
-							<h4 class="list-group-item qoj-profile-item-heading"><?= UOJLocale::get('group') ?></h4>
-							<p class="list-group-item qoj-profile-item-text"><?= group($user['userdefine']) ?></p>
+							<h4 class="list-group-item-heading"><?= UOJLocale::get('group') ?></h4>
+							<p class="list-group-item-text"><?= group($user['userdefine']) ?></p>
 						</div>
 						<div class="list-group-item qoj-profile-item">
-							<h4 class="list-group-item qoj-profile-item-heading"><?= UOJLocale::get('rating') ?></h4>
-							<p class="list-group-item qoj-profile-item-text"><strong style="color:red"><?= $user['rating'] ?></strong></p>
+							<h4 class="list-group-item-heading"><?= UOJLocale::get('rating') ?></h4>
+							<p class="list-group-item-text"><strong style="color:red"><?= $user['rating'] ?></strong></p>
 						</div>
 						<div class="list-group-item qoj-profile-item">
-							<h4 class="list-group-item qoj-profile-item-heading"><?= UOJLocale::get('email') ?></h4>
-							<p class="list-group-item qoj-profile-item-text"><?= $esc_email ?></p>
+							<h4 class="list-group-item-heading"><?= UOJLocale::get('email') ?></h4>
+							<p class="list-group-item-text"><?= $esc_email ?></p>
 						</div>
 						<div class="list-group-item qoj-profile-item">
-							<h4 class="list-group-item qoj-profile-item-heading"><?= UOJLocale::get('QQ') ?></h4>
-							<p class="list-group-item qoj-profile-item-text"><?= $esc_qq ?></p>
+							<h4 class="list-group-item-heading"><?= UOJLocale::get('QQ') ?></h4>
+							<p class="list-group-item-text"><?= $esc_qq ?></p>
 						</div>
 						<div class="list-group-item qoj-profile-item">
-							<h4 class="list-group-item qoj-profile-item-heading"><?= UOJLocale::get('motto') ?></h4>
-							<p class="list-group-item qoj-profile-item-text"><?= $esc_motto ?></p>
+							<h4 class="list-group-item-heading"><?= UOJLocale::get('motto') ?></h4>
+							<p class="list-group-item-text"><?= $esc_motto ?></p>
 						</div>
 						<?php if (isSuperUser($myUser)): ?>
 						<div class="list-group-item qoj-profile-item">
-							<h4 class="list-group-item qoj-profile-item-heading">register time</h4>
-							<p class="list-group-item qoj-profile-item-text"><?= $user['register_time'] ?></p>
+							<h4 class="list-group-item-heading">register time</h4>
+							<p class="list-group-item-text"><?= $user['register_time'] ?></p>
 						</div>
 						<div class="list-group-item qoj-profile-item">
-							<h4 class="list-group-item qoj-profile-item-heading">remote_addr</h4>
-							<p class="list-group-item qoj-profile-item-text"><?= $user['remote_addr'] ?></p>
+							<h4 class="list-group-item-heading">remote_addr</h4>
+							<p class="list-group-item-text"><?= $user['remote_addr'] ?></p>
 						</div>
 						<div class="list-group-item qoj-profile-item">
-							<h4 class="list-group-item qoj-profile-item-heading">http_x_forwarded_for</h4>
-							<p class="list-group-item qoj-profile-item-text"><?= $user['http_x_forwarded_for'] ?></p>
+							<h4 class="list-group-item-heading">http_x_forwarded_for</h4>
+							<p class="list-group-item-text"><?= $user['http_x_forwarded_for'] ?></p>
 						</div>
 						<?php endif ?>
 					</div>
@@ -90,15 +90,15 @@
 			<div class="top-buffer-lg"></div>
 			<div class="list-group">
 				<div class="list-group-item qoj-profile-item">
-					<h4 class="list-group-item qoj-profile-item-heading"><?= UOJLocale::get('rating changes') ?></h4>
-					<div class="list-group-item qoj-profile-item-text" id="rating-plot" style="height:500px;"></div>
+					<h4 class="list-group-item-heading"><?= UOJLocale::get('rating changes') ?></h4>
+					<div class="list-group-item-text" id="rating-plot" style="height:500px;"></div>
 				</div>
 				<div class="list-group-item qoj-profile-item">
 					<?php
 						$ac_problems = DB::selectAll("select problem_id from best_ac_submissions where submitter = '{$user['username']}'");
 					?>
-					<h4 class="list-group-item qoj-profile-item-heading"><?= UOJLocale::get('accepted problems').'：'.UOJLocale::get('n problems in total', count($ac_problems))?> </h4>
-					<p class="list-group-item qoj-profile-item-text">
+					<h4 class="list-group-item-heading"><?= UOJLocale::get('accepted problems').'：'.UOJLocale::get('n problems in total', count($ac_problems))?> </h4>
+					<p class="list-group-item-text">
 					<?php
 						foreach ($ac_problems as $problem) {
 							echo '<a href="/problem/', $problem['problem_id'], '" style="display:inline-block; width:4em;">', $problem['problem_id'], '</a>';
