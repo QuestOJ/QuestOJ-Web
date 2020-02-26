@@ -22,6 +22,7 @@ return [
 	'username' => 'Username',
 	'password' => 'Password',
 	'new password' => 'New password',
+	'group' => 'Group',
 	'email' => 'Email',
 	'QQ' => 'QQ',
 	'sex' => 'Sex',

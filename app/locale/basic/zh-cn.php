@@ -22,6 +22,7 @@ return [
 	'username' => '用户名',
 	'password' => '密码',
 	'new password' => '新密码',
+	'group' => '用户组',
 	'email' => 'Email',
 	'QQ' => 'QQ',
 	'sex' => '性别',
