@@ -4,6 +4,9 @@
 		if (!crsf_check()) {
 			return '页面已过期';
 		}
+		if (!captcha_check()) {
+			return '验证码无效';
+		}
 		if (!isset($_POST['username'])) {
 			return "无效表单";
 		}
@@ -89,6 +92,14 @@
 			<span class="help-block" id="help-password"></span>
 		</div>
 	</div>
+
+	<?php if (UOJConfig::$data['security']['captcha']['available']): ?>
+		<div id="div-password" class="form-group">
+			<label for="input-password" class="col-sm-2 control-label"><?= UOJLocale::get('captcha') ?></label>
+			<div class="g-recaptcha col-sm-3" data-sitekey="<?= UOJConfig::$data['security']['captcha']['site-key'] ?>"></div>
+		</div>
+	<?php endif ?>
+
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-3">
 			<button type="submit" id="button-submit" class="btn btn-secondary"><?= UOJLocale::get('submit') ?></button>
@@ -144,7 +155,10 @@ function submitRegisterPost() {
 		register : '',
 		username : $('#input-username').val(),
 		email		: $('#input-email').val(),
-		password : md5($('#input-password').val(), "<?= getPasswordClientSalt() ?>")
+		password : md5($('#input-password').val(), "<?= getPasswordClientSalt() ?>"), 
+		<?php if (UOJConfig::$data['security']['captcha']['available']): ?>
+		recaptcha : grecaptcha.getResponse()
+		<?php endif ?>
 	}, function(msg) {
 		if (/^欢迎/.test(msg)) {
 			BootstrapDialog.show({
@@ -174,6 +188,9 @@ function submitRegisterPost() {
 					label: '好的',
 					action: function(dialog) {
 						dialog.close();
+						<?php if (UOJConfig::$data['security']['captcha']['available']): ?>
+						grecaptcha.reset();
+						<?php endif ?>
 					}
 				}],
 			});

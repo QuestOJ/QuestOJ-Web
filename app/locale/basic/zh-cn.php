@@ -5,6 +5,7 @@ return [
 	'email auth' => '邮箱验证',
 	'register' => '注册',
 	'logout' => '登出',
+	'captcha' => '验证码',
 	'my profile' => '个人信息',
 	'private message' => '私信',
 	'system message' => '系统消息',

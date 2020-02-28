@@ -1,5 +1,6 @@
 <?php
 return [
+	'manage_platform' => '',
 	'profile' => [
 		'oj-name'  => 'Universal Online Judge',
 		'oj-name-short' => 'UOJ',
@@ -34,6 +35,11 @@ return [
 		'cookie' => [
 			'checksum_salt' => ['salt1', 'salt2', 'salt3']
 		],
+		'captcha' => [
+			'available' => false,
+			'site-key' => '',
+			'secret-token' => ''
+		]
 	],
 	'mail' => [
 		'noreply' => [

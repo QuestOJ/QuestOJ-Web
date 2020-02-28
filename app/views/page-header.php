@@ -86,6 +86,9 @@
 		
 		<!-- LAB -->
 		<?= HTML::js_src('/js/LAB.min.js') ?>
+		
+		<!-- reCAPTCHA -->
+		<script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
 
 		<!-- favicon -->
 		<link rel="shortcut icon" href="<?= HTML::url('/pictures/favicon.ico') ?>" />

@@ -5,6 +5,7 @@ return [
 	'email auth' => 'Email Authentication',
 	'register' => 'Register',
 	'logout' => 'Logout',
+	'captcha' => 'CAPTCHA',
 	'my profile' => 'My Profile',
 	'private message' => 'Private Message',
 	'system message' => 'System Message',
