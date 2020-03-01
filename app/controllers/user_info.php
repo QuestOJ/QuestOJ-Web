@@ -115,10 +115,11 @@
 <script type="text/javascript">
 var rating_data = [[
 <?php
-	$user_rating_min = $user_rating_max = 1500;
+	$user_rating_min = 10000;
+	$user_rating_max = 0;
 	$result = DB::query("select contest_id, rank, user_rating from contests_registrants where username = '{$user['username']}' and has_participated = 1 order by contest_id");
 	$is_first_row = true;
-	$last_rating = 1500;
+	$last_rating = 0;
 	while ($row = DB::fetch($result)) {
 		$contest = queryContest($row['contest_id']);
 		$rating_delta = $row['user_rating'] - $last_rating;
@@ -160,7 +161,7 @@ var rating_data = [[
 ?>
 ]];
 var rating_plot = $.plot($("#rating-plot"), [{
-	color: "#3850eb",
+	color: "#EDC240",
 	label: "<?= $user['username'] ?>",
 	data: rating_data[0]
 }], {

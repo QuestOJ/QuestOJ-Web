@@ -109,16 +109,31 @@ function htmlspecialchars(str)
 }
 
 function getColOfRating(rating) {
-	if (rating < 1500) {
-		var H = 300 - (1500 - 850) * 300 / 1650, S = 30 + (1500 - 850) * 70 / 1650, V = 50 + (1500 - 850) * 50 / 1650;
-		if (rating < 300) rating = 300;
-		var k = (rating - 300) / 1200;
-		return ColorConverter.toStr(ColorConverter.toRGB(new HSV(H + (300 - H) * (1 - k), 30 + (S - 30) * k, 50 + (V - 50) * k)));
+	if (rating >= 2400) {
+		return 'rgb(255, 0, 0)';
 	}
-	if (rating > 2500) {
-		rating = 2500;
+	if (rating >= 2100) {
+		return 'rgb(255, 204, 136)';
 	}
-	return ColorConverter.toStr(ColorConverter.toRGB(new HSV(300 - (rating - 850) * 300 / 1650, 30 + (rating - 850) * 70 / 1650, 50 + (rating - 850) * 50 / 1650)));
+	if (rating >= 1800) {
+		return 'rgb(255, 136, 255)';
+	}
+	if (rating >= 1500) {
+		return 'rgb(170, 170, 255)';
+	}
+	if (rating >= 1200) {
+		return 'rgb(119, 221, 187)';
+	}
+	if (rating >= 800) {
+		return 'rgb(119, 255, 119)';
+	}
+	if (rating >= 400) {
+		return 'rgb(217, 197, 178)';
+	}
+	if (rating == 0) {
+		return 'rgb(0, 0, 0)';
+	}
+	return 'rgb(204, 204, 204)';
 }
 function getColOfScore(score) {
 	if (score == 0) {
@@ -141,16 +156,34 @@ function getUserLink(username, rating, addSymbol) {
 	if (username.charAt(0) == '@') {
 		username = username.substr(1);
 	}
-	if (addSymbol) {
-		if (rating >= 2500) {
-			text += '<sup>';
-			for (var i = 2500; i <= rating; i += 200) {
-				text += "&alefsym;"
-			}
-			text += "</sup>";
-		}
+	
+	var userColor = 'user-gray';
+	if (rating >= 400) {
+		userColor = 'user-brown';
 	}
-	return '<a class="uoj-username" href="' + uojHome + '/user/profile/' + username + '" style="color:' + getColOfRating(rating) + '">' + text + '</a>';
+	if (rating >= 800) {
+		userColor = 'user-green';
+	}
+	if (rating >= 1200) {
+		userColor = 'user-cyan';
+	}
+	if (rating >= 1500) {
+		userColor = 'user-blue';
+	}
+	if (rating >= 1800) {
+		userColor = 'user-violet';
+	}
+	if (rating >= 2100) {
+		userColor = 'user-orange';
+	}
+	if (rating >= 2400) {
+		userColor = 'user-red';
+	}
+	if (rating == 0) {
+		userColor = 'user-black';
+	}
+
+	return '<a class="uoj-username ' + userColor +'" href="' + uojHome + '/user/profile/' + username + '">' + text + '</a>';
 }
 function getUserSpan(username, rating, addSymbol) {
 	if (!username) {
@@ -162,15 +195,6 @@ function getUserSpan(username, rating, addSymbol) {
 	var text = username;
 	if (username.charAt(0) == '@') {
 		username = username.substr(1);
-	}
-	if (addSymbol) {
-		if (rating >= 2500) {
-			text += '<sup>';
-			for (var i = 2500; i <= rating; i += 200) {
-				text += "&alefsym;"
-			}
-			text += "</sup>";
-		}
 	}
 	return '<span class="uoj-username" style="color:' + getColOfRating(rating) + '">' + text + '</span>';
 }
@@ -190,19 +214,37 @@ function replaceWithHighlightUsername() {
 
 $.fn.uoj_honor = function() {
 	return this.each(function() {
-		var honor = $(this).text();
 		var rating = $(this).data("rating");
 		if (isNaN(rating)) {
 			return;
 		}
-		if (rating >= 2500) {
-			honor += '<sup>';
-			for (var i = 2500; i <= rating; i += 200) {
-				honor += "&alefsym;"
-			}
-			honor += "</sup>";
+		var userColor = 'user-gray';
+		if (rating >= 400) {
+			userColor = 'user-brown';
 		}
-		$(this).css("color", getColOfRating(rating)).html(honor);
+		if (rating >= 800) {
+			userColor = 'user-green';
+		}
+		if (rating >= 1200) {
+			userColor = 'user-cyan';
+		}
+		if (rating >= 1500) {
+			userColor = 'user-blue';
+		}
+		if (rating >= 1800) {
+			userColor = 'user-violet';
+		}
+		if (rating >= 2100) {
+			userColor = 'user-orange';
+		}
+		if (rating >= 2400) {
+			userColor = 'user-red';
+		}
+		if (rating == 0) {
+			userColor = 'user-black';
+		}
+
+		$(this).addClass(userColor);
 	});
 }
 
@@ -1140,7 +1182,7 @@ function showStandings() {
 		function(row) {
 			var col_tr = '<tr>';
 			col_tr += '<td>' + row[3] + '</td>';
-			col_tr += '<td>' + getUserLink(row[2][0], row[2][1]) + '&nbsp;<span style="font-size: 12px; color: grey">'+row[2][2]+'</span></td>';
+			col_tr += '<td>' + getUserLink(row[2][0], row[2][1]) + '&nbsp;<span style="font-size: 12px; color: grey">'+row[2][3]+'</span></td>';
 			col_tr += '<td>' + '<div><span class="uoj-score" data-max="' + problems.length * 100 + '" style="color:' + getColOfScore(row[0] / problems.length) + '">' + row[0] + '</span></div>' + '<div>' + getPenaltyTimeStr(row[1]) + '</div></td>';
 			for (var i = 0; i < problems.length; i++) {
 				col_tr += '<td>';

@@ -47,7 +47,7 @@
 		<?= HTML::css_link('/css/bootstrap-glyphicons.min.css?v=2019.5.31') ?>
 
 		<!-- Custom styles for this template -->
-		<?= HTML::css_link('/css/qoj-theme.css?v=2020.2.26') ?>
+		<?= HTML::css_link('/css/qoj-theme.css?v=2020.3.1') ?>
 		
 		<!-- jQuery (necessary for Bootstrap\'s JavaScript plugins) -->
 		<?= HTML::js_src('/js/jquery.min.js') ?>
@@ -79,7 +79,7 @@
 		<?= HTML::js_src('/js/color-converter.min.js') ?>
 		
 		<!-- uoj -->
-		<?= HTML::js_src('/js/qoj.js?v=2019.12.28') ?>
+		<?= HTML::js_src('/js/qoj.js?v=2020.3.2') ?>
 		
 		<!-- readmore -->
 		<?= HTML::js_src('/js/readmore/readmore.min.js') ?>

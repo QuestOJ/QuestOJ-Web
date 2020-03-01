@@ -66,7 +66,7 @@ $handlers = [
 			die("php cli.php tools:insert <id>\n");
 		}
 		
-		Tools::insert($id, $number);
+		Tools::insert($id);
 		die("finished!\n");
 	},
 	'tools:delete' => function ($id) {
@@ -74,7 +74,15 @@ $handlers = [
 			die("php cli.php tools:delete <id>\n");
 		}
 		
-		Tools::delete($id, $number);
+		Tools::delete($id);
+		die("finished!\n");
+	},
+	'tools:calc' => function ($id) {
+		if (func_num_args() != 1) {
+			die("php cli.php tools:calc <id>\n");
+		}
+		
+		Tools::calc($id);
 		die("finished!\n");
 	},
 	'help' => 'showHelp'

@@ -1,6 +1,7 @@
 <?php
 
 requirePHPLib('data');
+requirePHPLib('rating');
 
 class Tools {
     private static function lockService() {
@@ -124,5 +125,38 @@ class Tools {
         DB::update("alter table problems AUTO_INCREMENT={$AI}");
 
         Tools::unlockService();
+    }
+
+    public static function calc($target) {
+        print("Contest {$target}\n");
+
+        $contest = queryContest($target);
+        print("Contest name: {$contest["name"]}\n");
+
+        $contests_registrants = DB::selectAll("select * from contests_registrants where contest_id = {$contest["id"]}");
+
+        for ($i = 0; $i < count($contests_registrants); $i++) {
+            $user = queryUser($contests_registrants[$i]["username"]);
+            $performance = $user["performance"];
+            $rating = $user["rating"];
+            
+            DB::update("update contests_registrants SET average_performance = {$performance}, user_rating = {$rating} where username = '{$contests_registrants[$i]["username"]}' and contest_id = {$contests_registrants[$i]["contest_id"]}");
+
+            print("User {$contests_registrants[$i]["username"]} performance change to {$performance}\n");
+        } 
+
+        $contest_data = queryContestData($contest);
+        genMoreContestInfo($contest);
+
+        calcStandings($contest, $contest_data, $score, $standings, true);
+        $rating = calcRating($standings, $contest);
+
+        $rank = 1;
+        foreach ($standings as $particular) {
+            $index = $rank - 1;
+            print("User {$particular[2][0]} rating {$rating[$index]}\n");
+            DB::update($sql="update user_info SET rating = {$rating[$index]} where username = '{$particular[2][0]}'");
+            $rank += 1;
+        }
     }
 }

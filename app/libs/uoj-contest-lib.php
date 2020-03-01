@@ -5,6 +5,7 @@ define("CONTEST_PENDING_FINAL_TEST", 2);
 define("CONTEST_TESTING", 10);
 define("CONTEST_FINISHED", 20);	
 
+/*
 function calcRating($standings, $K = 400) {
 	$DELTA = 500;
 
@@ -95,7 +96,7 @@ function calcRatingSelfTest() {
 		print "\n";
 	}
 }
-
+*/
 function genMoreContestInfo(&$contest) {
 	$contest['start_time_str'] = $contest['start_time'];
 	$contest['start_time'] = new DateTime($contest['start_time']);
@@ -171,7 +172,7 @@ function queryContestData($contest, $config = array()) {
 		}
 	}
 	$people = [];
-	$result = DB::query("select username, user_rating, realname from contests_registrants where contest_id = {$contest['id']} and has_participated = 1");
+	$result = DB::query("select username, user_rating, average_performance, realname from contests_registrants where contest_id = {$contest['id']} and has_participated = 1");
 	while ($row = DB::fetch($result, MYSQLI_NUM)) {
 		$row[1] = (int)$row[1];
 		$people[] = $row;

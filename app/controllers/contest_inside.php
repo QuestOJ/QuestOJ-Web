@@ -1,6 +1,7 @@
 <?php
 	requirePHPLib('form');
-	
+	requirePHPLib('rating');
+
 	if (!validateUInt($_GET['id']) || !($contest = queryContest($_GET['id']))) {
 		become404Page();
 	}
@@ -122,7 +123,7 @@
 				calcStandings($contest, $contest_data, $score, $standings, true);
 				if (!isset($contest['extra_config']['unrated'])) {
 					$rating_k = isset($contest['extra_config']['rating_k']) ? $contest['extra_config']['rating_k'] : 400;
-					$ratings = calcRating($standings, $rating_k);
+					$ratings = calcRating($standings, $contest);
 				} else {
 					$ratings = array();
 					for ($i = 0; $i < count($standings); $i++) {
