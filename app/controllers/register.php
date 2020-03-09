@@ -94,8 +94,8 @@
 	</div>
 
 	<?php if (UOJConfig::$data['security']['captcha']['available']): ?>
-		<div id="div-password" class="form-group">
-			<label for="input-password" class="col-sm-2 control-label"><?= UOJLocale::get('captcha') ?></label>
+		<div id="div-recaptcha" class="form-group">
+			<label for="input-recaptcha" class="col-sm-2 control-label"><?= UOJLocale::get('captcha') ?></label>
 			<div class="g-recaptcha col-sm-3" data-sitekey="<?= UOJConfig::$data['security']['captcha']['site-key'] ?>"></div>
 		</div>
 	<?php endif ?>

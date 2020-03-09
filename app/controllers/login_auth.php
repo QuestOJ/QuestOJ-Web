@@ -50,6 +50,9 @@ EOD;
 		if (!crsf_check()) {
 			return 'expired';
 		}
+		if (!captcha_check()) {
+			return 'recaptcha';
+		}
 		if (!isset($_POST['realname'])) {
 			return "failed";
 		}
@@ -70,8 +73,8 @@ EOD;
 			return "failed";
 		}
 
-                $esc_realname = DB::escape($realname);
-                DB::update("update user_info set realname = '$esc_realname' where username = '{$myUser['username']}'");
+        $esc_realname = DB::escape($realname);
+        DB::update("update user_info set realname = '$esc_realname' where username = '{$myUser['username']}'");
 		DB::update("update user_info set verify='1' where username = '{$myUser['username']}'");
 		DB::update("update user_info set code = '' where username = '{$myUser['username']}'");
 		$_SESSION["verify"] = 1;	
@@ -104,6 +107,15 @@ EOD;
       <span class="help-block" id="help-code"></span>
     </div>
   </div>
+  <?php if (UOJConfig::$data['security']['captcha']['available']): ?>
+	<div id="div-recaptcha" class="form-group">
+		<label for="input-recaptcha" class="col-sm-2 control-label"><?= UOJLocale::get('captcha') ?></label>
+		<div class="g-recaptcha col-sm-3" data-sitekey="<?= UOJConfig::$data['security']['captcha']['site-key'] ?>"></div>
+		<div class="col-sm-3">
+			<span class="help-block" id="help-recaptcha"></span>
+		</div>
+	</div>
+  <?php endif ?>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-3">
       <button type="button" id="button-sendmail" class="btn btn-secondary">获取验证码</button>&nbsp;&nbsp;
@@ -161,7 +173,10 @@ function submitLoginPost() {
 		_token : "<?= crsf_token() ?>",
 		login : '',
 		realname : $('#input-realname').val(),
-		code : $('#input-code').val()
+		code : $('#input-code').val(),
+		<?php if (UOJConfig::$data['security']['captcha']['available']): ?>
+		recaptcha : grecaptcha.getResponse()
+		<?php endif ?>
 	}, function(msg) {
 		if (msg == 'ok') {
 			var prevUrl = document.referrer;
@@ -172,9 +187,21 @@ function submitLoginPost() {
 		} else if (msg == 'expired') {
 			$('#div-code').addClass('has-error');
 			$('#help-code').html('页面会话已过期。');
+			<?php if (UOJConfig::$data['security']['captcha']['available']): ?>
+			grecaptcha.reset();
+			<?php endif ?>
+		} else if (msg == 'recaptcha') {
+			$('#div-recaptcha').addClass('has-error');
+			$('#help-recaptcha').html('人机验证未通过。');
+			<?php if (UOJConfig::$data['security']['captcha']['available']): ?>
+			grecaptcha.reset();
+			<?php endif ?>			
 		} else {
 			$('#div-code').addClass('has-error');
 			$('#help-code').html('验证码错误。');
+			<?php if (UOJConfig::$data['security']['captcha']['available']): ?>
+			grecaptcha.reset();
+			<?php endif ?>
 		}
 	});
 	return true;
