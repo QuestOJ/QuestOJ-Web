@@ -135,7 +135,7 @@ var rating_data = [[
 		$last_rank = $row['rank'];
 		$last_rating = $row['user_rating'];
 		
-		if ($row['user_rating'] < $user_rating_min) {
+		if ($row['user_rating'] != 0 && $row['user_rating'] < $user_rating_min) {
 			$user_rating_min = $row['user_rating'];
 		}
 		if ($row['user_rating'] > $user_rating_max) {
