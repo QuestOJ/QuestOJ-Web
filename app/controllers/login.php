@@ -105,7 +105,7 @@ function submitLoginPost() {
 			};
 			window.location.href = prevUrl;
 		} else if (msg == 'verify') {
-			window.location.href = '/login/auth';
+			window.location.href = '/register/verify';
 		} else if (msg == 'banned') {
 			$('#div-username').addClass('has-error');
 			$('#help-username').html('该用户已被封停，请联系管理员。');

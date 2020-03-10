@@ -54,9 +54,9 @@ Route::group([
 		Route::any('/ranklist', '/ranklist.php?type=rating');
 		
 		Route::any('/login', '/login.php');
-		Route::any('/login/auth', '/login_auth.php');
 		Route::any('/logout', '/logout.php');
 		Route::any('/register', '/register.php');
+		Route::any('/register/verify', '/register_verify.php');
 		Route::any('/forgot-password', '/forgot_pw.php');
 		Route::any('/reset-password', '/reset_pw.php');
 		Route::any('/user/profile/{username}', '/user_info.php');
