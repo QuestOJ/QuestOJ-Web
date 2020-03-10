@@ -299,10 +299,12 @@ function validateMotto(str) {
 function validateRealname(str) {
 	if (str.length == 0) {
 		return '姓名不能为空。';
-	} else if ((! /^[\u4e00-\u9fa5]{1,6}(·[\u4e00-\u9fa5]{1,6}){0,2}([,，][\u4e00-\u9fa5]{1,6}(·[\u4e00-\u9fa5]{1,6}){0,2})*$/.test(str)) && (! /^[a-zA-Z0-9_]+$/.test(str))) {
-		return '姓名应只包含中英文和空格和间隔号。';
-	} else {
+	} else if (/^[\u4e00-\u9fa5]{1,6}(·[\u4e00-\u9fa5]{1,6}){0,2}([,，][\u4e00-\u9fa5]{1,6}(·[\u4e00-\u9fa5]{1,6}){0,2})*$/.test(str)) {
 		return '';
+	} else if (/^[a-zA-Z ]+$/.test(str)){
+		return '';
+	} else {
+		return '姓名应只包含中文和间隔号或英文和空格。'
 	}
 }
 function validateCode(str) {

@@ -24,7 +24,7 @@ function validatePassword($password) {
 }
 
 function validateRealname($realname) {
-	return is_string($realname) && (preg_match('/^[\x7f-\xff]+$/', $realname) || preg_match('/^[a-zA-Z0-9_]{1,20}$/', $realname));
+	return is_string($realname) && (preg_match('/^[\x7f-\xff]+$/', $realname) || preg_match('/^[a-zA-Z ]{1,20}$/', $realname));
 }
 
 function validateCode($code) {

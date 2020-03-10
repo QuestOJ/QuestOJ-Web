@@ -127,7 +127,7 @@ EOD;
 
 <script type="text/javascript">
 $('#button-sendmail').click(function(){
-	$.post('/login/auth', {
+	$.post('/register/verify', {
 		sendmail : ''
 	}, function(res) {
 		if (res == "good") {
@@ -170,7 +170,7 @@ function submitLoginPost() {
 		return false;
 	}
 	
-	$.post('/login/auth', {
+	$.post('/register/verify', {
 		_token : "<?= crsf_token() ?>",
 		login : '',
 		realname : $('#input-realname').val(),
