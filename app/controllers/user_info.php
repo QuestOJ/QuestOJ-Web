@@ -158,6 +158,10 @@ var rating_data = [[
 		
 	$user_rating_min -= 400;
 	$user_rating_max += 400;
+
+	if ($user_rating_min < -10) {
+		$user_rating_min = -10;
+	}
 ?>
 ]];
 var rating_plot = $.plot($("#rating-plot"), [{
