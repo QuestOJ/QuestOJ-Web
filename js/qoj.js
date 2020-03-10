@@ -108,6 +108,34 @@ function htmlspecialchars(str)
 	return s;
 }
 
+function getUserColorClass(rating) {
+	if (rating >= 2400) {
+		return 'user-red';
+	}
+	if (rating >= 2100) {
+		return 'user-orange';
+	}
+	if (rating >= 1800) {
+		return 'user-violet';
+	}
+	if (rating >= 1500) {
+		return 'user-blue';
+	}
+	if (rating >= 1200) {
+		return 'user-cyan';
+	}
+	if (rating >= 800) {
+		return 'user-green';
+	}
+	if (rating == 0) {
+		return 'user-black';
+	}
+	if (rating >= 400) {
+		return 'user-brown';
+	}
+	return 'user-gray';
+}
+
 function getColOfRating(rating) {
 	if (rating >= 2400) {
 		return 'rgb(255, 0, 0)';
@@ -156,34 +184,8 @@ function getUserLink(username, rating, addSymbol) {
 	if (username.charAt(0) == '@') {
 		username = username.substr(1);
 	}
-	
-	var userColor = 'user-gray';
-	if (rating >= 400) {
-		userColor = 'user-brown';
-	}
-	if (rating >= 800) {
-		userColor = 'user-green';
-	}
-	if (rating >= 1200) {
-		userColor = 'user-cyan';
-	}
-	if (rating >= 1500) {
-		userColor = 'user-blue';
-	}
-	if (rating >= 1800) {
-		userColor = 'user-violet';
-	}
-	if (rating >= 2100) {
-		userColor = 'user-orange';
-	}
-	if (rating >= 2400) {
-		userColor = 'user-red';
-	}
-	if (rating == 0) {
-		userColor = 'user-black';
-	}
 
-	return '<a class="uoj-username ' + userColor +'" href="' + uojHome + '/user/profile/' + username + '">' + text + '</a>';
+	return '<a class="uoj-username ' + getUserColorClass(rating) +'" href="' + uojHome + '/user/profile/' + username + '">' + text + '</a>';
 }
 function getUserSpan(username, rating, addSymbol) {
 	if (!username) {
@@ -196,7 +198,7 @@ function getUserSpan(username, rating, addSymbol) {
 	if (username.charAt(0) == '@') {
 		username = username.substr(1);
 	}
-	return '<span class="uoj-username" style="color:' + getColOfRating(rating) + '">' + text + '</span>';
+	return '<span class="uoj-username ' + getUserColorClass(rating) +'">' + text + '</span>';
 }
 
 function replaceWithHighlightUsername() {
@@ -218,33 +220,7 @@ $.fn.uoj_honor = function() {
 		if (isNaN(rating)) {
 			return;
 		}
-		var userColor = 'user-gray';
-		if (rating >= 400) {
-			userColor = 'user-brown';
-		}
-		if (rating >= 800) {
-			userColor = 'user-green';
-		}
-		if (rating >= 1200) {
-			userColor = 'user-cyan';
-		}
-		if (rating >= 1500) {
-			userColor = 'user-blue';
-		}
-		if (rating >= 1800) {
-			userColor = 'user-violet';
-		}
-		if (rating >= 2100) {
-			userColor = 'user-orange';
-		}
-		if (rating >= 2400) {
-			userColor = 'user-red';
-		}
-		if (rating == 0) {
-			userColor = 'user-black';
-		}
-
-		$(this).addClass(userColor);
+		$(this).addClass(getUserColorClass(rating));
 	});
 }
 

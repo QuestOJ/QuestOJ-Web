@@ -89,6 +89,7 @@ EOD;
 <?php
 	$REQUIRE_LIB['md5'] = '';
 	$REQUIRE_LIB['dialog'] = '';
+	$REQUIRE_LIB['recaptcha'] = '';
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('email auth')) ?>
 <h2 class="page-header"><?= UOJLocale::get('email auth') ?></h2>

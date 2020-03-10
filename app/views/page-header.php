@@ -78,8 +78,8 @@
 		<!-- Color converter -->
 		<?= HTML::js_src('/js/color-converter.min.js') ?>
 		
-		<!-- uoj -->
-		<?= HTML::js_src('/js/qoj.js?v=2020.3.2') ?>
+		<!-- qoj -->
+		<?= HTML::js_src('/js/qoj.js?v=2020.3.10') ?>
 		
 		<!-- readmore -->
 		<?= HTML::js_src('/js/readmore/readmore.min.js') ?>
@@ -87,8 +87,6 @@
 		<!-- LAB -->
 		<?= HTML::js_src('/js/LAB.min.js') ?>
 		
-		<!-- reCAPTCHA -->
-		<script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
 
 		<!-- favicon -->
 		<link rel="shortcut icon" href="<?= HTML::url('/pictures/favicon.ico') ?>" />
@@ -205,6 +203,11 @@
 		<?php if (isset($REQUIRE_LIB['ckeditor'])): ?>
 		<!-- ckeditor -->
 		<?= HTML::js_src('/js/ckeditor/ckeditor.js') ?>
+		<?php endif ?>
+
+		<?php if (isset($REQUIRE_LIB['recaptcha'])): ?>
+		<!-- reCAPTCHA -->
+		<script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
 		<?php endif ?>
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
