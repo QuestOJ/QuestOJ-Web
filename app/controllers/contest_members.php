@@ -37,7 +37,7 @@
 			};
 			$pre_rating_form->submit_button_config['align'] = 'right';
 			$pre_rating_form->submit_button_config['class_str'] = 'btn btn-warning';
-			$pre_rating_form->submit_button_config['text'] = '重新计算参赛前的 rating';
+			$pre_rating_form->submit_button_config['text'] = '更新参赛前的 rating';
 			$pre_rating_form->submit_button_config['smart_confirm'] = '';
 			
 			$pre_rating_form->runAtServer();
