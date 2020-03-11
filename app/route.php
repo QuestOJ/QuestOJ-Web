@@ -61,7 +61,7 @@ Route::group([
 		Route::any('/register/verify', '/register_verify.php');
 		Route::any('/forgot-password', '/forgot_pw.php');
 		Route::any('/reset-password', '/reset_pw.php');
-		Route::any('/user/contest/{username}', '/user_contest.php');
+		Route::any('/user/contests/{username}', '/user_contests.php');
 		Route::any('/user/profile/{username}', '/user_info.php');
 		Route::any('/user/modify-profile', '/change_user_info.php');
 		Route::any('/user/msg', '/user_msg.php');

@@ -83,7 +83,7 @@
 			
 			<a type="button" class="btn btn-success btn-sm" href="<?= HTML::blog_url($user['username'], '/') ?>"><span class="glyphicon glyphicon-arrow-right"></span> <?= UOJLocale::get('visit his blog', $username) ?></a>
 			
-			<a type="button" class="btn btn-success btn-sm" href="/user/contest/<?= $user['username'] ?>"><span class="glyphicon glyphicon-search"></span> <?= UOJLocale::get('view contests history') ?></a>
+			<a type="button" class="btn btn-success btn-sm" href="/user/contests/<?= $user['username'] ?>"><span class="glyphicon glyphicon-search"></span> <?= UOJLocale::get('view contests history') ?></a>
 
 			<div class="top-buffer-lg"></div>
 			<div class="list-group">
