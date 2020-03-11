@@ -38,9 +38,11 @@ Route::group([
 		Route::any('/submission/custom/{id}', '/submission_custom.php');
 		Route::any('/submission-status-details', '/submission_status_details.php');
 		
-		Route::any('/hacks', '/hack_list.php');
-		Route::any('/hack/{id}', '/hack.php');
-		
+		if (!UOJConfig::$data['switch']['disable-hack']) {
+			Route::any('/hacks', '/hack_list.php');
+			Route::any('/hack/{id}', '/hack.php');
+		}
+
 		Route::any('/blogs', '/blogs.php');
 		if (UOJConfig::$data['switch']['blog-domain-mode'] != 3) {
 			Route::any('/blog/{id}', '/blog_show.php');

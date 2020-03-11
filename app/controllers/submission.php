@@ -30,40 +30,42 @@
 		die();
 	}
 	
-	$hackable = $submission['score'] == 100 && $problem['hackable'] == 1;
-	if ($hackable) {
-		$hack_form = new UOJForm('hack');	
-		
-		$hack_form->addTextFileInput('input', '输入数据');
-		$hack_form->addCheckBox('use_formatter', '帮我整理文末回车、行末空格、换行符', true);
-		$hack_form->handle = function(&$vdata) {
-			global $myUser, $problem, $submission;
-			if ($myUser == null) {
-				redirectToLogin();
-			}
+	if (!UOJConfig::$data['switch']['disable-hack']) {
+		$hackable = $submission['score'] == 100 && $problem['hackable'] == 1;
+		if ($hackable) {
+			$hack_form = new UOJForm('hack');	
 			
-			if ($_POST["input_upload_type"] == 'file') {
-				$tmp_name = UOJForm::uploadedFileTmpName("input_file");
-				if ($tmp_name == null) {
-					becomeMsgPage('你在干啥……怎么什么都没交过来……？');
+			$hack_form->addTextFileInput('input', '输入数据');
+			$hack_form->addCheckBox('use_formatter', '帮我整理文末回车、行末空格、换行符', true);
+			$hack_form->handle = function(&$vdata) {
+				global $myUser, $problem, $submission;
+				if ($myUser == null) {
+					redirectToLogin();
 				}
-			}
+				
+				if ($_POST["input_upload_type"] == 'file') {
+					$tmp_name = UOJForm::uploadedFileTmpName("input_file");
+					if ($tmp_name == null) {
+						becomeMsgPage('你在干啥……怎么什么都没交过来……？');
+					}
+				}
+				
+				$fileName = uojRandAvaiableTmpFileName();
+				$fileFullName = UOJContext::storagePath().$fileName;
+				if ($_POST["input_upload_type"] == 'editor') {
+					file_put_contents($fileFullName, $_POST['input_editor']);
+				} else {
+					move_uploaded_file($_FILES["input_file"]['tmp_name'], $fileFullName);
+				}
+				$input_type = isset($_POST['use_formatter']) ? "USE_FORMATTER" : "DONT_USE_FORMATTER";
+				DB::insert("insert into hacks (problem_id, submission_id, hacker, owner, input, input_type, submit_time, details, is_hidden) values ({$problem['id']}, {$submission['id']}, '{$myUser['username']}', '{$submission['submitter']}', '$fileName', '$input_type', now(), '', {$problem['is_hidden']})");
+			};
+			$hack_form->succ_href = "/hacks";
 			
-			$fileName = uojRandAvaiableTmpFileName();
-			$fileFullName = UOJContext::storagePath().$fileName;
-			if ($_POST["input_upload_type"] == 'editor') {
-				file_put_contents($fileFullName, $_POST['input_editor']);
-			} else {
-				move_uploaded_file($_FILES["input_file"]['tmp_name'], $fileFullName);
-			}
-			$input_type = isset($_POST['use_formatter']) ? "USE_FORMATTER" : "DONT_USE_FORMATTER";
-			DB::insert("insert into hacks (problem_id, submission_id, hacker, owner, input, input_type, submit_time, details, is_hidden) values ({$problem['id']}, {$submission['id']}, '{$myUser['username']}', '{$submission['submitter']}', '$fileName', '$input_type', now(), '', {$problem['is_hidden']})");
-		};
-		$hack_form->succ_href = "/hacks";
-		
-		$hack_form->runAtServer();
+			$hack_form->runAtServer();
+		}
 	}
-
+	
 	if ($submission['status'] == 'Judged' && hasProblemPermission($myUser, $problem)) {
 		$rejudge_form = new UOJForm('rejudge');
 		$rejudge_form->handle = function() {
