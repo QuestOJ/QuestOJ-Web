@@ -11,6 +11,9 @@ return [
 	'system message' => '系统消息',
 	'system manage' => '系统管理',
 	'contests' => '比赛',
+	'contests history' => '比赛历史',
+	'rank' => '排名',
+	'performance' => '表现',
 	'problems' => '题库',
 	'submissions' => '提交记录',
 	'hacks' => 'Hack!',
@@ -50,6 +53,8 @@ return [
 	'visit his blog' => function($name) {
 		return "访问 $name 的博客";
 	},
+	'view contests history' => '查看比赛历史',
+	'new rating' => '新 Rating',
 	'rating changes' => 'Rating 变化',
 	'accepted problems' => 'AC 过的题目',
 	'n problems in total' => function($n) {

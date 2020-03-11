@@ -69,10 +69,6 @@
 							<h4 class="list-group-item-heading">remote_addr</h4>
 							<p class="list-group-item-text"><?= $user['remote_addr'] ?></p>
 						</div>
-						<div class="list-group-item qoj-profile-item">
-							<h4 class="list-group-item-heading">http_x_forwarded_for</h4>
-							<p class="list-group-item-text"><?= $user['http_x_forwarded_for'] ?></p>
-						</div>
 						<?php endif ?>
 					</div>
 				</div>
@@ -87,6 +83,8 @@
 			
 			<a type="button" class="btn btn-success btn-sm" href="<?= HTML::blog_url($user['username'], '/') ?>"><span class="glyphicon glyphicon-arrow-right"></span> <?= UOJLocale::get('visit his blog', $username) ?></a>
 			
+			<a type="button" class="btn btn-success btn-sm" href="/user/contest/<?= $user['username'] ?>"><span class="glyphicon glyphicon-search"></span> <?= UOJLocale::get('view contests history') ?></a>
+
 			<div class="top-buffer-lg"></div>
 			<div class="list-group">
 				<div class="list-group-item qoj-profile-item">

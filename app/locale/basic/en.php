@@ -11,6 +11,9 @@ return [
 	'system message' => 'System Message',
 	'system manage' => 'System Manage',
 	'contests' => 'Contests',
+	'contests history' => 'Contests History',
+	'rank' => 'Rank',
+	'performance' => 'Performance',
 	'problems' => 'Problems',
 	'submissions' => 'Submissions',
 	'hacks' => 'Hack!',
@@ -50,6 +53,8 @@ return [
 	'visit his blog' => function($name) {
 		return "Visit $name's blog";
 	},
+	'view contests history' => 'View Contests History',
+	'new rating' => 'New Rating',
 	'rating changes' => 'Rating changes',
 	'accepted problems' => 'Accepted problems',
 	'n problems in total' => function($n) {

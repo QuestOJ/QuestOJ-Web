@@ -119,3 +119,17 @@ function calcRating($standings, $contests){
 
     return $rating;
 }
+
+function calcRatingGroup($rating) {
+    switch ($rating) {
+        case $rating >= 2400: return 1;
+        case $rating >= 2000: return 2;
+        case $rating >= 1800: return 3;
+        case $rating >= 1500: return 4;
+        case $rating >= 1200: return 5;
+        case $rating >= 800: return 6;
+        case $rating >= 400: return 7;
+        case $rating > 0: return 8;
+        default: return 9; 
+    }
+}
