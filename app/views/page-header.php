@@ -86,7 +86,6 @@
 		
 		<!-- LAB -->
 		<?= HTML::js_src('/js/LAB.min.js') ?>
-		
 
 		<!-- favicon -->
 		<link rel="shortcut icon" href="<?= HTML::url('/pictures/favicon.ico') ?>" />
@@ -226,7 +225,14 @@
 		</script>
 		
 		<?php if (UOJConfig::$data['switch']['web-analytics']): ?>
-		<script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?bbd5ae87bf89e087603a1988103688ff";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm, s);})();</script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=<?= UOJConfig::$data['switch']['web-analytics'] ?>"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', '<?= UOJConfig::$data['switch']['web-analytics'] ?>');
+		</script>
 		<?php endif ?>
 	</head>
 	<body role="document">
