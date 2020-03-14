@@ -2,10 +2,10 @@
 return [
 	'manage_platform' => '',
 	'profile' => [
-		'oj-name'  => 'Universal Online Judge',
-		'oj-name-short' => 'UOJ',
+		'oj-name'  => 'Quest Online Judge',
+		'oj-name-short' => 'QOJ',
 		'administrator' => 'root',
-		'admin-email' => 'admin@local_uoj.ac',
+		'admin-email' => 'postmaster@questoj.cn',
 		'QQ-group' => '',
 		'ICP-license' => ''
 	],
@@ -19,12 +19,12 @@ return [
 		'domain' => null,
 		'main' => [
 			'protocol' => 'http',
-			'host' => UOJContext::httpHost(),
+			'host' => '_httpHost_',
 			'port' => 80
 		],
 		'blog' => [
 			'protocol' => 'http',
-			'host' => UOJContext::httpHost(),
+			'host' => '_httpHost_',
 			'port' => 80
 		]
 	],
