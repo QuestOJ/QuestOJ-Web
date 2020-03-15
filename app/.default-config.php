@@ -57,7 +57,6 @@ return [
 		]
 	],
 	'switch' => [
-		'web-analytics' => false,
 		'disable-hack' => false,
 		'blog-domain-mode' => 3
 	]

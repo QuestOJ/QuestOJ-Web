@@ -224,14 +224,14 @@
 		});
 		</script>
 		
-		<?php if (UOJConfig::$data['switch']['web-analytics']): ?>
+		<?php if (UOJConfig::$data['web-analytics']): ?>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=<?= UOJConfig::$data['switch']['web-analytics'] ?>"></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=<?= UOJConfig::$data['web-analytics'] ?>"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
 			gtag('js', new Date());
-			gtag('config', '<?= UOJConfig::$data['switch']['web-analytics'] ?>');
+			gtag('config', '<?= UOJConfig::$data['web-analytics'] ?>');
 		</script>
 		<?php endif ?>
 	</head>
