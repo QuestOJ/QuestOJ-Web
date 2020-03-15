@@ -168,6 +168,7 @@ class Tools {
 
         for ($i = 0; $i < count($contests); $i++) {
             Tools::calc($contests[$i]["id"]);
+            sleep(1.5);
         }
     }
 }
