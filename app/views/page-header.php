@@ -79,7 +79,7 @@
 		<?= HTML::js_src('/js/color-converter.min.js') ?>
 		
 		<!-- qoj -->
-		<?= HTML::js_src('/js/qoj.js?v=2020.3.10') ?>
+		<?= HTML::js_src('/js/qoj.js?v=2020.3.15') ?>
 		
 		<!-- readmore -->
 		<?= HTML::js_src('/js/readmore/readmore.min.js') ?>

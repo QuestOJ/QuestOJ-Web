@@ -115,7 +115,7 @@ var rating_data = [[
 <?php
 	$user_rating_min = 10000;
 	$user_rating_max = 0;
-	$result = DB::query("select contest_id, rank, user_rating from contests_registrants where username = '{$user['username']}' and has_participated = 1 order by contest_id");
+	$result = DB::query("select contests_registrants.contest_id, contests_registrants.rank, contests_registrants.user_rating, contests_history.calc_time from contests_registrants, contests_history where contests_registrants.username = '{$user['username']}' and contests_registrants.has_participated = 1 and contests_registrants.username = contests_history.username and contests_registrants.contest_id=contests_history.contest_id order by contests_history.calc_time, contests_registrants.contest_id");
 	$is_first_row = true;
 	$last_rating = 0;
 	while ($row = DB::fetch($result)) {

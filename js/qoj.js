@@ -109,53 +109,53 @@ function htmlspecialchars(str)
 }
 
 function getUserColorClass(rating) {
-	if (rating >= 2400) {
+	if (rating >= 2100) {
 		return 'user-red';
 	}
-	if (rating >= 2100) {
+	if (rating >= 1800) {
 		return 'user-orange';
 	}
-	if (rating >= 1800) {
+	if (rating >= 1500) {
 		return 'user-violet';
 	}
-	if (rating >= 1500) {
+	if (rating >= 1250) {
 		return 'user-blue';
 	}
-	if (rating >= 1200) {
+	if (rating >= 1000) {
 		return 'user-cyan';
 	}
-	if (rating >= 800) {
+	if (rating >= 600) {
 		return 'user-green';
+	}
+	if (rating >= 200) {
+		return 'user-brown';
 	}
 	if (rating == 0) {
 		return 'user-black';
-	}
-	if (rating >= 400) {
-		return 'user-brown';
 	}
 	return 'user-gray';
 }
 
 function getColOfRating(rating) {
-	if (rating >= 2400) {
+	if (rating >= 2100) {
 		return 'rgb(255, 0, 0)';
 	}
-	if (rating >= 2100) {
+	if (rating >= 1800) {
 		return 'rgb(255, 204, 136)';
 	}
-	if (rating >= 1800) {
+	if (rating >= 1500) {
 		return 'rgb(255, 136, 255)';
 	}
-	if (rating >= 1500) {
+	if (rating >= 1250) {
 		return 'rgb(170, 170, 255)';
 	}
-	if (rating >= 1200) {
+	if (rating >= 1000) {
 		return 'rgb(119, 221, 187)';
 	}
-	if (rating >= 800) {
+	if (rating >= 600) {
 		return 'rgb(119, 255, 119)';
 	}
-	if (rating >= 400) {
+	if (rating >= 200) {
 		return 'rgb(217, 197, 178)';
 	}
 	if (rating == 0) {

@@ -85,6 +85,14 @@ $handlers = [
 		Tools::calc($id);
 		die("finished!\n");
 	},
+	'tools:calcAll' => function () {
+		if (func_num_args() != 0) {
+			die("php cli.php tools:calcAll\n");
+		}
+		
+		Tools::calcAll();
+		die("finished!\n");
+	},
 	'help' => 'showHelp'
 ];
 

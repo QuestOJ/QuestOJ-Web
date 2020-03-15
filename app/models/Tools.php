@@ -159,4 +159,15 @@ class Tools {
             $rank += 1;
         }
     }
+
+    public static function calcAll() {
+        DB::query("TRUNCATE `contests_history`");
+        DB::query("UPDATE `user_info` SET rating = 0, performance = -1");
+
+        $contests = DB::selectAll("select id from contests where status = 'finished' order by start_time, id");
+
+        for ($i = 0; $i < count($contests); $i++) {
+            Tools::calc($contests[$i]["id"]);
+        }
+    }
 }

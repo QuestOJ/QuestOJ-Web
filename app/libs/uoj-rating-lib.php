@@ -56,7 +56,7 @@ function calcPerformance($standings, $contests) {
         $singlePerformance = calcSinglePerformance($particular[3], $rankArray[$particular[3]], $standings);
 
         if ($particular[2][4]) {
-            $singlePerformance = ($singlePerformance - $base_performance) * 1.5 + $base_performance;
+            $singlePerformance = ($singlePerformance - $base_performance) * 1.7 + $base_performance;
         }
 
         $singlePerformance = min($singlePerformance, $rated_bound + 400);
@@ -85,7 +85,7 @@ function calcRating($standings, $contests){
     $baseINF = calcF(1000);
 
     foreach ($standings as $particular) {
-        $contests_history = DB::selectAll("select * from contests_history where username = '{$particular[2][0]}' order by contest_id desc");
+        $contests_history = DB::selectAll("select * from contests_history where username = '{$particular[2][0]}' order by calc_time desc, contest_id desc");
 
         $denominator = pow(0.9, 1);
         $averagePerformance = $performance[$rank - 1] * pow(0.9, 1);
@@ -122,13 +122,13 @@ function calcRating($standings, $contests){
 
 function calcRatingGroup($rating) {
     switch ($rating) {
-        case $rating >= 2400: return 1;
-        case $rating >= 2000: return 2;
-        case $rating >= 1800: return 3;
-        case $rating >= 1500: return 4;
-        case $rating >= 1200: return 5;
-        case $rating >= 800: return 6;
-        case $rating >= 400: return 7;
+        case $rating >= 2100: return 1;
+        case $rating >= 1800: return 2;
+        case $rating >= 1500: return 3;
+        case $rating >= 1250: return 4;
+        case $rating >= 1000: return 5;
+        case $rating >= 600: return 6;
+        case $rating >= 200: return 7;
         case $rating > 0: return 8;
         default: return 9; 
     }
