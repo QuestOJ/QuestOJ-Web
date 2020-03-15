@@ -435,12 +435,12 @@ EOD
 					$data_disp->addDisplayer('checker', $getDisplaySrcFunc('chk'));
 				}
 			}
-			if (!UOJConfig::$data['switch']['disable-hack']) {
-				if ($problem['hackable']) {
-					$data_disp->addDisplayer('standard', $getDisplaySrcFunc('std'));
-					$data_disp->addDisplayer('validator', $getDisplaySrcFunc('val'));
-				}
+
+			if ($problem['hackable']) {
+				$data_disp->addDisplayer('standard', $getDisplaySrcFunc('std'));
+				$data_disp->addDisplayer('validator', $getDisplaySrcFunc('val'));
 			}
+			
 			if (isset($problem_conf['interaction_mode'])) {
 				$data_disp->addDisplayer('interactor', $getDisplaySrcFunc('interactor'));
 			}
@@ -468,24 +468,23 @@ EOD
 		die();
 	}
 
-	if (!UOJConfig::$data['switch']['disable-hack']) {
-		$hackable_form = new UOJForm('hackable');
-		$hackable_form->handle = function() {
-			global $problem;
-			$problem['hackable'] = !$problem['hackable'];
-			//$problem['hackable'] = 0;
-			$ret = dataSyncProblemData($problem);
-			if ($ret) {
-				becomeMsgPage('<div>' . $ret . '</div><a href="/problem/'.$problem['id'].'/manage/data">返回</a>');
-			}
-			
-			$hackable = $problem['hackable'] ? 1 : 0;
-			DB::query("update problems set hackable = $hackable where id = ${problem['id']}");
-		};
-		$hackable_form->submit_button_config['class_str'] = 'btn btn-warning btn-block';
-		$hackable_form->submit_button_config['text'] = $problem['hackable'] ? '禁止使用hack' : '允许使用hack';
-		$hackable_form->submit_button_config['smart_confirm'] = '';
-	}
+	$hackable_form = new UOJForm('hackable');
+	$hackable_form->handle = function() {
+		global $problem;
+		$problem['hackable'] = !$problem['hackable'];
+		//$problem['hackable'] = 0;
+		$ret = dataSyncProblemData($problem);
+		if ($ret) {
+			becomeMsgPage('<div>' . $ret . '</div><a href="/problem/'.$problem['id'].'/manage/data">返回</a>');
+		}
+		
+		$hackable = $problem['hackable'] ? 1 : 0;
+		DB::query("update problems set hackable = $hackable where id = ${problem['id']}");
+	};
+	$hackable_form->submit_button_config['class_str'] = 'btn btn-warning btn-block';
+	$hackable_form->submit_button_config['text'] = $problem['hackable'] ? '禁止使用hack' : '允许使用hack';
+	$hackable_form->submit_button_config['smart_confirm'] = '';
+	
 
 	$data_form = new UOJForm('data');
 	$data_form->handle = function() {
@@ -621,10 +620,8 @@ EOD
 		$test_std_form->runAtServer();
 	}
 	
-	if (!UOJConfig::$data['switch']['disable-hack']) {
-		$hackable_form->runAtServer();
-	}
 
+	$hackable_form->runAtServer();
 	$view_type_form->runAtServer();
 	$data_form->runAtServer();
 	$clear_data_form->runAtServer();
@@ -682,7 +679,6 @@ EOD
 		</div>
 	</div>
 	<div class="col-md-2 top-buffer-sm">
-		<?php if (!UOJConfig::$data['switch']['disable-hack']) : ?>
 		<div class="top-buffer-md">
 			<?php if ($problem['hackable']): ?>
 				<span class="glyphicon glyphicon-ok"></span> hack功能已启用
@@ -691,7 +687,6 @@ EOD
 			<?php endif ?>
 			<?php $hackable_form->printHTML() ?>
 		</div>
-		<?php endif ?>
 		<div class="top-buffer-md">
 		<?php if ($problem['hackable']): ?>
 			<?php $test_std_form->printHTML() ?>
