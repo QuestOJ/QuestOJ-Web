@@ -56,7 +56,7 @@ function calcPerformance($standings, $contests) {
         $singlePerformance = calcSinglePerformance($particular[3], $rankArray[$particular[3]], $standings);
 
         if ($particular[2][4]) {
-            $singlePerformance = ($singlePerformance - $base_performance) * 1.7 + $base_performance;
+            $singlePerformance = ($singlePerformance - $base_performance) * 1.75 + $base_performance;
         }
 
         $singlePerformance = min($singlePerformance, $rated_bound + 400);
@@ -101,12 +101,12 @@ function calcRating($standings, $contests){
         $singleRating = $singleRating / $denominator;
         $singleRating = log($singleRating, 2) * 800;
 
-        $roundMinus = ((calcF(count($contests_history)+1)-$baseINF) / (calcF(1)-$baseINF)) * 800;
+        $roundMinus = ((calcF(count($contests_history)+1)-$baseINF) / (calcF(1)-$baseINF)) * 1200;
 
         $singleRating = $singleRating - $roundMinus;
         
-        if ($singleRating < 100) {
-            $singleRating = pow(1.005, $singleRating - 241.49) / log(1.005, exp(1)) + 1;
+        if ($singleRating < 200) {
+            $singleRating = pow(1.003, $singleRating - 372.71) / log(1.003, exp(1)) + 1;
         }
 
 
