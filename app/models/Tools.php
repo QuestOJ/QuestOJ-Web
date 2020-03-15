@@ -161,14 +161,40 @@ class Tools {
     }
 
     public static function calcAll() {
+        Tools::lockService();
+
         DB::query("TRUNCATE `contests_history`");
         DB::query("UPDATE `user_info` SET rating = 0, performance = -1");
 
         $contests = DB::selectAll("select id from contests where status = 'finished' order by start_time, id");
+        $userOld = DB::selectAll("select username, rating from user_info");
 
         for ($i = 0; $i < count($contests); $i++) {
             Tools::calc($contests[$i]["id"]);
             sleep(1.5);
         }
+
+        $userNew = DB::selectAll("select username, rating from user_info");
+
+        for ($i = 0; $i < count($userOld); $i++) {
+            $change = $userNew[$i]['rating'] - $userOld[$i]['rating'];
+            $user_link = getUserLink($userNew[$i]['username']);
+
+            if ($change != 0) {
+                $tail = '<strong style="color:red">' . ($change > 0 ? '+' : '') . $change . '</strong>';
+                $content = <<<EOD
+<p>${user_link} 您好：</p>
+<p class="indent2">经过重新计算后您的Rating变化为${tail}，当前Rating为 <strong style="color:red">{$userNew[$i]['rating']}</strong>。</p>
+EOD;
+            } else {
+                $content = <<<EOD
+<p>${user_link} 您好：</p>
+<p class="indent2">经过重新计算后您的Rating没有变化。当前Rating为 <strong style="color:red">{$userNew[$i]['rating']}</strong>。</p>
+EOD;
+            }
+            sendSystemMsg($userNew[$i]['username'], 'Rating变化通知', $content);
+        }
+
+    Tools::unlockService();
     }
 }

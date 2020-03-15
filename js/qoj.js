@@ -112,13 +112,13 @@ function getUserColorClass(rating) {
 	if (rating >= 2100) {
 		return 'user-red';
 	}
-	if (rating >= 1800) {
+	if (rating >= 1900) {
 		return 'user-orange';
 	}
-	if (rating >= 1500) {
+	if (rating >= 1600) {
 		return 'user-violet';
 	}
-	if (rating >= 1250) {
+	if (rating >= 1300) {
 		return 'user-blue';
 	}
 	if (rating >= 1000) {
@@ -137,16 +137,16 @@ function getUserColorClass(rating) {
 }
 
 function getColOfRating(rating) {
-	if (rating >= 2100) {
+	if (rating >= 2200) {
 		return 'rgb(255, 0, 0)';
 	}
-	if (rating >= 1800) {
+	if (rating >= 1900) {
 		return 'rgb(255, 204, 136)';
 	}
-	if (rating >= 1500) {
+	if (rating >= 1600) {
 		return 'rgb(255, 136, 255)';
 	}
-	if (rating >= 1250) {
+	if (rating >= 1300) {
 		return 'rgb(170, 170, 255)';
 	}
 	if (rating >= 1000) {
