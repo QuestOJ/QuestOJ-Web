@@ -111,7 +111,7 @@
 
 			$start_test_form->runAtServer();
 		}
-		if ($contest['cur_progress'] >= CONTEST_TESTING) {
+		if ($contest['cur_progress'] == CONTEST_TESTING) {
 			$publish_result_form = new UOJForm('publish_result');
 			$publish_result_form->handle = function() {
 				// time config
