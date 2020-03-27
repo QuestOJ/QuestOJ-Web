@@ -132,7 +132,7 @@
 			global $uojMainJudgerWorkPath;
 			
 			$include_path = "$uojMainJudgerWorkPath/include";
-			$cmd_prefix = "$uojMainJudgerWorkPath/run/run_program >{$this->prepare_dir}/run_makefile_result.txt --in=/dev/null --out=stderr --err={$this->prepare_dir}/makefile_result.txt --tl=10 --ml=512 --ol=64 --type=compiler --work-path={$this->prepare_dir}";
+			$cmd_prefix = "$uojMainJudgerWorkPath/run/run_program >{$this->prepare_dir}/run_makefile_result.txt --in=/dev/null --out=stderr --err={$this->prepare_dir}/makefile_result.txt --tl=10 --ml=512 --ol=64  --unsafe --type=compiler --work-path={$this->prepare_dir}";
 			exec("$cmd_prefix --add-readable-raw=$include_path/ /usr/bin/make INCLUDE_PATH=$include_path");
 			
 			$fp = fopen("{$this->prepare_dir}/run_makefile_result.txt", "r");
