@@ -37,6 +37,11 @@ class Auth {
 		}
 
 		$verify = DB::selectFirst("select verify from user_info where username = '$username'")['verify'];
+		
+		if (UOJConfig::$data['security']['register']['verify'] < 2) {
+			$verify = 1;
+		}
+		
 		$_SESSION['verify'] = $verify;
 
 		return $verify;

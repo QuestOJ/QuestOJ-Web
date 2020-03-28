@@ -257,7 +257,9 @@
 					<li class="nav-item" role="presentation"><a class="nav-link" href="<?= HTML::url('/logout?_token='.crsf_token()) ?>"><?= UOJLocale::get('logout') ?></a></li>
 				<?php else: ?>
 					<li class="nav-item" role="presentation"><a class="nav-link" href="<?= HTML::url('/login') ?>"><?= UOJLocale::get('login') ?></a></li>
-					<li class="nav-item" role="presentation"><a class="nav-link" href="<?= HTML::url('/register') ?>"><?= UOJLocale::get('register') ?></a></li>
+					<?php if (UOJConfig::$data['security']['register']['available']): ?> 
+						<li class="nav-item" role="presentation"><a class="nav-link" href="<?= HTML::url('/register') ?>"><?= UOJLocale::get('register') ?></a></li>
+					<?php endif ?>
 				<?php endif ?>
 				</ul>
 				<h1 class="d-none d-sm-block"><a href="<?= HTML::url('/') ?>"><img src="<?= HTML::url('/pictures/logo_small.png') ?>" alt="Logo" class="img-rounded" style="width:39px; height:39px;" /></a> <?= $PageMainTitle ?></h1>

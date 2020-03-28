@@ -1,4 +1,7 @@
 <?php
+	if (!UOJConfig::$data['security']['register']['available']) {
+		become403Page();
+	}
 
 	function handleRegisterPost() {
 		if (!crsf_check()) {

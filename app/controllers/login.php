@@ -33,7 +33,7 @@
 		}
 		
 		$verify = Auth::login($user['username']);
-		
+
 		if ($verify == 0) {
 			return "verify";
 		}

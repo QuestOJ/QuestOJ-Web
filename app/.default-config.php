@@ -39,6 +39,10 @@ return [
 			'available' => false,
 			'site-key' => '',
 			'secret-token' => ''
+		],
+		'register' => [
+			'available' => true,
+			'verify' => 1
 		]
 	],
 	'mail' => [
@@ -57,6 +61,7 @@ return [
 		]
 	],
 	'switch' => [
+		'web-analytics' => false,
 		'disable-hack' => false,
 		'blog-domain-mode' => 3
 	]
