@@ -53,18 +53,11 @@ EOD;
 		if (!captcha_check()) {
 			return 'recaptcha';
 		}
-		if (!isset($_POST['realname'])) {
-			return "failed";
-		}
 		if (!isset($_POST['code'])) {
 			return "failed";
 		}
-		$realname = $_POST['realname'];
 		$code = $_POST['code'];
 		
-		if (!validateRealname($realname)) {
-			return "failed";
-		}
 		if (!validateCode($code)) {
 			return "failed";
 		}
@@ -74,7 +67,6 @@ EOD;
 		}
 
         $esc_realname = DB::escape($realname);
-        DB::update("update user_info set realname = '$esc_realname' where username = '{$myUser['username']}'");
 		DB::update("update user_info set verify='1' where username = '{$myUser['username']}'");
 		DB::update("update user_info set code = '' where username = '{$myUser['username']}'");
 		$_SESSION["verify"] = 1;	
@@ -96,13 +88,6 @@ EOD;
 <?php echoUOJPageHeader(UOJLocale::get('email auth')) ?>
 <h2 class="page-header"><?= UOJLocale::get('email auth') ?></h2>
 <form id="form-login" class="form-horizontal" method="post">
-  <div id="div-realname" class="form-group">
-    <label for="input-realname" class="col-sm-2 control-label"><?= UOJLocale::get('realname') ?></label>
-    <div class="col-sm-3">
-      <input type="text" class="form-control" id="input-realname" name="realname" placeholder="<?= UOJLocale::get('enter your realname') ?>" maxlength="20" />
-      <span class="help-block" id="help-realname"></span>
-    </div>
-  </div>
   <div id="div-code" class="form-group">
     <label for="input-code" class="col-sm-2 control-label"><?= UOJLocale::get('verification code') ?></label>
     <div class="col-sm-3">
@@ -162,7 +147,6 @@ $('#button-sendmail').click(function(){
 
 function validateLoginPost() {
 	var ok = true;
-	ok &= getFormErrorAndShowHelp('realname', validateRealname);
 	ok &= getFormErrorAndShowHelp('code', validateCode);
 	return ok;
 }
@@ -175,7 +159,6 @@ function submitLoginPost() {
 	$.post('/register/verify', {
 		_token : "<?= crsf_token() ?>",
 		login : '',
-		realname : $('#input-realname').val(),
 		code : $('#input-code').val(),
 		<?php if (UOJConfig::$data['security']['captcha']['available']): ?>
 		recaptcha : grecaptcha.getResponse()

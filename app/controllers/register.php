@@ -16,10 +16,15 @@
 		if (!isset($_POST['email'])) {
 			return "无效表单";
 		}
+		if (!isset($_POST['realname'])) {
+			return "无效表单";
+		}
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 		$email = $_POST['email'];
 		$esc_email = DB::escape($email);
+		$realname = $_POST['realname'];
+		$esc_realname = DB::escape($realname);
 
 		if (!validateUsername($username)) {
 			return "失败：无效用户名。";
@@ -38,6 +43,10 @@
 		if (!validateEmail($email)) {
 			return "失败：无效电子邮箱。";
 		}
+		if (!validateRealname($realname)) {
+			return "失败：无效姓名。";
+		}
+
 		$password = getPasswordToStore($password, $username);
 		
 		$svn_pw = uojRandString(10);
@@ -95,7 +104,13 @@
 			<span class="help-block" id="help-password"></span>
 		</div>
 	</div>
-
+	<div id="div-realname" class="form-group">
+		<label for="input-realname" class="col-sm-2 control-label"><?= UOJLocale::get('realname') ?></label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" id="input-realname" name="realname" placeholder="<?= UOJLocale::get('enter your realname') ?>" maxlength="20" />
+			<span class="help-block" id="help-realname"></span>
+		</div>
+    </div>
 	<?php if (UOJConfig::$data['security']['captcha']['available']): ?>
 		<div id="div-recaptcha" class="form-group">
 			<label for="input-recaptcha" class="col-sm-2 control-label"><?= UOJLocale::get('captcha') ?></label>
@@ -136,6 +151,7 @@ function checkUsernameNotInUse() {
 function validateRegisterPost() {
 	var ok = true;
 	ok &= getFormErrorAndShowHelp('email', validateEmail);
+	ok &= getFormErrorAndShowHelp('realname', validateRealname);
 	ok &= getFormErrorAndShowHelp('username', function(str) {
 		var err = validateUsername(str);
 		if (err)
@@ -159,6 +175,7 @@ function submitRegisterPost() {
 		username : $('#input-username').val(),
 		email		: $('#input-email').val(),
 		password : md5($('#input-password').val(), "<?= getPasswordClientSalt() ?>"), 
+		realname : $('#input-realname').val(),
 		<?php if (UOJConfig::$data['security']['captcha']['available']): ?>
 		recaptcha : grecaptcha.getResponse()
 		<?php endif ?>
