@@ -1,13 +1,14 @@
 <?php
 return [
-	'manage_platform' => '',
+	'manage_platform' => 'http://127.0.0.2',
 	'profile' => [
 		'oj-name'  => 'Quest Online Judge',
 		'oj-name-short' => 'QOJ',
 		'administrator' => 'root',
 		'admin-email' => 'postmaster@questoj.cn',
 		'QQ-group' => '',
-		'ICP-license' => ''
+		'ICP-license' => '',
+		'docs-url' => ''
 	],
 	'database' => [
 		'database'  => 'app_uoj233',
