@@ -17,3 +17,4 @@
 - [Quest Online Judge Docs](https://docs.questoj.cn)
 - [QuestOJ Web src](https://github.com/QuestOJ/QuestOJ-Web)
 - [QuestOJ Manage Platform src](https://github.com/QuestOJ/QuestOJ-Manage)
+- [Server Manage Tools src](https://github.com/QuestOJ/Manage-Tools)
