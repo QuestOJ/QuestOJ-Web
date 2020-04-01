@@ -31,8 +31,18 @@ function hasViewPermission($str,$user,$problem,$submission) {
 	return false;
 }
 
+function hasRegistered($user, $contest) {
+	return DB::fetch(DB::query("select * from contests_registrants where username = '${user['username']}' and contest_id = ${contest['id']}")) != null;
+}
+function hasAC($user, $problem) {
+	return DB::fetch(DB::query("select * from best_ac_submissions where submitter = '${user['username']}' and problem_id = ${problem['id']}")) != null;
+}
+
 function hasContestPermission($user, $contest) {
 	if ($user == null) {
+		return false;
+	}
+	if (hasRegistered($user, $contest)) {
 		return false;
 	}
 	if (isSuperUser($user)) {
@@ -41,11 +51,33 @@ function hasContestPermission($user, $contest) {
 	return DB::selectFirst("select * from contests_permissions where username = '{$user['username']}' and contest_id = {$contest['id']}") != null;
 }
 
-function hasRegistered($user, $contest) {
-	return DB::fetch(DB::query("select * from contests_registrants where username = '${user['username']}' and contest_id = ${contest['id']}")) != null;
+function hasContestInProgess($user) {
+	$unfinished = DB::selectAll("select * from contests where status = 'unfinished'");
+	foreach ($unfinished as $contest){
+		genMoreContestInfo($contest);
+		if ($contest['cur_progress'] == CONTEST_IN_PROGRESS) {
+			if (hasRegistered($user, $contest['id'])) {
+				return true;
+			}
+		}
+	}	
+	return false;
+}
+function hasConflictWithRegistered($user, $contest) {
+	$contestStartTime = $contest["start_time"]->format('Y-m-d H:i:s');
+	$contestEndTime = $contest["end_time"]->format('Y-m-d H:i:s');
+	$unfinished = DB::selectAll("select * from contests where status = 'unfinished'");
+	foreach ($unfinished as $contest){
+			genMoreContestInfo($contest);
+			$thisContestStartTime = $contest["start_time"]->format('Y-m-d H:i:s');
+			$thisContestEndTime = $contest["end_time"]->format('Y-m-d H:i:s');
+			if ($thisContestStartTime < $contestEndTime && $thisContestEndTime > $contestStartTime) {
+					if (hasRegistered($user, $contest['id'])) {
+							return $contest['id'];
+					}
+			}
 	}
-function hasAC($user, $problem) {
-	return DB::fetch(DB::query("select * from best_ac_submissions where submitter = '${user['username']}' and problem_id = ${problem['id']}")) != null;
+	return -1;
 }
 
 function queryGroup($groupname){

@@ -130,7 +130,7 @@ function blog_name_decode($name) {
 }
 
 function isSuperUser($user) {
-	return $user != null && $user['usergroup'] == 'S';
+	return $user != null && $user['usergroup'] == 'S' && !hasContestInProgess($user);
 }
 function getProblemExtraConfig($problem) {
 	$extra_config = json_decode($problem['extra_config'], true);
