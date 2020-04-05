@@ -7,6 +7,9 @@ function hasProblemPermission($user, $problem) {
 	if (isSuperUser($user)) {
 		return true;
 	}
+	if (hasContestInProgess($user)) {
+		return false;
+	}
 	
 	return DB::selectFirst("select * from problems_permissions where username = '{$user['username']}' and problem_id = {$problem['id']}") != null;
 }
