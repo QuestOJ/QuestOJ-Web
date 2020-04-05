@@ -8,7 +8,7 @@ return [
 		'admin-email' => 'postmaster@questoj.cn',
 		'QQ-group' => '',
 		'ICP-license' => '',
-		'docs-url' => ''
+		'docs-url' => '/faq'
 	],
 	'database' => [
 		'database'  => 'app_uoj233',
