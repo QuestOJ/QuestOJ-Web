@@ -109,7 +109,7 @@ function htmlspecialchars(str)
 }
 
 function getUserColorClass(rating) {
-	if (rating >= 2100) {
+	if (rating >= 2200) {
 		return 'user-red';
 	}
 	if (rating >= 1900) {
