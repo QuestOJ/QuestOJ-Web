@@ -41,10 +41,10 @@
 			<h4><a data-toggle="collapse" href="#collapseThree">3. <?= UOJConfig::$data['profile']['oj-name-short'] ?>的测评环境？</a></h4>
 		</header>
 		<div id="collapseThree" class="collapse">
-			<p>默认的测评环境是 Ubuntu Linux 18.04 LTS x64。</p>
-			<p>C++的编译器是 g++ 7.5.0，编译命令：<code>g++ code.cpp -o code -lm -O2 -DONLINE_JUDGE</code>。如果选择C++1x会在编译命令后面添加<code>-std=c++1x</code>。</p>
-			<p>C的编译器是 gcc 7.5.0，编译命令：<code>gcc code.c -o code -lm -O2 -DONLINE_JUDGE</code>。</p>
-			<p>Pascal的编译器是 fpc 3.0.0，编译命令：<code>fpc code.pas -O2</code>。</p>
+			<p>默认的测评环境是 Ubuntu Linux 20.04 LTS x64。</p>
+			<p>C++的编译器是 g++ 9.3.0，编译命令：<code>g++ code.cpp -o code -lm -O2 -DONLINE_JUDGE</code>。如果选择C++1x会在编译命令后面添加<code>-std=c++1x</code>。</p>
+			<p>C的编译器是 gcc 9.3.0，编译命令：<code>gcc code.c -o code -lm -O2 -DONLINE_JUDGE</code>。</p>
+			<p>Pascal的编译器是 fpc 3.0.4，编译命令：<code>fpc code.pas -O2</code>。</p>
 		</div>
 	</section>
 	<section>
