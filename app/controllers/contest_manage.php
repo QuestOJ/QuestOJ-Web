@@ -6,7 +6,7 @@
 	}
 	genMoreContestInfo($contest);
 	
-	if (!isSuperUser($myUser)) {
+	if (!isSuperUser($myUser) || hasRegistered($user, $contest)) {
 		become403Page();
 	}
 	
