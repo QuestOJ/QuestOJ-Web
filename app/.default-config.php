@@ -44,7 +44,8 @@ return [
 		'register' => [
 			'available' => true,
 			'verify' => 1
-		]
+		],
+		'anonymous-visable' => true
 	],
 	'mail' => [
 		'noreply' => [

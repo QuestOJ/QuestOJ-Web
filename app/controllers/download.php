@@ -1,4 +1,5 @@
 <?php
+	disable_for_anonymous();
 	requirePHPLib('judger');
 	$disposition = "attachment";
 

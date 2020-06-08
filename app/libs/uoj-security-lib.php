@@ -53,3 +53,10 @@ function captcha_check() {
 	
 	return json_decode($response, true)["success"];
 }
+
+function disable_for_anonymous() {
+	global $myUser;
+	if (!UOJConfig::$data['security']['anonymous-visable'] == false && $myUser == null) {
+		redirectToLogin();
+	}
+}

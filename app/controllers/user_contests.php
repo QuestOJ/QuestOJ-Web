@@ -6,7 +6,7 @@
         }
 
         requirePHPLib('form');
-		requirePHPLib('rating');
+	requirePHPLib('rating');
 
         $rating = $user["rating"];
 

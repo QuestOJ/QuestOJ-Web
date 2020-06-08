@@ -1,4 +1,5 @@
 <?php
+	disable_for_anonymous();
 	requirePHPLib('form');
 	
 	function echoBlogCell($blog) {

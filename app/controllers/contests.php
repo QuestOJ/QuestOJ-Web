@@ -1,4 +1,5 @@
 <?php
+	disable_for_anonymous();
 	requirePHPLib('form');
 	
 	$upcoming_contest_name = null;

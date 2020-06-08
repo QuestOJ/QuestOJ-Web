@@ -1,4 +1,5 @@
 <?php
+	disable_for_anonymous();
 	requirePHPLib('form');
 	
 	if (!validateUInt($_GET['id']) || !($contest = queryContest($_GET['id']))) {

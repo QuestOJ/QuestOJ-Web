@@ -1,4 +1,5 @@
 <?php
+	disable_for_anonymous();
 	if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
 		become404Page();
 	}
