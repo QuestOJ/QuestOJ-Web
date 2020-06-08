@@ -2,7 +2,7 @@
 
 class Auth {
 	public static function checkVerify() {
-		return $_SESSION['verify'];
+		return $_SESSION['verify'] >= UOJConfig::$data['security']['register']['verify'];
 	}
 	public static function checkLogin() {
 		global $myUser;
@@ -37,10 +37,6 @@ class Auth {
 		}
 
 		$verify = DB::selectFirst("select verify from user_info where username = '$username'")['verify'];
-		
-		if (UOJConfig::$data['security']['register']['verify'] < 2) {
-			$verify = 1;
-		}
 		
 		$_SESSION['verify'] = $verify;
 

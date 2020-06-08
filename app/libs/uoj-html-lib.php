@@ -940,10 +940,12 @@ function echoRanklist($config = array()) {
 	$header_row .= '<th style="width: 5em;">'.UOJLocale::get('rating').'</th>';
 	$header_row .= '</tr>';
 	
+	$verifyMin = UOJConfig::$data['security']['register']['verify'];
+	
 	$users = array();
 	$print_row = function($user, $now_cnt) use(&$users) {
 		if (!$users) {
-			$rank = DB::selectCount("select count(*) from user_info where rating > {$user['rating']} and verify = 1") + 1;
+			$rank = DB::selectCount("select count(*) from user_info where rating > {$user['rating']} and verify >= {$verifyMin}") + 1;
 		} else if ($user['rating'] == $users[count($users) - 1]['rating']) {
 			$rank = $users[count($users) - 1]['rank'];
 		} else {
@@ -969,5 +971,5 @@ function echoRanklist($config = array()) {
 	}
 	
 	$config['get_row_index'] = '';
-	echoLongTable($col_names, 'user_info', 'verify = 1', $tail, $header_row, $print_row, $config);
+	echoLongTable($col_names, 'user_info', 'verify >= '.$verifyMin, $tail, $header_row, $print_row, $config);
 }

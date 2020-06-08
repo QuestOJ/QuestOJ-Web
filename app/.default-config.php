@@ -43,7 +43,7 @@ return [
 		],
 		'register' => [
 			'available' => true,
-			'verify' => 1
+			'verify' => 0
 		],
 		'anonymous-visable' => true
 	],
