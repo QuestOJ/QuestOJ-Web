@@ -4,7 +4,7 @@
 	requirePHPLib('judger');
 	requirePHPLib('data');
 	
-	if (isSuperUser($myUser)) {
+	if (isSuperUser(Auth::user())) {
 		$new_problem_form = new UOJForm('new_problem');
 		$new_problem_form->handle = function() {
 			DB::query("insert into problems (title, is_hidden, submission_requirement) values ('New Problem', 1, '{}')");
@@ -22,7 +22,7 @@
 	
 	function echoProblem($problem) {
 		global $myUser;
-		if (isProblemVisibleToUser($problem, $myUser)) {
+		if (isProblemVisibleToUser($problem, Auth::user())) {
 			echo '<tr class="text-center">';
 			if ($problem['submission_id']) {
 				echo '<td class="success">';
@@ -114,7 +114,7 @@ EOD;
 			'table_classes' => array('table', 'table-bordered', 'table-hover', 'table-striped'),
 			'print_after_table' => function() {
 				global $myUser;
-				if (isSuperUser($myUser)) {
+				if (isSuperUser(Auth::user())) {
 					global $new_problem_form;
 					$new_problem_form->printHTML();
 				}
@@ -186,7 +186,7 @@ $('#input-show_submit_mode').click(function() {
 	echo '</table>';
 	echo '</div>';
 	
-	if (isSuperUser($myUser)) {
+	if (isSuperUser(Auth::user())) {
 		$new_problem_form->printHTML();
 	}
 	

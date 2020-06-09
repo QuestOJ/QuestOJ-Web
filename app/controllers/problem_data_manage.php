@@ -6,7 +6,7 @@
 	if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
 		become404Page();
 	}
-	if (!hasProblemPermission($myUser, $problem)) {
+	if (!hasProblemPermission(Auth::user(), $problem)) {
 		become403Page();
 	}
 	
@@ -195,7 +195,7 @@ $esc_extra_config
 </div>
 EOD
 	);
-	if (isSuperUser($myUser)) {
+	if (isSuperUser(Auth::user())) {
 		$info_form->addVInput('submission_requirement', 'text', '提交文件配置', $problem['submission_requirement'],
 			function ($submission_requirement, &$vdata) {
 				$submission_requirement = json_decode($submission_requirement, true);
@@ -490,7 +490,7 @@ EOD
 	$data_form->handle = function() {
 		global $problem, $myUser;
 		set_time_limit(60 * 5);
-		$ret = dataSyncProblemData($problem, $myUser);
+		$ret = dataSyncProblemData($problem, Auth::user());
 		if ($ret) {
 			becomeMsgPage('<div>' . $ret . '</div><a href="/problem/'.$problem['id'].'/manage/data">返回</a>');
 		}

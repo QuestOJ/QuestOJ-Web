@@ -1,5 +1,5 @@
 <?php
-	if ($myUser == null || !isSuperUser($myUser)) {
+	if (!Auth::check() || !isSuperUser(Auth::user())) {
 		become403Page();
 	}
 	

@@ -6,7 +6,7 @@
 	}
 	genMoreContestInfo($contest);
 	
-	if (!isSuperUser($myUser) || hasRegistered($user, $contest)) {
+	if (!isSuperUser(Auth::user()) || hasRegistered($user, $contest)) {
 		become403Page();
 	}
 	
@@ -116,7 +116,7 @@
 		}
 	);
 	
-	if (isSuperUser($myUser)) {
+	if (isSuperUser(Auth::user())) {
 		$contest_version_form = new UOJForm('contest_version');
 		$contest_version_form->addSelect('contest_version', array("1" => "AGC 1200 / INF", "2" => "ARC 1000 / 2800", "3" => "ABC 800 / 2000"), 'Rating 变化幅度', isset($contest['extra_config']['contest_version']) ? $contest['extra_config']['contest_version'] : '2',
 			function ($x) {
@@ -203,7 +203,7 @@
 	<li class="nav-item"><a class="nav-link active" href="#tab-time" role="tab" data-toggle="tab">比赛时间</a></li>
 	<li class="nav-item"><a class="nav-link" href="#tab-managers" role="tab" data-toggle="tab">管理者</a></li>
 	<li class="nav-item"><a class="nav-link" href="#tab-problems" role="tab" data-toggle="tab">试题</a></li>
-	<?php if (isSuperUser($myUser)): ?>
+	<?php if (isSuperUser(Auth::user())): ?>
 	<li class="nav-item"><a class="nav-link" href="#tab-others" role="tab" data-toggle="tab">其它</a></li>
 	<?php endif ?>
 	<li class="nav-item"><a class="nav-link" href="/contest/<?=$contest['id']?>" role="tab">返回</a></li>
@@ -258,7 +258,7 @@
 		<p class="text-center">命令格式：命令一行一个，+233表示把题号为233的试题加入比赛，-233表示把题号为233的试题从比赛中移除</p>
 		<?php $problems_form->printHTML(); ?>
 	</div>
-	<?php if (isSuperUser($myUser)): ?>
+	<?php if (isSuperUser(Auth::user())): ?>
 	<div class="tab-pane" id="tab-others">
 		<div class="row">
 			<div class="col-sm-12">

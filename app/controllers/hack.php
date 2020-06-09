@@ -16,11 +16,11 @@
 		$contest = null;
 	}
 
-	if (!isHackVisibleToUser($hack, $problem, $myUser)) {
+	if (!isHackVisibleToUser($hack, $problem, Auth::user())) {
 		become403Page();
 	}
 	
-	if (isSuperUser($myUser)) {
+	if (isSuperUser(Auth::user())) {
 		$delete_form = new UOJForm('delete');
 		$delete_form->handle = function() {
 			global $hack;
@@ -34,15 +34,15 @@
 		$delete_form->runAtServer();
 	}
 	
-	$should_show_content = hasViewPermission($problem_extra_config['view_content_type'], $myUser, $problem, $submission);
-	$should_show_all_details = hasViewPermission($problem_extra_config['view_all_details_type'], $myUser, $problem, $submission);
-	$should_show_details = hasViewPermission($problem_extra_config['view_details_type'], $myUser, $problem, $submission);
-	$should_show_details_to_me = isSuperUser($myUser);
+	$should_show_content = hasViewPermission($problem_extra_config['view_content_type'], Auth::user(), $problem, $submission);
+	$should_show_all_details = hasViewPermission($problem_extra_config['view_all_details_type'], Auth::user(), $problem, $submission);
+	$should_show_details = hasViewPermission($problem_extra_config['view_details_type'], Auth::user(), $problem, $submission);
+	$should_show_details_to_me = isSuperUser(Auth::user());
 	if ($hack['success'] === null) {
 		$should_show_all_details = false;
 	}
-	if (!isSubmissionFullVisibleToUser($submission, $contest, $problem, $myUser)
-		|| !isHackFullVisibleToUser($hack, $contest, $problem, $myUser)) {
+	if (!isSubmissionFullVisibleToUser($submission, $contest, $problem, Auth::user())
+		|| !isHackFullVisibleToUser($hack, $contest, $problem, Auth::user())) {
 		$should_show_content = $should_show_all_details = false;
 	}
 	
@@ -59,7 +59,7 @@
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('problems::hack').' #'.$hack['id']) ?>
 
-<?php echoHackListOnlyOne($hack, array(), $myUser) ?>
+<?php echoHackListOnlyOne($hack, array(), Auth::user()) ?>
 <?php if ($should_show_all_details): ?>
 	<div class="card border-info">
 		<div class="card-header bg-info">
@@ -76,7 +76,7 @@
 		</div>
 	</div>
 <?php endif ?>
-<?php echoSubmissionsListOnlyOne($submission, array(), $myUser) ?>
+<?php echoSubmissionsListOnlyOne($submission, array(), Auth::user()) ?>
 <?php if ($should_show_content): ?>
 	<?php echoSubmissionContent($submission, getProblemSubmissionRequirement($problem)) ?>
 <?php endif ?>

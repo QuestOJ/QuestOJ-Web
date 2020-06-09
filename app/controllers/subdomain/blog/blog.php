@@ -12,7 +12,7 @@
 	$comment_form->addVTextArea('comment', '内容', '',
 		function($comment) {
 			global $myUser;
-			if ($myUser == null) {
+			if (!Auth::check()) {
 				return '请先登录';
 			}
 			if (!$comment) {
@@ -75,7 +75,7 @@
 	$reply_form->addVTextArea('reply_comment', '内容', '',
 		function($comment) {
 			global $myUser;
-			if ($myUser == null) {
+			if (!Auth::check()) {
 				return '请先登录';
 			}
 			if (!$comment) {

@@ -19,7 +19,7 @@ EOD;
 				$upcoming_contest_href = "/contest/{$contest['id']}";
 				$rest_second = $cur_rest_second;
 			}
-			if ($myUser != null && hasRegistered($myUser, $contest)) {
+			if (Auth::check() && hasRegistered(Auth::user(), $contest)) {
 				$contest_name_link .= '<sup><a style="color:green">'.UOJLocale::get('contests::registered').'</a></sup>';
 			} else {
 				$contest_name_link .= '<sup><a style="color:red" href="/contest/'.$contest['id'].'/register">'.UOJLocale::get('contests::register').'</a></sup>';
@@ -86,7 +86,7 @@ EOD;
 		array('page_len' => 100,
 			'print_after_table' => function() {
 				global $myUser;
-				if (isSuperUser($myUser)) {
+				if (isSuperUser(Auth::user())) {
 					echo '<div class="text-right">';
 					echo '<a href="/contest/new" class="btn btn-primary">'.UOJLocale::get('contests::add new contest').'</a>';
 					echo '</div>';

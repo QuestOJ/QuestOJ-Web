@@ -4,7 +4,7 @@
 	if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
 		become404Page();
 	}
-	if (!hasProblemPermission($myUser, $problem)) {
+	if (!hasProblemPermission(Auth::user(), $problem)) {
 		become403Page();
 	}
 	

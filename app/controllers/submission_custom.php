@@ -16,13 +16,13 @@
 	$submission["used_time"] = $submission_result["time"];
 	$submission["used_memory"] = $submission_result["memory"];
 
-	if (!isCustomSubmissionVisibleToUser($submission, $problem, $myUser)) {
+	if (!isCustomSubmissionVisibleToUser($submission, $problem, Auth::user())) {
 		become403Page();
 	}
 	
 	$out_status = explode(', ', $submission['status'])[0];
 	
-	if (isSuperUser($myUser)) {
+	if (isSuperUser(Auth::user())) {
 		$delete_form = new UOJForm('delete');
 		$delete_form->handle = function() {
 			global $submission;
@@ -50,7 +50,7 @@
 	$REQUIRE_LIB['shjs'] = "";
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('problems::submission').' #'.$submission['id']) ?>
-<?php echoSubmissionsListOnlyOne($submission, array('result_hidden' => true, 'language_hidden' => true, 'file_size_hidden' => true), $myUser) ?>
+<?php echoSubmissionsListOnlyOne($submission, array('result_hidden' => true, 'language_hidden' => true, 'file_size_hidden' => true), Auth::user()) ?>
 <?php echoSubmissionContent($submission, getProblemSubmissionRequirement($problem)) ?>
 
 <?php if ($should_show_all_details): ?>

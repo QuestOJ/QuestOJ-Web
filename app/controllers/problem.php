@@ -23,22 +23,22 @@
 	$is_in_contest = false;
 	$ban_in_contest = false;
 	if ($contest != null) {
-		if (!hasContestPermission($myUser, $contest)) {
+		if (!hasContestPermission(Auth::user(), $contest)) {
 			if ($contest['cur_progress'] == CONTEST_NOT_STARTED) {
 				become404Page();
 			} elseif ($contest['cur_progress'] == CONTEST_IN_PROGRESS) {
-				if ($myUser == null || !hasRegistered($myUser, $contest)) {
+				if (!Auth::check() || !hasRegistered(Auth::user(), $contest)) {
 					becomeMsgPage("<h1>比赛正在进行中</h1><p>很遗憾，您尚未报名。比赛结束后再来看吧～</p>");
 				} else {
 					$is_in_contest = true;
 					DB::update("update contests_registrants set has_participated = 1 where username = '{$myUser['username']}' and contest_id = {$contest['id']}");
 				}
 			} else {
-				$ban_in_contest = !isProblemVisibleToUser($problem, $myUser);
+				$ban_in_contest = !isProblemVisibleToUser($problem, Auth::user());
 			}
 		}
 	} else {
-		if (!isProblemVisibleToUser($problem, $myUser)) {
+		if (!isProblemVisibleToUser($problem, Auth::user())) {
 			become404Page();
 		}
 	}
@@ -62,7 +62,7 @@
 		} else {
 			ob_start();
 			$styler = new CustomTestSubmissionDetailsStyler();
-			if (!hasViewPermission($problem_extra_config['view_details_type'], $myUser, $problem, $submission)) {
+			if (!hasViewPermission($problem_extra_config['view_details_type'], Auth::user(), $problem, $submission)) {
 				$styler->fade_all_details = true;
 			}
 			echoJudgementDetails($custom_test_submission_result['details'], $styler, 'custom_test_details');
@@ -245,7 +245,7 @@ $('#contest-countdown').countdown(<?= $contest['end_time']->getTimestamp() - UOJ
 	<?php if ($custom_test_requirement): ?>
 	<li class="nav-item"><a class="nav-link" href="#tab-custom-test" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-console"></span> <?= UOJLocale::get('problems::custom test') ?></a></li>
 	<?php endif ?>
-	<?php if (hasProblemPermission($myUser, $problem)): ?>
+	<?php if (hasProblemPermission(Auth::user(), $problem)): ?>
 	<li class="nav-item"><a class="nav-link" href="/problem/<?= $problem['id'] ?>/manage/statement" role="tab"><?= UOJLocale::get('problems::manage') ?></a></li>
 	<?php endif ?>
 	<?php if ($contest): ?>

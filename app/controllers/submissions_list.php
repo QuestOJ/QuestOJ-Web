@@ -33,7 +33,7 @@
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('submissions')) ?>
 <div class="d-none d-sm-block">
-	<?php if ($myUser != null): ?>
+	<?php if (Auth::check()): ?>
 	<div class="float-right">
 		<a href="/submissions?submitter=<?= $myUser['username'] ?>" class="btn btn-primary btn-sm"><?= UOJLocale::get('problems::my submissions') ?></a>
 	</div>
@@ -79,6 +79,6 @@
 	<div class="top-buffer-sm"></div>
 </div>
 <?php
-	echoSubmissionsList($cond, 'order by id desc', array('judge_time_hidden' => ''), $myUser);
+	echoSubmissionsList($cond, 'order by id desc', array('judge_time_hidden' => ''), Auth::user());
 ?>
 <?php echoUOJPageFooter() ?>

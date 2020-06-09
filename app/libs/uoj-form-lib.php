@@ -712,7 +712,7 @@ EOD;
 		$form->handle = function(&$vdata) use($form_name, $requirement, $zip_file_name_gen, $handle) {
 			global $myUser;
 			
-			if ($myUser == null) {
+			if (!Auth::check()) {
 				redirectToLogin();
 			}
 			
@@ -790,7 +790,7 @@ EOD;
 		$form->handle = function() use($name, $requirement, $zip_file_name_gen, $handle) {
 			global $myUser;
 			
-			if ($myUser == null) {
+			if (!Auth::check()) {
 				redirectToLogin();
 			}
 			

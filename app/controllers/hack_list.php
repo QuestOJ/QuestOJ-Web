@@ -44,7 +44,7 @@
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('hacks')) ?>
 <div class="d-none d-sm-block">
-	<?php if ($myUser != null): ?>
+	<?php if (Auth::check()): ?>
 	<div class="float-right">
 		<a href="/hacks?hacker=<?= $myUser['username'] ?>" class="btn btn-success btn-sm"><?= UOJLocale::get('problems::hacks by me') ?></a>
 		<a href="/hacks?owner=<?= $myUser['username'] ?>" class="btn btn-danger btn-sm"><?= UOJLocale::get('problems::hacks to me') ?></a>
@@ -97,6 +97,6 @@
 	<div class="top-buffer-sm"></div>
 </div>
 <?php
-	echoHacksList($cond, 'order by id desc', array('judge_time_hidden' => ''), $myUser);
+	echoHacksList($cond, 'order by id desc', array('judge_time_hidden' => ''), Auth::user());
 ?>
 <?php echoUOJPageFooter() ?>

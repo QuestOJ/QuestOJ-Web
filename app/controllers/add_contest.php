@@ -1,7 +1,7 @@
 <?php
 	requirePHPLib('form');
 	
-	if (!isSuperUser($myUser))
+	if (!isSuperUser(Auth::user()))
 	{
 		become403Page();
 	}

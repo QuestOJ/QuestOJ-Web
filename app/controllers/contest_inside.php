@@ -13,7 +13,7 @@
 			header("Location: /contest/{$contest['id']}/register");
 			die();
 		} elseif ($contest['cur_progress'] == CONTEST_IN_PROGRESS) {
-			if ($myUser == null || !hasRegistered(Auth::user(), $contest)) {
+			if (!Auth::check() || !hasRegistered(Auth::user(), $contest)) {
 				becomeMsgPage("<h1>比赛正在进行中</h1><p>很遗憾，您尚未报名。比赛结束后再来看吧～</p>");
 			}
 		}
@@ -80,7 +80,7 @@
 		}
 	}
 	
-	if (isSuperUser($myUser)) {
+	if (isSuperUser(Auth::user())) {
 		if (CONTEST_PENDING_FINAL_TEST <= $contest['cur_progress'] && $contest['cur_progress'] <= CONTEST_TESTING) {
 			$start_test_form = new UOJForm('start_test');
 			$start_test_form->handle = function() {
@@ -386,9 +386,9 @@ EOD;
 			</script>
 EOD;
 		if (Cookie::get('show_all_submissions') !== null) {
-			echoSubmissionsList("contest_id = {$contest['id']}", 'order by id desc', array('judge_time_hidden' => ''), $myUser);
+			echoSubmissionsList("contest_id = {$contest['id']}", 'order by id desc', array('judge_time_hidden' => ''), Auth::user());
 		} else {
-			echoSubmissionsList("submitter = '{$myUser['username']}' and contest_id = {$contest['id']}", 'order by id desc', array('judge_time_hidden' => ''), $myUser);
+			echoSubmissionsList("submitter = '{$myUser['username']}' and contest_id = {$contest['id']}", 'order by id desc', array('judge_time_hidden' => ''), Auth::user());
 		}
 	}
 	
@@ -518,7 +518,7 @@ EOD;
 	<?php endif?>
 	
 		<a href="/contest/<?=$contest['id']?>/registrants" class="btn btn-info btn-block"><?= UOJLocale::get('contests::contest registrants') ?></a>
-		<?php if (isSuperUser($myUser)): ?>
+		<?php if (isSuperUser(Auth::user())): ?>
 		<a href="/contest/<?=$contest['id']?>/manage" class="btn btn-primary btn-block">管理</a>
 		<?php if (isset($start_test_form)): ?>
 		<div class="top-buffer-sm">

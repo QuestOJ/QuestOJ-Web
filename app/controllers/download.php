@@ -9,13 +9,13 @@
 				become404Page();
 			}
 			
-			$visible = isProblemVisibleToUser($problem, $myUser);
-			if (!$visible && $myUser != null) {
+			$visible = isProblemVisibleToUser($problem, Auth::user());
+			if (!$visible && Auth::check()) {
 				$result = DB::query("select contest_id from contests_problems where problem_id = {$_GET['id']}");
 				while (list($contest_id) = DB::fetch($result, MYSQLI_NUM)) {
 					$contest = queryContest($contest_id);
 					genMoreContestInfo($contest);
-					if ($contest['cur_progress'] != CONTEST_NOT_STARTED && hasRegistered($myUser, $contest) && queryContestProblemRank($contest, $problem)) {
+					if ($contest['cur_progress'] != CONTEST_NOT_STARTED && hasRegistered(Auth::user(), $contest) && queryContestProblemRank($contest, $problem)) {
 						$visible = true;
 					}
 				}
@@ -35,7 +35,7 @@
                         if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
                                 become404Page();
                         }
-       			if (!hasProblemPermission($myUser, $problem)) {
+       			if (!hasProblemPermission(Auth::user(), $problem)) {
                 		become403Page();
         		}
 
@@ -50,7 +50,7 @@
 			if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
 				become404Page();
 			}
-			if (!hasProblemPermission($myUser, $problem)) {
+			if (!hasProblemPermission(Auth::user(), $problem)) {
 				become403Page();
 			}
 

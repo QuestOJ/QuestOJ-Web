@@ -5,23 +5,23 @@
 	}
 	genMoreContestInfo($contest);
 	
-	if ($myUser == null) {
+	if (!Auth::check()) {
 		redirectToLogin();
-	} elseif (hasRegistered($myUser, $contest) || $contest['cur_progress'] != CONTEST_NOT_STARTED) {
+	} elseif (hasRegistered(Auth::user(), $contest) || $contest['cur_progress'] != CONTEST_NOT_STARTED) {
 		redirectTo('/contests');
 	}
 	
 	$register_form = new UOJForm('register');
 	$register_form->handle = function() {
 		global $myUser, $contest;
-		if (hasConflictWithRegistered($myUser, $contest) != -1) {
+		if (hasConflictWithRegistered(Auth::user(), $contest) != -1) {
 			return;
 		}
 		DB::query("insert into contests_registrants (username, realname, user_rating, average_performance, contest_id, has_participated) values ('{$myUser['username']}', '{$myUser['realname']}', {$myUser['rating']}, {$myUser['performance']}, {$contest['id']}, 0)");
 		updateContestPlayerNum($contest);
 	};
 
-	if (hasConflictWithRegistered($myUser, $contest) != -1) {
+	if (hasConflictWithRegistered(Auth::user(), $contest) != -1) {
 		$register_form->submit_button_config['class_str'] = 'btn btn-primary';
 		$register_form->submit_button_config['disabled'] = 'disabled';
 	} else {
@@ -42,7 +42,7 @@
 	<li>比赛结束后会进行最终测试，最终测试后的排名为最终排名。</li>
 	<li>比赛排名按分数为第一关键字，完成题目的总时间为第二关键字。完成题目的总时间等于完成每道题所花时间之和（无视掉爆零的题目）。</li>
 	<li>请遵守比赛规则，一位选手在一场比赛内不得报名多个账号，选手之间不能交流或者抄袭代码，如果被检测到将以0分处理或者封禁。</li>
-	<?php if (hasConflictWithRegistered($myUser, $contest) != -1) : ?>
+	<?php if (hasConflictWithRegistered(Auth::user(), $contest) != -1) : ?>
 	<li style="color:red">比赛时间与其他已报名比赛冲突，您无法报名参加此场比赛</li>
 	<?php endif ?>
 </ul>

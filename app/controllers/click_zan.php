@@ -13,7 +13,7 @@
 	if (!validateZan()) {
 		die('<div class="text-danger">failed</div>');
 	}
-	if ($myUser == null) {
+	if (!Auth::check()) {
 		die('<div class="text-danger">please <a href="'.HTML::url('/login').'">log in</a></div>');
 	}
 	
@@ -36,7 +36,7 @@
 			break;
 	}
 	
-	$cur = queryZanVal($id, $type, $myUser);
+	$cur = queryZanVal($id, $type, Auth::user());
 	
 	if ($cur != $delta) {
 		$row = DB::fetch(DB::query("select zan from $table_name where id = $id"));

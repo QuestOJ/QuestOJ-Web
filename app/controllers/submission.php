@@ -17,7 +17,7 @@
 	} else {
 		$contest = null;
 	}
-	if (!isSubmissionVisibleToUser($submission, $problem, $myUser)) {
+	if (!isSubmissionVisibleToUser($submission, $problem, Auth::user())) {
 		become403Page();
 	}
 	
@@ -40,7 +40,7 @@
 			$hack_form->addCheckBox('use_formatter', '帮我整理文末回车、行末空格、换行符', true);
 			$hack_form->handle = function(&$vdata) {
 				global $myUser, $problem, $submission;
-				if ($myUser == null) {
+				if (!Auth::check()) {
 					redirectToLogin();
 				}
 				
@@ -67,7 +67,7 @@
 		}
 	}
 	
-	if ($submission['status'] == 'Judged' && hasProblemPermission($myUser, $problem)) {
+	if ($submission['status'] == 'Judged' && hasProblemPermission(Auth::user(), $problem)) {
 		$rejudge_form = new UOJForm('rejudge');
 		$rejudge_form->handle = function() {
 			global $submission;
@@ -79,7 +79,7 @@
 		$rejudge_form->runAtServer();
 	}
 	
-	if (isSuperUser($myUser)) {
+	if (isSuperUser(Auth::user())) {
 		$delete_form = new UOJForm('delete');
 		$delete_form->handle = function() {
 			global $submission;
@@ -96,10 +96,10 @@
 		$delete_form->runAtServer();
 	}
 	
-	$should_show_content = hasViewPermission($problem_extra_config['view_content_type'], $myUser, $problem, $submission);
-	$should_show_all_details = hasViewPermission($problem_extra_config['view_all_details_type'], $myUser, $problem, $submission);
-	$should_show_details = hasViewPermission($problem_extra_config['view_details_type'], $myUser, $problem, $submission);
-	$should_show_details_to_me = isSuperUser($myUser);
+	$should_show_content = hasViewPermission($problem_extra_config['view_content_type'], Auth::user(), $problem, $submission);
+	$should_show_all_details = hasViewPermission($problem_extra_config['view_all_details_type'], Auth::user(), $problem, $submission);
+	$should_show_details = hasViewPermission($problem_extra_config['view_details_type'], Auth::user(), $problem, $submission);
+	$should_show_details_to_me = isSuperUser(Auth::user());
 	if (explode(', ', $submission['status'])[0] != 'Judged') {
 		$should_show_all_details = false;
 	}
@@ -108,10 +108,10 @@
 			$should_show_details = false;
 		}
 	}
-	if (!isSubmissionFullVisibleToUser($submission, $contest, $problem, $myUser)) {
+	if (!isSubmissionFullVisibleToUser($submission, $contest, $problem, Auth::user())) {
 		$should_show_content = $should_show_all_details = false;
 	}
-	if ($contest != null && hasContestPermission($myUser, $contest)) {
+	if ($contest != null && hasContestPermission(Auth::user(), $contest)) {
 		$should_show_details_to_me = true;
 		$should_show_content = true;
 		$should_show_all_details = true;
@@ -119,7 +119,7 @@
 	
 	if ($should_show_all_details) {
 		$styler = new SubmissionDetailsStyler();
-		if ((!$should_show_details || ($contest['extra_config']['contest_type']=='IOI' && $contest['cur_progress'] == CONTEST_IN_PROGRESS)) && !hasContestPermission($myUser, $contest)) {
+		if ((!$should_show_details || ($contest['extra_config']['contest_type']=='IOI' && $contest['cur_progress'] == CONTEST_IN_PROGRESS)) && !hasContestPermission(Auth::user(), $contest)) {
 			$styler->fade_all_details = true;
 			$styler->show_small_tip = false;
 			if ($contest['extra_config']['contest_type']=='IOI' && $contest['cur_progress'] == CONTEST_IN_PROGRESS) {
@@ -132,7 +132,7 @@
 	$REQUIRE_LIB['shjs'] = "";
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('problems::submission').' #'.$submission['id']) ?>
-<?php echoSubmissionsListOnlyOne($submission, array(), $myUser) ?>
+<?php echoSubmissionsListOnlyOne($submission, array(), Auth::user()) ?>
 
 <?php if ($should_show_content): ?>
 	<?php echoSubmissionContent($submission, getProblemSubmissionRequirement($problem)) ?>

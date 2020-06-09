@@ -7,11 +7,11 @@
 	}
 	genMoreContestInfo($contest);
 	
-	$has_contest_permission = hasContestPermission($myUser, $contest);
+	$has_contest_permission = hasContestPermission(Auth::user(), $contest);
 	$show_ip = $has_contest_permission;
 	
 	if ($contest['cur_progress'] == CONTEST_NOT_STARTED) {
-		$iHasRegistered = $myUser != null && hasRegistered($myUser, $contest);
+		$iHasRegistered = Auth::check() && hasRegistered(Auth::user(), $contest);
 	
 		if ($iHasRegistered) {
 			$unregister_form = new UOJForm('unregister');

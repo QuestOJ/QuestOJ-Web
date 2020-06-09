@@ -7,11 +7,11 @@
 	$contest = validateUInt($_GET['contest_id']) ? queryContest($_GET['contest_id']) : null;
 	if ($contest != null) {
 		genMoreContestInfo($contest);
-		if (!isContestProblemVisibleToUser($problem, $contest, $myUser)) {
+		if (!isContestProblemVisibleToUser($problem, $contest, Auth::user())) {
 			become404Page();
 		}
 	} else {
-		if (!isProblemVisibleToUser($problem, $myUser)) {
+		if (!isProblemVisibleToUser($problem, Auth::user())) {
 			become404Page();
 		}
 	}
@@ -62,7 +62,7 @@
 
 <h1 class="page-header text-center"><?= $problem['title'] ?> <?= UOJLocale::get('problems::statistics') ?></h1>
 
-<?php if ($contest && !hasContestPermission($myUser, $contest) && $contest['cur_progress'] <= CONTEST_IN_PROGRESS): ?>
+<?php if ($contest && !hasContestPermission(Auth::user(), $contest) && $contest['cur_progress'] <= CONTEST_IN_PROGRESS): ?>
 <h2 class="text-center text-muted">比赛尚未结束</h2>
 <?php else: ?>
 <h2 class="text-center"><?= UOJLocale::get('problems::accepted submissions') ?></h2>
@@ -85,9 +85,9 @@
 </script>
 
 <?php if ($submissions_sort_by_choice == 'time'): ?>
-	<?php echoSubmissionsList("best_ac_submissions.submission_id = submissions.id and best_ac_submissions.problem_id = {$problem['id']}", 'order by best_ac_submissions.used_time, best_ac_submissions.used_memory, best_ac_submissions.tot_size', array('judge_time_hidden' => '', 'table_name' => 'best_ac_submissions, submissions'), $myUser); ?>
+	<?php echoSubmissionsList("best_ac_submissions.submission_id = submissions.id and best_ac_submissions.problem_id = {$problem['id']}", 'order by best_ac_submissions.used_time, best_ac_submissions.used_memory, best_ac_submissions.tot_size', array('judge_time_hidden' => '', 'table_name' => 'best_ac_submissions, submissions'), Auth::user()); ?>
 <?php else: ?>
-	<?php echoSubmissionsList("best_ac_submissions.shortest_id = submissions.id and best_ac_submissions.problem_id = {$problem['id']}", 'order by best_ac_submissions.shortest_tot_size, best_ac_submissions.shortest_used_time, best_ac_submissions.shortest_used_memory', array('judge_time_hidden' => '', 'table_name' => 'best_ac_submissions, submissions'), $myUser); ?>
+	<?php echoSubmissionsList("best_ac_submissions.shortest_id = submissions.id and best_ac_submissions.problem_id = {$problem['id']}", 'order by best_ac_submissions.shortest_tot_size, best_ac_submissions.shortest_used_time, best_ac_submissions.shortest_used_memory', array('judge_time_hidden' => '', 'table_name' => 'best_ac_submissions, submissions'), Auth::user()); ?>
 <?php endif ?>
 
 <h2 class="text-center"><?= UOJLocale::get('problems::score distribution') ?></h2>
