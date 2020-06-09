@@ -17,7 +17,7 @@ class Auth {
 	}
 	public static function user() {
 		global $myUser;
-		return Auth::check() ? $myUser : false;
+		return Auth::check() ? $myUser : null;
 	}
 	public static function login($username, $remember = true) {
 		if (!validateUsername($username)) {
