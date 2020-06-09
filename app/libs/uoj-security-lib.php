@@ -56,7 +56,7 @@ function captcha_check() {
 
 function disable_for_anonymous() {
 	global $myUser;
-	if (!UOJConfig::$data['security']['anonymous-visable'] == false && !Auth::check()) {
+	if (UOJConfig::$data['security']['anonymous-visable'] == false && !Auth::check()) {
 		redirectToLogin();
 	}
 }
