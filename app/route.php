@@ -76,6 +76,9 @@ Route::group([
 		Route::any('/api/register', '/api/register.php');
 		Route::any('/api/verify', '/api/verify.php');
 		Route::any('/api/message', '/api/message.php');
+
+		Route::any('/api/oss/get', '/api/oss/get.php');
+		Route::any('/api/oss/callback', '/api/oss/callback.php');
 	}
 );
 

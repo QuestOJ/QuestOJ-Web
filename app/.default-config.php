@@ -56,6 +56,14 @@ return [
 			'port' => 587
 		]
 	],
+	'data' => [
+		'oss' => false,
+		'accessKeyID' => '',
+		'accessKeySecret' => '',
+		'bucketEndpoint' => '',
+		'callback' => '',
+		'dir' => ''
+	],
 	'judger' => [
 		'socket' => [
 			'port' => '233',

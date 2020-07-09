@@ -47,7 +47,7 @@
 		<?= HTML::css_link('/css/bootstrap-glyphicons.min.css?v=2019.5.31') ?>
 
 		<!-- Custom styles for this template -->
-		<?= HTML::css_link('/css/qoj-theme.css?v=2020.3.1') ?>
+		<?= HTML::css_link('/css/qoj-theme.css?v=2020.7.9') ?>
 		
 		<!-- jQuery (necessary for Bootstrap\'s JavaScript plugins) -->
 		<?= HTML::js_src('/js/jquery.min.js') ?>

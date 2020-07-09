@@ -631,6 +631,10 @@ EOD
 ?>
 <?php
 	$REQUIRE_LIB['dialog'] = '';
+	
+	if (UOJConfig::$data["data"]["oss"]) {
+		$REQUIRE_LIB['oss'] = '';
+	}
 ?>
 <?php echoUOJPageHeader(HTML::stripTags($problem['title']) . ' - 数据 - 题目管理') ?>
 <h1 class="page-header" align="center">#<?=$problem['id']?> : <?=$problem['title']?> 管理</h1>
@@ -712,8 +716,13 @@ EOD
 		</div>
 		
 		<div class="top-buffer-md">
-			<button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#UploadDataModal">上传数据</button>
+			<?php if (!UOJConfig::$data["data"]["oss"]) : ?>
+				<button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#UploadDataModal">上传数据</button>
+			<?php else: ?>
+				<button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#UploadOSSDataModal">上传数据</button>
+			<?php endif ?>
 		</div>
+
 		<div class="top-buffer-md">
 			<button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#ProblemSettingsFileModal">试题配置</button>
 		</div>
@@ -741,6 +750,29 @@ EOD
         				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
       				</div>
     			</div>
+  		</div>
+	</div>
+
+	<div class="modal fade" id="UploadOSSDataModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  		<div class="modal-dialog">
+    			<div class="modal-content">
+      				<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">上传数据</h4>
+        				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      				</div>
+				<div class="modal-body">
+					<p class="help-block">说明：请将所有数据放置于压缩包根目录内。若压缩包内仅存在文件夹而不存在文件，则会将这些一级子文件夹下的内容移动到根目录下，然后这些一级子文件夹删除；若这些子文件夹内存在同名文件，则会发生随机替换，仅保留一个副本。</p>
+					<input type="hidden" name="problemID" value="<?= $_GET["id"] ?>" />
+					<div id="ossfile">你的浏览器不支持flash,Silverlight或者HTML5！</div>
+					<pre id="console"></pre>
+				</div>
+      				<div class="modal-footer">
+						<div id="container">
+                        	<button type="button" id="selectfiles" href="javascript:void(0);" class='btn btn-secondary'>选择文件</button>
+                        	<button type="button" id="postfiles" href="javascript:void(0);" class='btn btn-secondary'>开始上传</button>
+                        </div>
+				</div>
+    		</div>
   		</div>
 	</div>
 

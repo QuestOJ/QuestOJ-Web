@@ -453,3 +453,8 @@ h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h1 .small, .h1 .s
 .user-black {
     color: black !important;
 }
+
+#console {
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+}

@@ -26,4 +26,9 @@
 		</div>
 		<!-- /container -->
 	</body>
+	<?php global $REQUIRE_LIB; if (isset($REQUIRE_LIB['oss'])): ?>
+		<!-- oss -->
+		<?= HTML::js_src('/js/plupload/js/plupload.full.min.js') ?>
+		<?= HTML::js_src('/js/oss.upload.js') ?>
+	<?php endif ?>
 </html>
