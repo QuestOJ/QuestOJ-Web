@@ -28,7 +28,7 @@
 	</body>
 	<?php global $REQUIRE_LIB; if (isset($REQUIRE_LIB['oss'])): ?>
 		<!-- oss -->
-		<?= HTML::js_src('/js/plupload/js/plupload.full.min.js') ?>
-		<?= HTML::js_src('/js/oss.upload.js') ?>
+		<?= HTML::js_src('/js/plupload/js/plupload.full.min.js?ver=2020.7.10') ?>
+		<?= HTML::js_src('/js/oss.upload.js?ver=2020.7.10') ?>
 	<?php endif ?>
 </html>

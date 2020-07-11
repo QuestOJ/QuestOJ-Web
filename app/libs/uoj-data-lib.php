@@ -344,6 +344,36 @@
 	function dataSyncProblemData($problem, $user = null) {
 		return (new SyncProblemDataHandler($problem, $user))->handle();
 	}
+	function dataSyncFromOSS($problem, $user = null) {
+		$id = $problem['id'];
+		if (!validateUInt($id)) {
+			error_log("dataSyncProblemData: hacker detected");
+			return "invalid problem id";
+		}
+
+		$oss_dir = "/var/oss_data/$id";
+		$upload_dir = "/var/uoj_data/upload/$id";
+
+		$oss_filename = $oss_dir."/testdata_new.zip";
+		$up_filename = "/tmp/".rand(0,100000000)."data.zip";
+
+		if (!is_file($oss_filename)) {
+			$errmsg = "数据文件未上传！";
+			becomeMsgPage('<div>' . $errmsg . '</div><a href="/problem/'.$problem['id'].'/manage/data">返回</a>');
+		}
+
+		move_uploaded_file($oss_filename, $up_filename);
+		$zip = new ZipArchive;
+		if ($zip->open($up_filename) === TRUE){
+			$zip->extractTo("/var/uoj_data/upload/{$problem['id']}");
+			$zip->close();
+			exec("cd /var/uoj_data/upload/{$problem['id']}; if [ `find . -maxdepth 1 -type f`File = File ]; then for sub_dir in `find -maxdepth 1 -type d ! -name .`; do mv -f \$sub_dir/* . && rm -rf \$sub_dir; done; fi");
+			echo "<script>alert('上传成功！')</script>";
+		}else{
+			$errmsg = "解压失败！";
+			becomeMsgPage('<div>' . $errmsg . '</div><a href="/problem/'.$problem['id'].'/manage/data">返回</a>');
+		}
+	}
 	function dataAddExtraTest($problem, $input_file_name, $output_file_name) {
 		$id = $problem['id'];
 

@@ -498,6 +498,19 @@ EOD
 	$data_form->submit_button_config['class_str'] = 'btn btn-danger btn-block';
 	$data_form->submit_button_config['text'] = '检验配置并同步数据';
 	$data_form->submit_button_config['smart_confirm'] = '';
+
+	$sync_data_form = new UOJForm('data');
+	$sync_data_form->handle = function() {
+		global $problem, $myUser;
+		set_time_limit(60 * 5);
+		$ret = dataSyncFromOSS($problem, Auth::user());
+		if ($ret) {
+			becomeMsgPage('<div>' . $ret . '</div><a href="/problem/'.$problem['id'].'/manage/data">返回</a>');
+		}
+	};
+	$sync_data_form->submit_button_config['class_str'] = 'btn btn-danger btn-block';
+	$sync_data_form->submit_button_config['text'] = '同步数据';
+	$sync_data_form->submit_button_config['smart_confirm'] = '';
 	
 	$clear_data_form = new UOJForm('clear_data');
 	$clear_data_form->handle = function() {
@@ -624,6 +637,7 @@ EOD
 	$hackable_form->runAtServer();
 	$view_type_form->runAtServer();
 	$data_form->runAtServer();
+	$sync_data_from->runAtServer();
 	$clear_data_form->runAtServer();
 	$rejudge_form->runAtServer();
 	$rejudgege97_form->runAtServer();
@@ -702,9 +716,15 @@ EOD
 				<?php $view_type_form->printHTML(); ?>
 			</div>
 		</div>
+		<?php if (!UOJConfig::$data["data"]["oss"]) : ?>
 		<div class="top-buffer-md">
 			<?php $data_form->printHTML(); ?>
 		</div>
+		<?php else : ?>
+		<div class="top-buffer-md">
+			<?php $sync_data_form->printHTML(); ?>
+		</div>		
+		<?php endif ?>
 		<div class="top-buffer-md">
 			<?php $clear_data_form->printHTML(); ?>
 		</div>
@@ -863,4 +883,3 @@ EOD
 	</div>
 </div>
 <?php echoUOJPageFooter() ?>
-
