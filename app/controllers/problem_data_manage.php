@@ -2,6 +2,7 @@
 	requirePHPLib('form');
 	requirePHPLib('judger');
 	requirePHPLib('data');
+	requirePHPLib('oss');
 	
 	if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
 		become404Page();
@@ -118,8 +119,14 @@
 
 	$info_form = new UOJForm('info');
 	$http_host = HTML::escape(UOJContext::httpHost());
-	$download_url = HTML::url("/download.php?type=problem&id={$problem['id']}");
-	$testdata_url = HTML::url("/download.php?type=testdata&id={$problem['id']}");
+
+	if (!UOJConfig::$data["data"]["oss"]) {
+		$download_url = HTML::url("/download.php?type=problem&id={$problem['id']}");
+		$testdata_url = HTML::url("/download.php?type=testdata&id={$problem['id']}");
+	} else {
+		$download_url = getDownloadURL($problem);
+		$testdata_url = getTestdataURL($problem);	
+	}
 
 	$info_form->appendHTML(<<<EOD
 <div class="form-group row">
@@ -140,7 +147,7 @@ EOD
 	<label class="col-sm-3 control-label">problem_{$problem['id']}.zip</label>
 	<div class="col-sm-9">
 		<div class="form-control-static">
-			<a href="$download_url">$download_url</a>
+			<a href="$download_url">下载</a>
 		</div>
 	</div>
 </div>
@@ -151,7 +158,7 @@ $info_form->appendHTML(<<<EOD
         <label class="col-sm-3 control-label">testdata_{$problem['id']}.zip</label>
         <div class="col-sm-9">
                 <div class="form-control-static">
-                        <a href="$testdata_url">$testdata_url</a>
+                        <a href="$testdata_url">下载</a>
                 </div>
         </div>
 </div>
@@ -444,11 +451,20 @@ EOD
 			if (isset($problem_conf['interaction_mode'])) {
 				$data_disp->addDisplayer('interactor', $getDisplaySrcFunc('interactor'));
 			}
-
-			if (is_file("/var/uoj_data/{$_GET['id']}/statement.pdf")) {
-				$data_disp->addDisplayer('statement', function($self) {
-					echo "<embed src=\"/download.php?type=statement&id={$_GET['id']}\" width=\"100%\" height=\"700px\">";
-				});
+			
+			if (!UOJConfig::$data["data"]["oss"]) {
+				if (is_file("/var/uoj_data/{$_GET['id']}/statement.pdf")) {
+					$data_disp->addDisplayer('statement', function($self) {
+						echo "<embed src=\"/download.php?type=statement&id={$_GET['id']}\" width=\"100%\" height=\"700px\">";
+					});
+				}
+			} else {
+				if (is_file("/var/uoj_data/{$_GET['id']}/pdf.lock")) {
+					$data_disp->addDisplayer('statement', function($self) {
+						global $problem;
+						echo "<embed src=\"".getStatementURL($problem)."\" width=\"100%\" height=\"700px\">";
+					});
+				}
 			}
 
 			return $data_disp;
@@ -496,10 +512,10 @@ EOD
 		}
 	};
 	$data_form->submit_button_config['class_str'] = 'btn btn-danger btn-block';
-	$data_form->submit_button_config['text'] = '检验配置并同步数据';
+	$data_form->submit_button_config['text'] = '检验配置';
 	$data_form->submit_button_config['smart_confirm'] = '';
 
-	$sync_data_form = new UOJForm('data');
+	$sync_data_form = new UOJForm('syncdata');
 	$sync_data_form->handle = function() {
 		global $problem, $myUser;
 		set_time_limit(60 * 5);
@@ -637,7 +653,7 @@ EOD
 	$hackable_form->runAtServer();
 	$view_type_form->runAtServer();
 	$data_form->runAtServer();
-	$sync_data_from->runAtServer();
+	$sync_data_form->runAtServer();
 	$clear_data_form->runAtServer();
 	$rejudge_form->runAtServer();
 	$rejudgege97_form->runAtServer();
@@ -723,6 +739,7 @@ EOD
 		<?php else : ?>
 		<div class="top-buffer-md">
 			<?php $sync_data_form->printHTML(); ?>
+			<?php $data_form->printHTML(); ?>
 		</div>		
 		<?php endif ?>
 		<div class="top-buffer-md">

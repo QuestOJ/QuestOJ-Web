@@ -2,7 +2,9 @@
 	error_reporting(E_ALL ^ E_NOTICE);
 	
 	spl_autoload_register(function($class_name) {
-		require_once $_SERVER['DOCUMENT_ROOT'] . '/app/models/' . $class_name . '.php';
+		if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/app/models/' . $class_name . '.php')) {
+			require_once $_SERVER['DOCUMENT_ROOT'] . '/app/models/' . $class_name . '.php';
+		}
 	});
 	
 	function requireLib($name) { // html lib

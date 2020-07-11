@@ -18,6 +18,9 @@ DirectoryIndex
 
 RewriteEngine On
 
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
 RewriteCond %{QUERY_STRING} ^$
 RewriteRule ^(.*)/$ /$1 [L,R=301]
 

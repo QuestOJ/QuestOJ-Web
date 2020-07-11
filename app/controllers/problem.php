@@ -2,6 +2,10 @@
 	disable_for_anonymous();
 	requirePHPLib('form');
 	requirePHPLib('judger');
+
+	if (UOJConfig::$data["data"]["oss"]) {
+        requirePHPLib('oss');
+    }
 	
 	if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
 		become404Page();
@@ -254,7 +258,11 @@ $('#contest-countdown').countdown(<?= $contest['end_time']->getTimestamp() - UOJ
 </ul>
 <div class="tab-content">
 	<div class="tab-pane active" id="tab-statement">
+		<?php if (!UOJConfig::$data["data"]["oss"]) : ?>
 		<article class="top-buffer-md"><?php if (!file_exists("/var/uoj_data/{$problem['id']}/statement.pdf")){ echo $problem_content['statement']; } else { echo "<embed src=\"/download.php?type=statement&id={$problem['id']}\" width=\"100%\" height=\"700px\">"; } ?></article>
+		<?php else: ?>
+		<article class="top-buffer-md"><?php if (!file_exists("/var/uoj_data/{$problem['id']}/pdf.lock")){ echo $problem_content['statement']; } else { echo "<embed src=\"".getStatementURL($problem)."\" width=\"100%\" height=\"700px\">"; } ?></article>
+		<?php endif ?>
 	</div>
 	<div class="tab-pane" id="tab-submit-answer">
 		<div class="top-buffer-sm"></div>

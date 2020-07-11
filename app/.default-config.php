@@ -60,9 +60,12 @@ return [
 		'oss' => false,
 		'accessKeyID' => '',
 		'accessKeySecret' => '',
+		'bucket' => '',
+		'endpoint' => '',
 		'bucketEndpoint' => '',
 		'callback' => '',
-		'dir' => ''
+		'dir' => '',
+		'roleArn' => ''
 	],
 	'judger' => [
 		'socket' => [

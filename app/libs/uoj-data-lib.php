@@ -29,6 +29,8 @@
 		
 		exec("rm /var/uoj_data/upload/$id -r");
 		exec("rm /var/uoj_data/$id -r");
+		exec("rm /var/oss_data/data/$id -r");
+
 		dataNewProblem($id);
 	}
 	
@@ -197,6 +199,7 @@
 
 				if (is_file("{$this->upload_dir}/statement.pdf")) {
 					$this->copy_statement("statement.pdf");
+					file_put_contents($this->prepare_dir.'/pdf.lock', '');
 				}
 				
 				if (isset($this->allow_files['require']) && is_dir("{$this->upload_dir}/require")) {
@@ -321,7 +324,7 @@
 				}
 				
 				$zip_file->close();
-
+				
 				$orig_requirement = json_decode($this->problem['submission_requirement'], true);
 				if (!$orig_requirement) {
 					$esc_requirement = DB::escape(json_encode($this->requirement));
@@ -336,6 +339,16 @@
 			rename($this->prepare_dir, $this->data_dir);
 		
 			exec("cd /var/uoj_data; rm $id.zip; zip $id.zip $id -r -q");
+			
+			if (UOJConfig::$data["data"]["oss"]) {
+				exec("cd /var/oss_data/data/$id; rm testdata.zip download.zip");
+				exec("cd /var/uoj_data; cp $id.zip /var/oss_data/data/$id/testdata.zip");
+				exec("cd /var/uoj_data; cp $id/download.zip /var/oss_data/data/$id/download.zip");
+				exec("cd /var/uoj_data; cp $id/statement.pdf /var/oss_data/data/$id/statement.pdf");
+				exec("cd /var/uoj_data; rm -rf $id.zip");
+				exec("cd /var/uoj_data/$id; rm `ls | egrep -v \"(problem.conf|pdf.lock)\"`");
+				exec("cd /var/uoj_data; rm -rf upload/$id");
+			}
 
 			return '';
 		}
@@ -351,29 +364,30 @@
 			return "invalid problem id";
 		}
 
-		$oss_dir = "/var/oss_data/$id";
+		$oss_dir = "/var/oss_data/data/$id";
 		$upload_dir = "/var/uoj_data/upload/$id";
 
 		$oss_filename = $oss_dir."/testdata_new.zip";
 		$up_filename = "/tmp/".rand(0,100000000)."data.zip";
 
-		if (!is_file($oss_filename)) {
+		if (!file_exists($oss_filename)) {
 			$errmsg = "数据文件未上传！";
 			becomeMsgPage('<div>' . $errmsg . '</div><a href="/problem/'.$problem['id'].'/manage/data">返回</a>');
 		}
 
-		move_uploaded_file($oss_filename, $up_filename);
+		copy($oss_filename, $up_filename);
 		$zip = new ZipArchive;
 		if ($zip->open($up_filename) === TRUE){
 			$zip->extractTo("/var/uoj_data/upload/{$problem['id']}");
 			$zip->close();
 			exec("cd /var/uoj_data/upload/{$problem['id']}; if [ `find . -maxdepth 1 -type f`File = File ]; then for sub_dir in `find -maxdepth 1 -type d ! -name .`; do mv -f \$sub_dir/* . && rm -rf \$sub_dir; done; fi");
-			echo "<script>alert('上传成功！')</script>";
+			echo "<script>alert('同步成功！')</script>";
 		}else{
 			$errmsg = "解压失败！";
 			becomeMsgPage('<div>' . $errmsg . '</div><a href="/problem/'.$problem['id'].'/manage/data">返回</a>');
 		}
 	}
+	
 	function dataAddExtraTest($problem, $input_file_name, $output_file_name) {
 		$id = $problem['id'];
 

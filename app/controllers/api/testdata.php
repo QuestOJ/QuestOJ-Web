@@ -1,4 +1,5 @@
 <?php
+    requirePHPLib('judger');
 
     if (empty($_POST["token"])) {
         die("Authentication token required (101)");
