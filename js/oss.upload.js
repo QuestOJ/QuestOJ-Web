@@ -165,18 +165,18 @@ var uploader = new plupload.Uploader({
 			d.getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
             var prog = d.getElementsByTagName('div')[0];
 			var progBar = prog.getElementsByTagName('div')[0]
-			progBar.style.width= 2*file.percent+'px';
+			progBar.style.width= (document.getElementsByClassName('progress')[0].offsetWidth) / 100 *file.percent+'px';
 			progBar.setAttribute('aria-valuenow', file.percent);
 		},
 
 		FileUploaded: function(up, file, info) {
             if (info.status == 200)
             {
-                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '上传成功，回调结果: ' + info.response;
+                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = ' 上传成功，回调结果：' + info.response;
             }
             else if (info.status == 203)
             {
-                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '上传成功，回调失败' + info.response;
+                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = ' 上传成功，回调失败' + info.response;
             }
             else
             {
