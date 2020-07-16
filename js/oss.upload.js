@@ -109,7 +109,7 @@ function set_upload_param(up, filename, ret)
         'key' : g_object_name,
         'policy': policyBase64,
         'OSSAccessKeyId': accessid, 
-        'success_action_status' : '200', //让服务端返回200,不然，默认会返回204
+        'success_action_status' : '200',
         'callback' : callbackbody,
         'signature': signature,
     };
@@ -125,7 +125,6 @@ function set_upload_param(up, filename, ret)
 var uploader = new plupload.Uploader({
 	runtimes : 'html5,flash,silverlight,html4',
 	browse_button : 'selectfiles', 
-    //multi_selection: false,
 	container: document.getElementById('container'),
 	flash_swf_url : 'lib/plupload-2.1.2/js/Moxie.swf',
 	silverlight_xap_url : 'lib/plupload-2.1.2/js/Moxie.xap',
@@ -173,11 +172,11 @@ var uploader = new plupload.Uploader({
 		FileUploaded: function(up, file, info) {
             if (info.status == 200)
             {
-                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = 'upload to oss success, object name:' + get_uploaded_object_name(file.name) + ' 回调服务器返回的内容是:' + info.response;
+                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '上传成功，回调结果: ' + info.response;
             }
             else if (info.status == 203)
             {
-                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '上传到OSS成功，但是oss访问用户设置的上传回调服务器失败，失败原因是:' + info.response;
+                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '上传成功，回调失败' + info.response;
             }
             else
             {
@@ -187,10 +186,10 @@ var uploader = new plupload.Uploader({
 
 		Error: function(up, err) {
             if (err.code == -600) {
-                document.getElementById('console').appendChild(document.createTextNode("\n选择的文件太大了,可以根据应用情况，在upload.js 设置一下上传的最大大小"));
+                document.getElementById('console').appendChild(document.createTextNode("\n文件大小超出限制"));
             }
             else if (err.code == -601) {
-                document.getElementById('console').appendChild(document.createTextNode("\n选择的文件后缀不对,可以根据应用情况，在upload.js进行设置可允许的上传文件类型"));
+                document.getElementById('console').appendChild(document.createTextNode("\n不允许上传此类型文件"));
             }
             else if (err.code == -602) {
                 document.getElementById('console').appendChild(document.createTextNode("\n这个文件已经上传过一遍了"));

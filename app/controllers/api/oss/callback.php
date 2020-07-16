@@ -50,7 +50,7 @@ $ok = openssl_verify($authStr, $authorization, $pubKey, OPENSSL_ALGO_MD5);
 if ($ok == 1)
 {
     header("Content-Type: application/json");
-    $data = array("Status"=>"Ok");
+    $data = array("status"=>"ok");
     echo json_encode($data);
 }
 else
