@@ -151,7 +151,7 @@ EOD;
 					}
 					sendSystemMsg($user['username'], 'Rating变化通知', $content);
 					DB::query("update user_info set rating = {$ratings[$i]} where username = '{$standings[$i][2][0]}'");
-					DB::query("update contests_registrants set rank = {$standings[$i][3]} where contest_id = {$contest['id']} and username = '{$standings[$i][2][0]}'");
+					DB::query("update contests_registrants set `rank` = {$standings[$i][3]} where contest_id = {$contest['id']} and username = '{$standings[$i][2][0]}'");
 				}
 				DB::query("update contests set status = 'finished' where id = {$contest['id']}");
 			};
