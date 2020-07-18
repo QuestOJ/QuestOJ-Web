@@ -1,5 +1,5 @@
 <?php
-	$blogs = DB::selectAll("select blogs.id, title, poster, post_time from important_blogs, blogs where is_hidden = 0 and important_blogs.blog_id = blogs.id order by level desc, important_blogs.blog_id desc limit 5");
+	$blogs = DB::selectAll("select user_info.username, blogs.id, title, poster, post_time from important_blogs, blogs, user_info where important_blogs.blog_id = blogs.id and user_info.blog_id = blogs.poster order by level desc, important_blogs.blog_id desc limit 5");
 ?>
 <?php echoUOJPageHeader(UOJConfig::$data['profile']['oj-name-short']) ?>
 <div class="card card-default">
@@ -26,7 +26,7 @@
 						?>
 						<tr>
 							<td><a href="/blogs/<?= $blog['id'] ?>"><?= $blog['title'] ?></a><?= $new_tag ?></td>
-							<td>by <?= getUserLink($blog['poster']) ?></td>
+							<td>by <?= getUserLink($blog['username']) ?></td>
 							<td><small><?= $blog['post_time'] ?></small></td>
 						</tr>
 					<?php endforeach ?>

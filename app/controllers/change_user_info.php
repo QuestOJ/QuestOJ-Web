@@ -15,6 +15,7 @@
 		}
 		if ($_POST['ptag'])
 		{
+			$password_origin = $_POST['password_origin'];
 			$password = $_POST['password'];
 			if (!validatePassword($password))
 			{
@@ -22,16 +23,22 @@
 			}
 			$password = getPasswordToStore($password, $myUser['username']);
 			DB::update("update user_info set password = '$password' where username = '{$myUser['username']}'");
+			WP::updateUserPassword($myUser, DB::escape($password_origin));
 		}
 
+		$oldEmail = $myUser['email'];
 		$email = $_POST['email'];
 		if (!validateEmail($email))
 		{
 			return "失败：无效电子邮箱。";
 		}
-		$esc_email = DB::escape($email);
-		DB::update("update user_info set email = '$esc_email' where username = '{$myUser['username']}'");
 
+		if ($oldEmail != $email) {
+			$esc_email = DB::escape($email);
+			DB::update("update user_info set email = '$esc_email' where username = '{$myUser['username']}'");
+			DB::update("update user_info set verify='0' where username = '{$myUser['username']}'");
+		}
+		
 		if ($_POST['Qtag'])
 		{
 			$qq = $_POST['qq'];
@@ -152,6 +159,7 @@
 			Qtag     : $('#input-qq').val().length,
 			email    : $('#input-email').val(),
 			password : md5($('#input-password').val(), "<?= getPasswordClientSalt() ?>"),
+			password_origin : $('#input-password').val(),
 			old_password : md5($('#input-old_password').val(), "<?= getPasswordClientSalt() ?>"),
 			qq       : $('#input-qq').val(),
 			sex      : $('#input-sex').val(),

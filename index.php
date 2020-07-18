@@ -7,7 +7,6 @@ if (file_exists(UOJContext::documentRoot()."/app/.lock")) {
 }
 
 require UOJContext::documentRoot().'/app/route.php';
-require UOJContext::documentRoot().'/app/controllers/subdomain/blog/route.php';
 
 include UOJContext::documentRoot().'/app/controllers'.call_user_func(function() {
 	$route = Route::dispatch();

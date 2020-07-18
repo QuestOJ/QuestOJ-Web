@@ -15,6 +15,8 @@
 		}
 		$username = $_POST['username'];
 		$password = $_POST['password'];
+
+		$password_origin = $_POST["password_origin"];
 		
 		if (!validateUsername($username)) {
 			return "failed";
@@ -32,6 +34,10 @@
 			return "banned";
 		}
 		
+		if (!WP::checkUserStatus($user)) {
+			WP::createUser($user, DB::escape($password_origin));
+		}
+
 		$verify = Auth::login($user['username']);
 
 		if ($verify == 0) {
@@ -96,7 +102,8 @@ function submitLoginPost() {
 		_token : "<?= crsf_token() ?>",
 		login : '',
 		username : $('#input-username').val(),
-		password : md5($('#input-password').val(), "<?= getPasswordClientSalt() ?>")
+		password : md5($('#input-password').val(), "<?= getPasswordClientSalt() ?>"),
+		password_origin : $('#input-password').val()
 	}, function(msg) {
 		if (msg == 'ok') {
 			var prevUrl = document.referrer;

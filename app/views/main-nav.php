@@ -11,7 +11,7 @@
 			<?php if (!UOJConfig::$data['switch']['disable-hack']): ?>
 			<li class="nav-item"><a class="nav-link" href="<?= HTML::url('/hacks') ?>"><span class="glyphicon glyphicon-flag"></span> <?= UOJLocale::get('hacks') ?></a></li>
 			<?php endif ?>
-			<li class="nav-item"><a class="nav-link" href="<?= HTML::blog_list_url() ?>"><span class="glyphicon glyphicon-edit"></span> <?= UOJLocale::get('blogs') ?></a></li>
+			<li class="nav-item"><a class="nav-link" href="<?= UOJConfig::$data['wordpress']['address'] ?>"><span class="glyphicon glyphicon-edit"></span> <?= UOJLocale::get('blogs') ?></a></li>
 			<li class="nav-item"><a class="nav-link" href="<?= UOJConfig::$data['profile']['docs-url'] ?>"><span class="glyphicon glyphicon-info-sign"></span> <?= UOJLocale::get('help') ?></a></li>
 		</ul>
 		<form id="form-search-problem" class="form-inline my-2 my-lg-0" method="get">

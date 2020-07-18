@@ -67,6 +67,11 @@ return [
 		'dir' => '',
 		'roleArn' => ''
 	],
+	'wordpress' => [
+		'address' => '',
+		'username' => '',
+		'password' => ''	
+	],
 	'judger' => [
 		'socket' => [
 			'port' => '233',
@@ -75,7 +80,6 @@ return [
 	],
 	'switch' => [
 		'web-analytics' => false,
-		'disable-hack' => false,
-		'blog-domain-mode' => 3
+		'disable-hack' => false
 	]
 ];

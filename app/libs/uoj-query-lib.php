@@ -147,7 +147,7 @@ function queryZanVal($id, $type, $user) {
 }
 
 function queryBlog($id) {
-	return DB::fetch(DB::query("select * from blogs where id='$id'"), MYSQLI_ASSOC);
+	return DB::fetch(DB::query("SELECT blogs.*, user_info.username from blogs, user_info where blogs.id = '$id' and blogs.poster = user_info.blog_id"), MYSQLI_ASSOC);
 }
 function queryBlogTags($id) {
 	$tags = array();

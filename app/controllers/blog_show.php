@@ -1,9 +1,10 @@
 <?php
-	if (!validateUInt($_GET['id']) || !($blog = queryBlog($_GET['id']))) {
+	if (!validateUInt($_GET['id']) || !(WP::checkPostStatus($_GET['id']))) {
 		become404Page();
 	}
 
-	disable_for_anonymous();
-	
-	redirectTo(HTML::blog_url($blog['poster'], '/post/'.$_GET['id']));
+    $blog = queryBlog($_GET['id']);
+    $author = $blog["username"];
+
+	redirectTo(UOJConfig::$data['wordpress']['address']."/{$author}/post/".$_GET["id"]);
 ?>

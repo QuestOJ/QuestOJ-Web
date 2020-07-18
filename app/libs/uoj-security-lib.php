@@ -44,11 +44,11 @@ function captcha_check() {
 	curl_setopt($ch, CURLOPT_URL, "https://www.recaptcha.net/recaptcha/api/siteverify");
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+	curl_setopt($ch, CURLOPT_POSTFIELDS, array(
 		"secret" => UOJConfig::$data['security']['captcha']['secret-key'],
 		"response" => $_POST['recaptcha']
 	));
-    $response = curl_exec($ch);
+	$response = curl_exec($ch);
 	curl_close($ch);
 	
 	return json_decode($response, true)["success"];

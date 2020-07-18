@@ -70,6 +70,9 @@ EOD;
 		DB::update("update user_info set verify='1' where username = '{$myUser['username']}'");
 		DB::update("update user_info set code = '' where username = '{$myUser['username']}'");
 		$_SESSION["verify"] = 1;	
+
+		WP::updateUser($myUser);
+
 		return "ok";
 	}
 	

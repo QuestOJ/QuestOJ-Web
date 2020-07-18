@@ -21,7 +21,7 @@
 		
 		echo '<tr>';
 		echo '<td>' . $level_str . getBlogLink($blog['id']) . '</td>';
-		echo '<td>' . getUserLink($blog['poster']) . '</td>';
+		echo '<td>' . getUserLink($blog['username']) . '</td>';
 		echo '<td>' . $blog['post_time'] . '</td>';
 		echo '</tr>';
 	}
@@ -39,5 +39,5 @@ EOD;
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('announcements')) ?>
 <h3>公告</h3>
-<?php echoLongTable(array('blogs.id', 'poster', 'title', 'post_time', 'zan', 'level'), 'important_blogs, blogs', 'is_hidden = 0 and important_blogs.blog_id = blogs.id', 'order by level desc, important_blogs.blog_id desc', $header, 'echoBlogCell', $config); ?>
+<?php echoLongTable(array('user_info.username', 'blogs.id', 'poster', 'title', 'post_time', 'level'), 'important_blogs, blogs, user_info', 'important_blogs.blog_id = blogs.id and user_info.blog_id = blogs.poster', 'order by level desc, important_blogs.blog_id desc', $header, 'echoBlogCell', $config); ?>
 <?php echoUOJPageFooter() ?>
