@@ -20,32 +20,39 @@
 					}
 				}
 			}
+
 			if (!$visible) {
 				become404Page();
 			}
 
 			$id = $_GET['id'];
 			
-	
-			$file_name = "/var/uoj_data/$id/download.zip";
-			$download_name = "problem_$id.zip";
+			if (!UOJConfig::$data["data"]["oss"]) {
+				$file_name = "/var/uoj_data/$id/download.zip";
+				$download_name = "problem_$id.zip";
+			
+				break;
+			} else {
+				$download_url = getDownloadURL($problem);
+				header("Location: ".$download_url);
+				exit;
+			}
+
+		case 'testdata':
+			if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
+				become404Page();
+			}
+
+			if (!hasProblemPermission(Auth::user(), $problem)) {
+				become403Page();
+			}
+
+			$id = $_GET['id'];
+
+			$file_name = "/var/uoj_data/$id.zip";
+			$download_name = "testdata_$id.zip";
 			
 			break;
-		case 'testdata':
-                        if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
-                                become404Page();
-                        }
-       			if (!hasProblemPermission(Auth::user(), $problem)) {
-                		become403Page();
-        		}
-
-                        $id = $_GET['id'];
-
-                        
-                        $file_name = "/var/uoj_data/$id.zip";
-                        $download_name = "testdata_$id.zip";
-                        
-						break;
 		case 'statement':
 			if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
 				become404Page();

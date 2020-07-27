@@ -120,11 +120,11 @@
 	$info_form = new UOJForm('info');
 	$http_host = HTML::escape(UOJContext::httpHost());
 
+	$download_url = HTML::url("/download.php?type=problem&id={$problem['id']}");
+	
 	if (!UOJConfig::$data["data"]["oss"]) {
-		$download_url = HTML::url("/download.php?type=problem&id={$problem['id']}");
 		$testdata_url = HTML::url("/download.php?type=testdata&id={$problem['id']}");
 	} else {
-		$download_url = getDownloadURL($problem);
 		$testdata_url = getTestdataURL($problem);	
 	}
 
