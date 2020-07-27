@@ -1,6 +1,8 @@
 <?php
 	disable_for_anonymous();
 	requirePHPLib('judger');
+	requirePHPLib('oss');
+	
 	$disposition = "attachment";
 
 	switch ($_GET['type']) {
