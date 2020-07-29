@@ -8,7 +8,7 @@
 			return false;
 		}
 		$esc_judger_name = DB::escape($_POST['judger_name']);
-		$judger = DB::selectFirst("select password from judger_info where judger_name = '$esc_judger_name'");
+		$judger = DB::selectFirst("select password from judger_info where judger_name = '$esc_judger_name' and start = '1'");
 		if ($judger == null) {
 			return false;
 		}
