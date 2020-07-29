@@ -99,7 +99,7 @@ function calcRatingSelfTest() {
 */
 function genMoreContestInfo(&$contest) {
 	$contest['start_time_str'] = $contest['start_time'];
-	$contest['start_time'] = new DateTime($contest['start_time']);
+	$contest['start_time'] = new DateTime($contest['start_time'], new DateTimeZone('Asia/Shanghai'));
 	$contest['end_time'] = clone $contest['start_time'];
 	$contest['end_time']->add(new DateInterval("PT${contest['last_min']}M"));
 	
