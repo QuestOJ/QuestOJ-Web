@@ -29,8 +29,11 @@
 		
 		exec("rm /var/uoj_data/upload/$id -r");
 		exec("rm /var/uoj_data/$id -r");
-		exec("rm /var/oss_data/data/$id -r");
 
+		if (UOJConfig::$data["data"]["oss"]) {
+			exec("rm /var/oss_data/data/$id -r");
+		}
+		
 		dataNewProblem($id);
 	}
 	

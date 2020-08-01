@@ -11,11 +11,8 @@ class Tools {
     private static function unlockService() {
         unlink(UOJContext::documentRoot()."/app/.lock");
     }
-	
-    private static function moveBack($id) {
-        $oldID = $id;
-        $newID = $id + 1;
-
+    
+    private static function move($oldID, $newID) {
         DB::update("update best_ac_submissions set problem_id = '{$newID}' where problem_id = '{$oldID}'");
         DB::update("update click_zans set target_id = '{$newID}' where target_id = '{$oldID}' and type='P'");
         DB::update("update contests_problems set problem_id = '{$newID}' where problem_id = '{$oldID}'");
@@ -32,32 +29,28 @@ class Tools {
         rename("/var/uoj_data/upload/{$oldID}", "/var/uoj_data/upload/{$newID}");
         rename("/var/uoj_data/{$oldID}", "/var/uoj_data/{$newID}");
         rename("/var/uoj_data/{$oldID}.zip", "/var/uoj_data/{$newID}.zip");
+
+        if (UOJConfig::$data["data"]["oss"]) {
+            rename("/var/oss_data/data/{$oldID}", "/var/oss_data/data/{$newID}");
+        }
+    }
+
+    private static function moveBack($id) {
+        $oldID = $id;
+        $newID = $id + 1;
+
+        Tools::move($oldID, $newID);
     }
 
     private static function moveFront($id) {
         $oldID = $id;
         $newID = $id - 1;
 
-        DB::update("update best_ac_submissions set problem_id = '{$newID}' where problem_id = '{$oldID}'");
-        DB::update("update click_zans set target_id = '{$newID}' where target_id = '{$oldID}' and type='P'");
-        DB::update("update contests_problems set problem_id = '{$newID}' where problem_id = '{$oldID}'");
-        DB::update("update contests_submissions set problem_id = '{$newID}' where problem_id = '{$oldID}'");
-        DB::update("update custom_test_submissions set problem_id = '{$newID}' where problem_id = '{$oldID}'");
-        DB::update("update hacks set problem_id = '{$newID}' where problem_id = '{$oldID}'");
-        DB::update("update problems set id = '{$newID}' where id = '{$oldID}'");
-        DB::update("update problems_auth set pid = '{$newID}' where pid = '{$oldID}'");
-        DB::update("update problems_contents set id = '{$newID}' where id = '{$oldID}'");
-        DB::update("update problems_permissions set problem_id = '{$newID}' where problem_id = '{$oldID}'");
-        DB::update("update problems_tags set problem_id = '{$newID}' where problem_id = '{$oldID}'");
-        DB::update("update submissions set problem_id = '{$newID}' where problem_id = '{$oldID}'");
-
-        rename("/var/uoj_data/upload/{$oldID}", "/var/uoj_data/upload/{$newID}");
-        rename("/var/uoj_data/{$oldID}", "/var/uoj_data/{$newID}");
-        rename("/var/uoj_data/{$oldID}.zip", "/var/uoj_data/{$newID}.zip");
+        Tools::move($oldID, $newID);
     }
 
     private static function deleteProblem($id) {
-        dataClearProblemData($id);
+        dataClearProblemData(array('id' => $id));
         DB::query("delete from problems where id ='{$id}'");
         DB::query("delete from problems_contents where id ='{$id}'");
         DB::query("delete from best_ac_submissions where problem_id = '{$id}'");
