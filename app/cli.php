@@ -77,6 +77,14 @@ $handlers = [
 		Tools::delete($id);
 		die("finished!\n");
 	},
+	'tools:swap' => function ($id1, $id2) {
+		if (func_num_args() != 2) {
+			die("php cli.php tools:delete <id1> <id2>\n");
+		}
+		
+		Tools::swap($id1, $id2);
+		die("finished!\n");
+	},
 	'tools:calcAll' => function () {
 		if (func_num_args() != 0) {
 			die("php cli.php tools:calcAll\n");

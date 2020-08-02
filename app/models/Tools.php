@@ -1,6 +1,7 @@
 <?php
 
 requirePHPLib('data');
+requirePHPLib('judger');
 requirePHPLib('rating');
 
 class Tools {
@@ -13,6 +14,8 @@ class Tools {
     }
     
     private static function move($oldID, $newID) {
+        print("Move problem {$oldID} to {$newID}\n");
+        
         DB::update("update best_ac_submissions set problem_id = '{$newID}' where problem_id = '{$oldID}'");
         DB::update("update click_zans set target_id = '{$newID}' where target_id = '{$oldID}' and type='P'");
         DB::update("update contests_problems set problem_id = '{$newID}' where problem_id = '{$oldID}'");
@@ -26,12 +29,24 @@ class Tools {
         DB::update("update problems_tags set problem_id = '{$newID}' where problem_id = '{$oldID}'");
         DB::update("update submissions set problem_id = '{$newID}' where problem_id = '{$oldID}'");
 
+        if (file_exists("/var/uoj_data/{$oldID}/problem.conf")) {
+            $validate_problem = true;
+        }
+
         rename("/var/uoj_data/upload/{$oldID}", "/var/uoj_data/upload/{$newID}");
         rename("/var/uoj_data/{$oldID}", "/var/uoj_data/{$newID}");
         rename("/var/uoj_data/{$oldID}.zip", "/var/uoj_data/{$newID}.zip");
 
         if (UOJConfig::$data["data"]["oss"]) {
             rename("/var/oss_data/data/{$oldID}", "/var/oss_data/data/{$newID}");
+
+            if ($validate_problem) {
+                dataSyncFromOSS(queryProblemBrief($newID), Auth::user());
+            }
+        }
+        
+        if ($validate_problem) {
+            dataSyncProblemData(queryProblemBrief($newID), Auth::user());
         }
     }
 
@@ -85,7 +100,6 @@ class Tools {
         for ($id=$oldCnt; $id>=$target; $id--){
             $oldID = $id;
             $newID = $id + 1;
-            print("Move problem {$oldID} to {$newID}\n");
             Tools::moveBack($id);
         }
 
@@ -111,12 +125,26 @@ class Tools {
         for ($id=$target+1; $id<=$oldCnt; $id++){
             $oldID = $id;
             $newID = $id - 1;
-            print("Move problem {$oldID} to {$newID}\n");
             Tools::moveFront($id);
         }
 
         DB::update("alter table problems AUTO_INCREMENT={$AI}");
 
+        Tools::unlockService();
+    }
+
+    public static function swap($id1, $id2) {
+        Tools::lockService();
+        
+        $oldCnt = DB::num_rows("select id from problems");
+        print("Total problem {$oldCnt}\n");
+
+        $tmp = $oldCnt + 1;
+
+        Tools::move($id1, $tmp);
+        Tools::move($id2, $id1);
+        Tools::move($tmp, $id2);
+        
         Tools::unlockService();
     }
 
