@@ -33,8 +33,6 @@
 		if (UOJConfig::$data["data"]["oss"]) {
 			exec("rm /var/oss_data/data/$id -r");
 		}
-		
-		dataNewProblem($id);
 	}
 	
 	class SyncProblemDataHandler {
