@@ -59,7 +59,7 @@ function hasContestInProgess($user) {
 	foreach ($unfinished as $contest){
 		genMoreContestInfo($contest);
 		if ($contest['cur_progress'] == CONTEST_IN_PROGRESS) {
-			if (hasRegistered($user, $contest['id'])) {
+			if (hasRegistered($user, $contest)) {
 				return true;
 			}
 		}
